@@ -25,8 +25,8 @@
             = link_to 'User Menu', '#', class: 'nav-link dropdown-toggle', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false'
             .dropdown-menu{'aria-labelledy': 'dropdown01'}
               = link_to 'My Falcon Time', '#', class: 'dropdown-item'
-              = link_to 'Sign In', '#', class: 'dropdown-item'
-              = link_to 'Sign Out', '#', class: 'dropdown-item'
+              = link_to 'Sign In', user_google_oauth2_omniauth_authorize_path, class: 'dropdown-item'
+              = link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'dropdown-item'
               = link_to 'Item 4', '#', class: 'dropdown-item'
     %main.container{role: 'main'}
       - flash.each do |message_type, message|
