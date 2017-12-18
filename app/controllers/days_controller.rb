@@ -1,4 +1,5 @@
 class DaysController < ApplicationController
+  before_action :authenticate_user!
   before_action :set_day, only: [:show, :edit, :update, :destroy]
 
   # GET /days
