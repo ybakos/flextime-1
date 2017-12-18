@@ -12,47 +12,29 @@
     /[if lt IE 9]
       = javascript_include_tag "//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js"
   %body{class: "#{controller.controller_name} #{controller.action_name}"}
-    .navbar-wrapper
-      %nav.navbar.navbar-fixed-top.navbar-inverse
-        .container
-          .navbar-header
-            %button.navbar-toggle.collapsed{'aria-controls': 'navbar', 'aria-expanded': 'false', 'data-target': '#navbar', 'data-toggle': 'collapse', type: 'button'}
-              %span.sr-only Toggle navigation
-              %span.icon-bar
-              %span.icon-bar
-              %span.icon-bar
-            %a.navbar-brand
-              /= image_tag 'logo.png', alt: 'OSU'
-              = link_to 'Falcon Time', root_path, id: 'logo', title: 'Falcon Time'
-          #navbar.navbar-collapse.collapse
-            %ul.nav.navbar-nav.navbar-right
-              %li= link_to 'Days', days_path, title: 'List of all days'
-              %li= link_to 'Foo', '#', title: 'TODO'
-              %li= link_to 'Bar', '#', title: 'TODO'
-              - if signed_in?
-                %li= link_to 'Baz', '#', title: 'TODO'
-                %li= link_to 'Biz', '#', title: 'TODO'
-                - if true #current_user.admin?
-                  %li= link_to 'Users', '#', title: 'List of all users'
-                %li.dropdown
-                  %a.dropdown-toggle{'aria-expanded': 'false', 'aria-haspopup': 'true', 'data-toggle': 'dropdown', href: '#', role: 'button'}
-                    = 'current_user.name'
-                    %span.caret
-                  %ul.dropdown-menu
-                    %li= link_to 'My Account', '#', title: 'User account details'
-                    %li.divider
-                    %li= link_to 'Sign out', destroy_user_session_path, method: 'delete'
-              - else
-                %li= link_to 'Sign in', new_user_session_path
-    .container
-      %nav.subnav= yield(:subnav)
-      = yield(:screen_title)
+    %nav.navbar.navbar-expand-md.navbar-dark.bg-dark.fixed-top
+      = link_to 'Falcon Time', root_url, class: 'navbar-brand'
+      %button.navbar-toggler{type: 'button', 'data-toggle': 'collapse', 'data-target': '#navbar', 'aria-controls': 'navbar', 'aria-expanded': 'false', 'aria-label': 'Toggle navigation' }
+        %span.navbar-toggler-icon
+      #navbar.collapse.navbar-collapse.justify-content-md-center
+        %ul.navbar-nav.ml-auto
+          %li.nav-item.active= link_to 'Alpha <span class="sr-only">(current)</span>'.html_safe, '#', class: 'nav-link'
+          %li.nav-item= link_to 'Beta', '#', class: 'nav-link'
+          %li.nav-item= link_to 'Chi', '#', class: 'nav-link disabled'
+          %li.nav-item.dropdown
+            = link_to 'User Menu', '#', class: 'nav-link dropdown-toggle', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false'
+            .dropdown-menu{'aria-labelledy': 'dropdown01'}
+              = link_to 'My Falcon Time', '#', class: 'dropdown-item'
+              = link_to 'Sign In', '#', class: 'dropdown-item'
+              = link_to 'Sign Out', '#', class: 'dropdown-item'
+              = link_to 'Item 4', '#', class: 'dropdown-item'
+    %main.container{role: 'main'}
       - flash.each do |message_type, message|
         .alert{class: "alert-#{message_type}"}= message
       = yield
-      %footer
-        %nav
-          %ul
-            %li= link_to 'Report a Bug', 'https://github.com/osu-cascades/falcon-time/issues', title: 'Issues on GitHub'
-            %li= link_to 'Sky View Middle School', 'https://www.bend.k12.or.us/skyview', target: '_blank', title: 'Sky View Middle School'
-      = debug(params) if Rails.env.development?
+    %footer.container
+      %nav
+        %ul
+          %li= link_to 'Report a Bug', 'https://github.com/osu-cascades/falcon-time/issues', title: 'Issues on GitHub'
+          %li= link_to 'Sky View Middle School', 'https://www.bend.k12.or.us/skyview', target: '_blank', title: 'Sky View Middle School'
+    = debug(params) if Rails.env.development?
