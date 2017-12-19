@@ -1,2 +1,0 @@
-class Day < ApplicationRecord
-end
