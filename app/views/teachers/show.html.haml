@@ -1,12 +1,7 @@
-%p#notice= notice
+%h2.display-3= @teacher
 
-%p
-  %b Name:
-  = @teacher.name
-%p
-  %b Title:
-  = @teacher.title
+%nav.mt-3
+  = link_to 'Back', teachers_path, class: 'btn btn-outline-secondary'
+  = link_to 'Edit', edit_teacher_path(@teacher), class: 'btn btn-outline-primary'
 
-= link_to 'Edit', edit_teacher_path(@teacher)
-\|
-= link_to 'Back', teachers_path
+%h3.display-4 Students
