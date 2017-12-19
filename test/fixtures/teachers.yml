@@ -2,6 +2,6 @@ valid:
   name: Fake
   title: 1
 
-two:
+invalid_title:
   name: Another Fake
-  title: 1
+  title: 4

@@ -5,13 +5,17 @@ class TeacherTest < ActiveSupport::TestCase
     teacher = teachers(:valid)
     assert teacher.valid?
     teacher.name = nil
-    assert !teacher.valid?
+    assert teacher.invalid?
   end
 
   test "without a title is invalid" do
     teacher = teachers(:valid)
     assert teacher.valid?
     teacher.title = nil
-    assert !teacher.valid?
+    assert teacher.invalid?
+  end
+
+  test "without an acceptable title value is invalid" do
+    assert teachers(:invalid_title).invalid?
   end
 end
