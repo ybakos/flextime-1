@@ -18,9 +18,9 @@
         %span.navbar-toggler-icon
       #navbar.collapse.navbar-collapse.justify-content-md-center
         %ul.navbar-nav.ml-auto
-          %li.nav-item.active= link_to 'Alpha <span class="sr-only">(current)</span>'.html_safe, '#', class: 'nav-link'
-          %li.nav-item= link_to 'Beta', '#', class: 'nav-link'
-          %li.nav-item= link_to 'Chi', '#', class: 'nav-link disabled'
+          %li.nav-item.active= link_to 'Schedule <span class="sr-only">(current)</span>'.html_safe, '#', class: 'nav-link'
+          %li.nav-item= link_to 'Teachers', teachers_path, class: 'nav-link'
+          %li.nav-item= link_to 'Students', '#', class: 'nav-link disabled'
           %li.nav-item.dropdown
             = link_to 'User Menu', '#', class: 'nav-link dropdown-toggle', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false'
             .dropdown-menu{'aria-labelledy': 'dropdown01'}
