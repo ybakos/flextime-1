@@ -24,4 +24,10 @@ class TeacherTest < ActiveSupport::TestCase
     assert_equal teachers(:miss_valid).to_s, 'Miss Valid'
   end
 
+  test 'should have a unique combination of title and name' do
+    existing_teacher = teachers(:miss_valid)
+    teacher = Teacher.new(title: existing_teacher.title, name: existing_teacher.name)
+    assert_raises { teacher.save! }
+  end
+
 end

@@ -20,6 +20,7 @@ ActiveRecord::Schema.define(version: 20171219021427) do
     t.integer "title", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["name", "title"], name: "index_teachers_on_name_and_title", unique: true
   end
 
   create_table "users", force: :cascade do |t|
