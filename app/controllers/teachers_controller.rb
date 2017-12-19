@@ -13,11 +13,6 @@ class TeachersController < ApplicationController
   def show
   end
 
-  # GET /teachers/new
-  def new
-    @teacher = Teacher.new
-  end
-
   # GET /teachers/1/edit
   def edit
   end
