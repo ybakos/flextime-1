@@ -30,4 +30,8 @@ class TeacherTest < ActiveSupport::TestCase
     assert_raises { teacher.save! }
   end
 
+  test 'should have many students' do
+    assert_respond_to(teachers(:miss_valid), :students)
+  end
+
 end
