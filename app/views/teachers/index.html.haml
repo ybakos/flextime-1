@@ -1,24 +1,10 @@
 %h2.display-4 Teachers
-- if @teacher.errors.any?
-  #error_explanation
-    %h2= "#{pluralize(@teacher.errors.count, "error")} prohibited this teacher from being saved:"
-    %ul
-      - @teacher.errors.full_messages.each do |message|
-        %li= message
-= form_for @teacher, html: {class: 'form-inline mt-3'} do |f|
-  .form-group
-    = f.label :title, class: 'sr-only'
-    = f.select :title, Teacher.titles.keys, {include_blank: 'Choose...'}, {class: 'form-control mr-1', required: true}
-    = f.label :name, class: 'sr-only'
-    = f.text_field :name, placeholder: 'Name', class: 'form-control mr-3', required: true
-    = f.button 'Add', type: 'submit', class: 'btn btn-success'
+
+= render 'form'
 
 %ul.list-group.my-5
   - @teachers.each do |teacher|
-    %li.list-group-item{style: 'border: none'}
+    %li.list-group-item
       %h3= link_to teacher.to_s, teacher
-
-
-/ %td= link_to 'Show', teacher
-/ %td= link_to 'Edit', edit_teacher_path(teacher)
-/ %td= link_to 'Destroy', teacher, method: :delete, data: { confirm: 'Are you sure?' }
+      = link_to 'Edit', edit_teacher_path(teacher)
+      = link_to 'Delete', teacher, method: :delete, data: { confirm: 'Are you sure?' }

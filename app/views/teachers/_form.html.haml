@@ -1,16 +1,13 @@
-= form_for @teacher do |f|
-  - if @teacher.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@teacher.errors.count, "error")} prohibited this teacher from being saved:"
-      %ul
-        - @teacher.errors.full_messages.each do |message|
-          %li= message
-
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :title
-    = f.number_field :title
-  .actions
-    = f.submit 'Save'
+- if @teacher.errors.any?
+  #error_explanation
+    %h2= "#{pluralize(@teacher.errors.count, "error")} prohibited this teacher from being saved:"
+    %ul
+      - @teacher.errors.full_messages.each do |message|
+        %li= message
+= form_for @teacher, html: {class: 'form-inline mt-3'} do |f|
+  .form-group
+    = f.label :title, class: 'sr-only'
+    = f.select :title, Teacher.titles.keys, {include_blank: 'Choose...'}, {class: 'form-control mr-1', required: true}
+    = f.label :name, class: 'sr-only'
+    = f.text_field :name, placeholder: 'Name', class: 'form-control mr-3', required: true
+    = f.submit class: 'btn btn-success'
