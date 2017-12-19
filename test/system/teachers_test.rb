@@ -12,4 +12,11 @@ class TeachersTest < ApplicationSystemTestCase
     assert_link 'Miss Valid'
   end
 
+
+  test 'staff deletes a teacher' do
+    visit teachers_url
+    first('.list-group-item').click_link('Delete')
+    assert_no_link 'Miss Valid'
+  end
+
 end
