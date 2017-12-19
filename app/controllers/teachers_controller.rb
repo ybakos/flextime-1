@@ -4,6 +4,7 @@ class TeachersController < ApplicationController
   # GET /teachers
   # GET /teachers.json
   def index
+    @teacher = Teacher.new
     @teachers = Teacher.all
   end
 
@@ -28,10 +29,11 @@ class TeachersController < ApplicationController
 
     respond_to do |format|
       if @teacher.save
-        format.html { redirect_to @teacher, notice: 'Teacher was successfully created.' }
+        format.html { redirect_to teachers_path, notice: 'Teacher was successfully created.' }
         format.json { render :show, status: :created, location: @teacher }
       else
-        format.html { render :new }
+        @teachers = Teacher.all
+        format.html { render :index }
         format.json { render json: @teacher.errors, status: :unprocessable_entity }
       end
     end

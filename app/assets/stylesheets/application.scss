@@ -1,15 +1,4 @@
 /*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
  *= require_tree .
  *= require_self
  */
@@ -17,6 +6,27 @@
 
 body {
   padding-top: 5rem;
+}
+
+footer {
+  margin-top: 45px;
+  padding-top: 5px;
+  border-top: 1px solid $gray-400;
+  color: $gray-400;
+  ul {
+    float: right;
+    list-style: none;
+    li {
+      float: left;
+      margin-left: 15px;
+    }
+  }
+  a {
+    color: $gray-400;
+    &:hover {
+      color: $gray-400;
+    }
+  }
 }
 
 pre.debug_dump {
@@ -34,60 +44,26 @@ pre.debug_dump {
   }
 }
 
-// /* From scaffold */
+#error_explanation {
+  @extend .alert;
+  @extend .alert-warning;
+  h2 {
+    text-align: left;
+    font-weight: bold;
+    font-size: 1em;
+  }
 
-// div {
-//   &.field, &.actions {
-//     margin-bottom: 10px;
-//   }
-// }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
 
-// #notice {
-//   color: green;
-// }
+.field_with_errors .form-control {
+  @extend .is-invalid;
+}
 
-// .field_with_errors {
-//   padding: 2px;
-//   background-color: red;
-//   display: table;
-// }
-
-// #error_explanation {
-//   width: 450px;
-//   border: 2px solid red;
-//   padding: 7px 7px 0;
-//   margin-bottom: 20px;
-//   background-color: #f0f0f0;
-
-//   h2 {
-//     text-align: left;
-//     font-weight: bold;
-//     padding: 5px 5px 5px 15px;
-//     font-size: 12px;
-//     margin: -7px -7px 0;
-//     background-color: #c00;
-//     color: #fff;
-//   }
-
-//   ul li {
-//     font-size: 12px;
-//     list-style: square;
-//   }
-// }
-
-// label {
-//   display: block;
-// }
-
-// // Variables & Mixins
-
-// $highlight-color: #FF69B4;
-// $gray-medium-light: #eaeaea;
-// $gray-light: $gray-200;
-// $gray-lighter: $gray-200;
-// $gray: $gray-400;
-// $gray-darker: $gray-700;
-// $state-danger-text: $form-feedback-invalid-color;
 
 // @mixin box_sizing {
 //   -moz-box-sizing: border-box;
@@ -237,52 +213,4 @@ pre.debug_dump {
 
 // .subnav .btn-primary {
 //   min-width: 130px;
-// }
-
-
-// Footer
-
-footer {
-  margin-top: 45px;
-  padding-top: 5px;
-  border-top: 1px solid $gray-400;
-  color: $gray-400;
-  ul {
-    float: right;
-    list-style: none;
-    li {
-      float: left;
-      margin-left: 15px;
-    }
-  }
-  a {
-    color: $gray-400;
-    &:hover {
-      color: $gray-400;
-    }
-  }
-}
-
-// .debug_dump {
-//   clear: both;
-//   float: left;
-//   width: 100%;
-//   margin-top: 45px;
-//   @include box-sizing;
-// }
-
-// .img-circle {
-//   margin: auto;
-//   display: block;
-//   height: 200;
-//   width: 200;
-// }
-
-// // Forms
-
-
-// .field_with_errors {
-//   .form-control {
-//     color: $state-danger-text;
-//   }
 // }
