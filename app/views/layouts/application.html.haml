@@ -30,7 +30,10 @@
               = link_to 'Item 4', '#', class: 'dropdown-item'
     %main.container{role: 'main'}
       - flash.each do |message_type, message|
-        .alert{class: "alert-#{message_type}"}= message
+        .alert.alert-dismissible.fade.show{class: "alert-#{message_type.to_s == 'notice' ? 'success' : 'warning'}"}
+          = message
+          %button.close{type: 'button', 'data-dismiss': 'alert', 'aria-label': 'Close'}
+            %span{'aria-hidden': 'true'} &times;
       = yield
     %footer.container
       %nav
