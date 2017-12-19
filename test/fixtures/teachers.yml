@@ -1,7 +1,19 @@
-valid:
+miss_valid:
+  name: Valid
+  title: 0
+
+mr_fake:
   name: Fake
   title: 1
 
+mrs_fake:
+  name: Fake
+  title: 2
+
+ms_fake:
+  name: Fake
+  title: 3
+
 invalid_title:
-  name: Another Fake
+  name: Invalid Title
   title: 4
