@@ -39,4 +39,8 @@ class ActivityTest < ActiveSupport::TestCase
     assert activity.invalid?
   end
 
+  test 'string representation includes name, room and title' do
+    assert_equal activities(:one).to_s, 'Fake Activity (Fake Room) on Tuesday, Dec 19 2017'
+  end
+
 end
