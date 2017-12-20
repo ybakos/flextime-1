@@ -4,7 +4,11 @@ class ActivitiesController < ApplicationController
   # GET /activities
   # GET /activities.json
   def index
-    @activities = Activity.all
+    @activities = [
+      Activity.where(date: Date.today.monday + 1),
+      Activity.where(date: Date.today.monday + 3),
+      Activity.where(date: Date.today.monday + 4)
+    ]
   end
 
   # GET /activities/1
