@@ -31,3 +31,7 @@
 
 en:
   hello: "Hello world"
+  date:
+    formats:
+      day: "%A"
+      complete: "%A, %b %e %Y"

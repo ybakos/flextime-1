@@ -1,0 +1,11 @@
+one:
+  name: Fake Activity
+  room: Fake Room
+  capacity: 1
+  date: 2017-12-19
+
+two:
+  name: Another Fake Activity
+  room: Fake Room
+  capacity: 1
+  date: 2017-12-19
