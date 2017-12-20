@@ -3,7 +3,7 @@ class TeachersController < ApplicationController
 
   def index
     @teacher = Teacher.new
-    @teachers = Teacher.all
+    @teachers = Teacher.order(:name)
   end
 
   def show; end
