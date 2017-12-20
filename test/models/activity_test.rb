@@ -32,4 +32,11 @@ class ActivityTest < ActiveSupport::TestCase
     assert activity.invalid?
   end
 
+  test 'without a date is invalid' do
+    activity = activities(:one)
+    assert activity.valid?
+    activity.date = nil
+    assert activity.invalid?
+  end
+
 end
