@@ -1,27 +1,22 @@
-%h1 Listing activities
+%h2.display-3 This Week
 
-%table
-  %thead
-    %tr
-      %th Name
-      %th Room
-      %th Capacity
-      %th Date
-      %th
-      %th
-      %th
+= link_to 'Previous week', '#', class: 'btn btn-outline-secondary'
+= link_to 'Next week', '#', class: 'btn btn-outline-primary float-right'
 
-  %tbody
-    - @activities.each do |activity|
-      %tr
-        %td= activity.name
-        %td= activity.room
-        %td= activity.capacity
-        %td= activity.date
-        %td= link_to 'Show', activity
-        %td= link_to 'Edit', edit_activity_path(activity)
-        %td= link_to 'Destroy', activity, method: :delete, data: { confirm: 'Are you sure?' }
-
-%br
-
-= link_to 'New Activity', new_activity_path
+.row.my-5
+  - @activities.each do |activities|
+    .col
+      .h4.float-right
+        %span.badge.badge-pill.badge-secondary.font-weight-light= activities.sum(&:capacity)
+      %h3.display-4= activities.first.date.strftime("%A")
+      = link_to 'Add New Activity', new_activity_path, class: 'btn btn-sm btn-outline-success float-right'
+      %h4.h3.text-muted.font-weight-light= activities.first.date.strftime("%B %e")
+      %ul.list-group
+        - activities.each do |activity|
+          %li.list-group-item.my-2
+            %h5= link_to activity.name, activity
+            %h6
+              = activity.room
+              .float-right
+                %span.badge.badge-pill.badge-light= Random.new.rand(activity.capacity)
+                %span.badge.badge-pill.badge-secondary= activity.capacity
