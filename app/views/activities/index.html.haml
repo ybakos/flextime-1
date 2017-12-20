@@ -1,7 +1,8 @@
 %h2.display-3 This Week
 
-= link_to 'Previous week', '#', class: 'btn btn-outline-secondary'
-= link_to 'Next week', '#', class: 'btn btn-outline-primary float-right'
+%nav.mt-3
+  = link_to 'Previous week', '#', class: 'btn btn-outline-secondary'
+  = link_to 'Next week', '#', class: 'btn btn-outline-primary float-right'
 
 .row.my-5
   - @activities.each do |activities|
