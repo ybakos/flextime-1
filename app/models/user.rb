@@ -3,6 +3,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
+  enum role: [:student, :staff, :admin]
+
+  after_initialize :set_default_role
+
   # https://github.com/zquestz/omniauth-google-oauth2
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -15,5 +19,11 @@ class User < ApplicationRecord
       user.image_url = auth.info.image
     end
   end
+
+  private
+
+    def set_default_role
+      role = :student
+    end
 
 end
