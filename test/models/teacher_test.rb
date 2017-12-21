@@ -24,6 +24,14 @@ class TeacherTest < ActiveSupport::TestCase
     assert_equal teachers(:miss_valid).to_s, 'Miss Valid'
   end
 
+  test 'previous string representation is title. name before modification' do
+    teacher = teachers(:miss_valid)
+    assert_equal teacher.to_s, 'Miss Valid'
+    teacher.name = 'FAKE'
+    assert_equal teacher.to_s, 'Miss FAKE'
+    assert_equal teacher.to_s_was, 'Miss Valid'
+  end
+
   test 'has a unique title and name' do
     existing_teacher = teachers(:miss_valid)
     teacher = Teacher.new(title: existing_teacher.title, name: existing_teacher.name)

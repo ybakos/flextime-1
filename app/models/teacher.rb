@@ -12,4 +12,8 @@ class Teacher < ApplicationRecord
     "#{title} #{name}"
   end
 
+  def to_s_was
+    "#{title_was} #{name_was}"
+  end
+
 end

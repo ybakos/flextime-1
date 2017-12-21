@@ -59,9 +59,9 @@ class TeachersTest < ApplicationSystemTestCase
     select 'Mrs.', from: 'teacher_title'
     fill_in 'teacher_name', with: 'Fake'
     click_button 'Update Teacher'
+    assert_selector 'h2', text: 'Editing Mr. Fake'
     assert_text '1 error prohibited this teacher from being saved'
     assert_text 'Name has already been taken'
-    assert_selector 'h2', text: 'Editing Mrs. Fake' # UX smell. See https://github.com/osu-cascades/falcon-time/issues/28
   end
 
   test 'staff sees an error when updating a teacher and neither a title nor name are specified' do
