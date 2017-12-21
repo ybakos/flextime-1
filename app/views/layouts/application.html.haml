@@ -18,16 +18,14 @@
         %span.navbar-toggler-icon
       #navbar.collapse.navbar-collapse.justify-content-md-center
         %ul.navbar-nav.ml-auto
-          %li.nav-item.active= link_to 'Schedule <span class="sr-only">(current)</span>'.html_safe, activities_path, class: 'nav-link'
-          %li.nav-item= link_to 'Students', '#', class: 'nav-link disabled'
+          %li.nav-item= link_to 'Schedule', activities_path, class: 'nav-link'
+          %li.nav-item= link_to 'Students', students_path, class: 'nav-link'
           %li.nav-item= link_to 'Teachers', teachers_path, class: 'nav-link'
           %li.nav-item.dropdown
-            = link_to 'User Menu', '#', class: 'nav-link dropdown-toggle', 'data-toggle': 'dropdown', 'aria-haspopup': 'true', 'aria-expanded': 'false'
-            .dropdown-menu{'aria-labelledy': 'dropdown01'}
-              = link_to 'My Falcon Time', '#', class: 'dropdown-item'
-              = link_to 'Sign In', user_google_oauth2_omniauth_authorize_path, class: 'dropdown-item'
-              = link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'dropdown-item'
-              = link_to 'Item 4', '#', class: 'dropdown-item'
+            - unless signed_in?
+              = link_to 'Sign In', user_google_oauth2_omniauth_authorize_path, class: 'nav-link'
+            - else
+              = link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'nav-link'
     %main.container{role: 'main'}
       - flash.each do |message_type, message|
         .alert.alert-dismissible.fade.show{class: "alert-#{message_type.to_s == 'notice' ? 'success' : 'warning'}"}

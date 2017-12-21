@@ -1,0 +1,15 @@
+%h1 Listing students
+
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th
+
+  %tbody
+    - @students.each do |student|
+      %tr
+        %td= link_to 'Show', student_path(student)
+
+%br

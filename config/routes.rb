@@ -7,5 +7,6 @@ Rails.application.routes.draw do
 
   resources :activities
   resources :teachers, except: [:new]
+  resources :students, only: [:index, :show, :update]
 
 end
