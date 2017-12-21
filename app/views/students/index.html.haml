@@ -1,15 +1,19 @@
-%h1 Listing students
+%h2.display-3 Students
 
-%table
+%nav.mt-3
+  = link_to 'Previous week', '#', class: 'btn btn-outline-secondary'
+  = link_to 'Next week', '#', class: 'btn btn-outline-primary float-right'
+
+%table.table.mt-5
   %thead
-    %tr
-      %th
-      %th
-      %th
-
+    %th Student
+    %th Tuesday
+    %th Thursday
+    %th Friday
   %tbody
     - @students.each do |student|
       %tr
-        %td= link_to 'Show', student_path(student)
-
-%br
+        %td= link_to student.to_s, student_path(student)
+        %td= 'Ping Pong'
+        %td= 'Eating Grapes'
+        %td= 'Coding 101'

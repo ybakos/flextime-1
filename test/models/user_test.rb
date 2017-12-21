@@ -11,4 +11,8 @@ class UserTest < ActiveSupport::TestCase
     assert_equal users(:one).role, 'student'
   end
 
+  test 'has a string representation of first_name last_name' do
+    assert_equal users(:one).to_s, 'Fake User'
+  end
+
 end

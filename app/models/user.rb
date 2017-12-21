@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
@@ -18,6 +19,10 @@ class User < ApplicationRecord
       user.last_name = auth.info.last_name
       user.image_url = auth.info.image
     end
+  end
+
+  def to_s
+    "#{first_name} #{last_name}"
   end
 
   private
