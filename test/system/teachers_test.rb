@@ -2,18 +2,20 @@ require "application_system_test_case"
 
 class TeachersTest < ApplicationSystemTestCase
 
+  setup do
+    visit teachers_url
+  end
+
   test 'students cannot CRUD teachers' do
     skip
   end
 
   test 'staff views a list of teachers' do
-    visit teachers_url
     assert_selector 'h2', text: 'Teachers'
     assert_link 'Miss Valid'
   end
 
   test 'staff creates a teacher' do
-    visit teachers_url
     select 'Miss', from: 'teacher_title'
     fill_in 'teacher_name', with: 'FAKE'
     click_button 'Create Teacher'
@@ -22,7 +24,6 @@ class TeachersTest < ApplicationSystemTestCase
 
   # There can be only one "Mr. Smith"
   test 'staff sees an error when creating a teacher with a title/name pair matching an existing teacher' do
-    visit teachers_url
     assert_selector 'h3', text: 'Miss Valid', count: 1
     select 'Miss', from: 'teacher_title'
     fill_in 'teacher_name', with: 'Valid'
@@ -33,7 +34,6 @@ class TeachersTest < ApplicationSystemTestCase
   end
 
   test 'staff sees an error when creating a teacher and neither a title nor name are specified' do
-    visit teachers_url
     click_button 'Create Teacher'
     assert_text '2 errors prohibited this teacher from being saved'
     assert_text "Title can't be blank"
@@ -41,7 +41,6 @@ class TeachersTest < ApplicationSystemTestCase
   end
 
   def edit_first_teacher
-    visit teachers_url
     first('.list-group-item').click_link('Edit')
     assert_selector 'h2', text: 'Editing Mr. Fake'
   end
@@ -76,7 +75,6 @@ class TeachersTest < ApplicationSystemTestCase
   end
 
   test 'staff deletes a teacher' do
-    visit teachers_url
     first('.list-group-item').click_link('Delete')
     assert_no_link 'Mr. Fake'
   end
