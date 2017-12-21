@@ -1,5 +1,7 @@
-%h1 New activity
+%h2.display-3 New Activity
 
-= render 'form'
+%nav.mt-3
+  = link_to 'Back', activities_path, class: 'btn btn-outline-secondary'
 
-= link_to 'Back', activities_path
+.mt-5
+  = render 'form'

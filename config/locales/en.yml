@@ -35,3 +35,4 @@ en:
     formats:
       day: "%A"
       complete: "%A, %b %e %Y"
+      without_year: "%A, %b %e"

@@ -1,9 +1,13 @@
 require "application_system_test_case"
 
 class ActivitiesTest < ApplicationSystemTestCase
-  # test "visiting the index" do
-  #   visit activities_url
-  #
-  #   assert_selector "h1", text: "Activity"
-  # end
+
+  setup do
+
+  end
+
+  test 'staff views a list of activites for the current week' do
+    skip
+  end
+
 end

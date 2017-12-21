@@ -1,22 +1,24 @@
-= form_for @activity do |f|
-  - if @activity.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@activity.errors.count, "error")} prohibited this activity from being saved:"
-      %ul
-        - @activity.errors.full_messages.each do |message|
-          %li= message
+- if @activity.errors.any?
+  #error_explanation
+    %h2= "#{pluralize(@activity.errors.count, "error")} prohibited this activity from being saved:"
+    %ul
+      - @activity.errors.full_messages.each do |message|
+        %li= message
 
-  .field
-    = f.label :name
-    = f.text_field :name
-  .field
-    = f.label :room
-    = f.text_field :room
-  .field
-    = f.label :capacity
-    = f.number_field :capacity
-  .field
-    = f.label :date
-    = f.date_select :date
-  .actions
-    = f.submit 'Save'
+= form_for @activity do |f|
+  .row
+    .col-md-6.form-group
+      = f.label :name
+      = f.text_field :name, class: 'form-control'
+    .col-md-4.form-group
+      = f.label :room
+      = f.text_field :room, class: 'form-control'
+    .col-md-2.form-group
+      = f.label :capacity
+      = f.number_field :capacity, class: 'form-control'
+  .row
+    .col-md-4.form-group
+      = f.label :date
+      .form_control= f.date_select :date
+    .col-md-2
+      = f.submit 'Save', class: 'btn btn-success'
