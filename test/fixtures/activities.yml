@@ -1,11 +1,17 @@
-one:
-  name: Fake Activity
+tuesday_activity:
+  name: Fake Tuesday Activity
   room: Fake Room
   capacity: 1
-  date: 2017-12-19
+  date: <%= Date.today.monday + 1 %>
 
-two:
-  name: Another Fake Activity
+thursday_activity:
+  name: Fake Thursday Activity
   room: Fake Room
   capacity: 1
-  date: 2017-12-19
+  date: <%= Date.today.monday + 3 %>
+
+friday_activity:
+  name: Fake Friday Activity
+  room: Fake Room
+  capacity: 1
+  date: <%= Date.today.monday + 4 %>
