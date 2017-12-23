@@ -16,7 +16,7 @@ class ActivitiesTest < ApplicationSystemTestCase
   end
 
   test 'staff views a list of activities for the previous week' do
-    visit activities_url(week_offset: -1)
+    click_link 'Previous week'
     assert_selector 'h4', text: (Date.today.monday - 6).strftime("%B %e")
     assert_selector 'h5', text: 'Fake Tuesday Activity'
     assert_selector 'h4', text: (Date.today.monday - 4).strftime("%B %e")
@@ -26,7 +26,7 @@ class ActivitiesTest < ApplicationSystemTestCase
   end
 
   test 'staff views a list of activities for next week' do
-    visit activities_url(week_offset: 1)
+    click_link 'Next week'
     assert_selector 'h4', text: (Date.today.monday + 8).strftime("%B %e")
     assert_selector 'h5', text: 'Fake Tuesday Activity'
     assert_selector 'h4', text: (Date.today.monday + 10).strftime("%B %e")
@@ -34,6 +34,5 @@ class ActivitiesTest < ApplicationSystemTestCase
     assert_selector 'h4', text: (Date.today.monday + 11).strftime("%B %e")
     assert_selector 'h5', text: 'Fake Friday Activity'
   end
-
 
 end
