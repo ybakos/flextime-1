@@ -1,3 +1,4 @@
+# Current week
 tuesday_activity:
   name: Fake Tuesday Activity
   room: Fake Room
@@ -15,3 +16,41 @@ friday_activity:
   room: Fake Room
   capacity: 1
   date: <%= Date.today.monday + 4 %>
+
+# Previous week
+last_tuesday_activity:
+  name: Fake Tuesday Activity
+  room: Fake Room
+  capacity: 1
+  date: <%= Date.today.monday - 6 %>
+
+last_thursday_activity:
+  name: Fake Thursday Activity
+  room: Fake Room
+  capacity: 1
+  date: <%= Date.today.monday - 4 %>
+
+last_friday_activity:
+  name: Fake Friday Activity
+  room: Fake Room
+  capacity: 1
+  date: <%= Date.today.monday - 3 %>
+
+# Next week
+next_tuesday_activity:
+  name: Fake Tuesday Activity
+  room: Fake Room
+  capacity: 1
+  date: <%= Date.today.monday + 8 %>
+
+next_thursday_activity:
+  name: Fake Thursday Activity
+  room: Fake Room
+  capacity: 1
+  date: <%= Date.today.monday + 10 %>
+
+next_friday_activity:
+  name: Fake Friday Activity
+  room: Fake Room
+  capacity: 1
+  date: <%= Date.today.monday + 11 %>

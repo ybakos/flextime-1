@@ -153,3 +153,11 @@ capacity = (10..26).to_a
   Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday + 3)
   Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday + 4)
 end
+
+Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday + 8)
+Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday + 10)
+Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday + 11)
+
+Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday - 6)
+Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday - 4)
+Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday - 3)

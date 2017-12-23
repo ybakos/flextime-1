@@ -1,32 +1,25 @@
 class ActivitiesController < ApplicationController
+
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
 
-  # GET /activities
-  # GET /activities.json
   def index
+    @week_offset = params[:week_offset]&.to_i || 0
+    day_offset = @week_offset * 7
     @activities = [
-      Activity.where(date: Date.today.monday + 1),
-      Activity.where(date: Date.today.monday + 3),
-      Activity.where(date: Date.today.monday + 4)
+      Activity.where(date: Date.today.monday + 1 + day_offset),
+      Activity.where(date: Date.today.monday + 3 + day_offset),
+      Activity.where(date: Date.today.monday + 4 + day_offset)
     ]
   end
 
-  # GET /activities/1
-  # GET /activities/1.json
-  def show
-  end
+  def show; end
 
-  # GET /activities/new
   def new
     @activity = Activity.new
   end
 
-  # GET /activities/1/edit
-  def edit
-  end
+  def edit; end
 
-  # POST /activities
-  # POST /activities.json
   def create
     @activity = Activity.new(activity_params)
 
@@ -41,8 +34,6 @@ class ActivitiesController < ApplicationController
     end
   end
 
-  # PATCH/PUT /activities/1
-  # PATCH/PUT /activities/1.json
   def update
     respond_to do |format|
       if @activity.update(activity_params)
@@ -55,8 +46,6 @@ class ActivitiesController < ApplicationController
     end
   end
 
-  # DELETE /activities/1
-  # DELETE /activities/1.json
   def destroy
     @activity.destroy
     respond_to do |format|
@@ -66,13 +55,14 @@ class ActivitiesController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
+
     def set_activity
       @activity = Activity.find(params[:id])
     end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
+
     def activity_params
       params.require(:activity).permit(:name, :room, :capacity, :date)
     end
+
 end
