@@ -16,6 +16,7 @@ class ActivitiesController < ApplicationController
 
   def new
     @activity = Activity.new
+    @dates = [Date.today + 1, Date.today + 3, Date.today + 4]
   end
 
   def edit; end
