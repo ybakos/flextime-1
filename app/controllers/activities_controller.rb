@@ -5,11 +5,11 @@ class ActivitiesController < ApplicationController
   def index
     @week_offset = params[:week_offset]&.to_i || 0
     day_offset = @week_offset * 7
-    @activities = [
-      Activity.where(date: Date.today.monday + 1 + day_offset),
-      Activity.where(date: Date.today.monday + 3 + day_offset),
-      Activity.where(date: Date.today.monday + 4 + day_offset)
-    ]
+    @activities = {
+      Date.today.monday + 1 + day_offset => Activity.where(date: Date.today.monday + 1 + day_offset),
+      Date.today.monday + 3 + day_offset => Activity.where(date: Date.today.monday + 3 + day_offset),
+      Date.today.monday + 4 + day_offset => Activity.where(date: Date.today.monday + 4 + day_offset)
+    }
   end
 
   def show; end
