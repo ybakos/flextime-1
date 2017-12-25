@@ -15,12 +15,11 @@ class ActivitiesController < ApplicationController
   def show; end
 
   def new
-    @activity = Activity.new(humanized_date: params[:date])
-    monday_of_week = params[:date].to_date.monday
+    @activity = Activity.new(date: params[:date])
     @dates = [
-      [I18n.l(monday_of_week + 1, format: :complete), monday_of_week + 1],
-      [I18n.l(monday_of_week + 3, format: :complete), monday_of_week + 3],
-      [I18n.l(monday_of_week + 4, format: :complete), monday_of_week + 4]
+      [I18n.l(@activity.date.monday + 1, format: :complete), @activity.date.monday + 1],
+      [I18n.l(@activity.date.monday + 3, format: :complete), @activity.date.monday + 3],
+      [I18n.l(@activity.date.monday + 4, format: :complete), @activity.date.monday + 4]
     ]
   end
 
@@ -74,7 +73,7 @@ class ActivitiesController < ApplicationController
 
 
     def activity_params
-      params.require(:activity).permit(:name, :room, :capacity, :date, :humanized_date)
+      params.require(:activity).permit(:name, :room, :capacity, :date)
     end
 
 end
