@@ -1,4 +1,4 @@
-%h2.display-3 This Week
+%h2.display-3= (@week_offset == 0) ? 'This Week' : "Week of #{(Date.today.monday + (@week_offset * 7)).to_s(:long)}"
 
 %nav.mt-3
   = link_to 'Previous week', activities_path(week_offset: @week_offset - 1), class: 'btn btn-outline-secondary'
@@ -10,7 +10,7 @@
       .h4.float-right
         %span.badge.badge-pill.badge-secondary.font-weight-light= activities.sum(&:capacity)
       %h3.display-4= date.strftime("%A")
-      = link_to 'Add New Activity', new_activity_path, class: 'btn btn-sm btn-outline-success float-right'
+      = link_to 'Add New Activity', new_activity_path(date: date.to_s), class: 'btn btn-sm btn-outline-success float-right'
       %h4.h3.text-muted.font-weight-light= date.strftime("%B %-e")
       %ul.list-group
         - activities.each do |activity|
