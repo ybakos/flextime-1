@@ -49,7 +49,10 @@ class ActivitiesTest < ApplicationSystemTestCase
     fill_in 'activity_name', with: 'New Fake Tuesday Activity'
     fill_in 'activity_room', with: 'New Fake Room'
     fill_in 'activity_capacity', with: 10
-    select I18n.l(Date.today.monday + 1, format: :without_year), from: 'humanized_activity_date'
+    select I18n.l(Date.today.monday + 1, format: :without_year), from: 'activity_humanized_date'
+    click_button 'Create Activity'
+    assert_selector 'h2', text: 'New Fake Tuesday Activity'
+    assert_selector 'h3', text: "#{I18n.l(Date.today.monday + 1, format: :without_year)} in New Fake Room"
   end
 
 end

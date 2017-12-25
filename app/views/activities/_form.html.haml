@@ -17,8 +17,8 @@
       = f.label :capacity
       = f.number_field :capacity, class: 'form-control'
   .row
-    .col-md-4.form-group
+    .col-md-3.form-group
       = f.label :date
-      .form_control= f.date_select :date
-    .col-md-2
-      = f.submit 'Save', class: 'btn btn-success'
+      = f.select :humanized_date, options_for_select(@dates, params[:date] || @activity.date.to_s), {class: 'form-control'}
+    .col-md-3.form-group
+      = f.submit class: 'btn btn-success'
