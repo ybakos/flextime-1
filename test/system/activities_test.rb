@@ -59,4 +59,12 @@ class ActivitiesTest < ApplicationSystemTestCase
     assert_selector 'h3', text: "#{date_text} in #{activity_room}"
   end
 
+  test 'staff creating a new activity sees appropriate date pre-selected' do
+    d = Date.today
+    [d.tuesday, d.thursday, d.friday].each do |day|
+      visit new_activity_url(date: day.to_s)
+      assert has_select?('activity_date', selected: I18n.l(day, format: :complete))
+    end
+  end
+
 end
