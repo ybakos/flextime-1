@@ -6,6 +6,8 @@ class ActivitiesTest < ApplicationSystemTestCase
     visit activities_url
   end
 
+  # Viewing
+
   test 'staff views a list of activites for the current week' do
     d = Date.today
     assert_selector 'h2', text: 'This Week'
@@ -42,6 +44,15 @@ class ActivitiesTest < ApplicationSystemTestCase
     assert_selector 'h4', text: d.tuesday.strftime("%B %-e")
     assert_no_selector 'h5'
   end
+
+  test 'staff views a single activity' do
+    a = activities(:tuesday_activity)
+    click_link a.name
+    assert_selector 'h2', text: a.name
+    assert_selector 'h3', text: "#{I18n.l(a.date, format: :without_year)} in #{a.room}"
+  end
+
+  # Creating
 
   test 'staff creates a new activity' do
     date_text = I18n.l(Date.today.tuesday, format: :without_year)
