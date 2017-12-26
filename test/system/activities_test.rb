@@ -37,9 +37,9 @@ class ActivitiesTest < ApplicationSystemTestCase
 
   # https://github.com/osu-cascades/falcon-time/issues/30
   test 'staff views a week with no activities' do
-    click_link 'Previous week'
-    click_link 'Previous week'
-    assert_selector 'h4', text: (Date.today.monday - 13).strftime("%B %-e")
+    2.times { click_link 'Previous week' }
+    d = Date.today.prev_week.prev_week
+    assert_selector 'h4', text: d.tuesday.strftime("%B %-e")
     assert_no_selector 'h5'
   end
 
