@@ -10,16 +10,32 @@ class TeachersTest < ApplicationSystemTestCase
     skip
   end
 
+  # Viewing
+
   test 'staff views a list of teachers' do
     assert_selector 'h2', text: 'Teachers'
     assert_link 'Miss Valid'
   end
+
+  # https://github.com/osu-cascades/falcon-time/issues/32
+  test 'staff views a teacher and a list of student activities' do
+    skip
+  end
+
+  # Creating
 
   test 'staff creates a teacher' do
     select 'Miss', from: 'teacher_title'
     fill_in 'teacher_name', with: 'FAKE'
     click_button 'Create Teacher'
     assert_link 'Miss FAKE'
+  end
+
+  test 'staff sees an error when creating a teacher and neither a title nor name are specified' do
+    click_button 'Create Teacher'
+    assert_text '2 errors prohibited this teacher from being saved'
+    assert_text "Title can't be blank"
+    assert_text "Name can't be blank"
   end
 
   # There can be only one "Mr. Smith"
@@ -33,12 +49,7 @@ class TeachersTest < ApplicationSystemTestCase
     assert_selector 'h3', text: 'Miss Valid', count: 1
   end
 
-  test 'staff sees an error when creating a teacher and neither a title nor name are specified' do
-    click_button 'Create Teacher'
-    assert_text '2 errors prohibited this teacher from being saved'
-    assert_text "Title can't be blank"
-    assert_text "Name can't be blank"
-  end
+  # Updating
 
   def edit_first_teacher
     first('.list-group-item').click_link('Edit')
@@ -73,6 +84,8 @@ class TeachersTest < ApplicationSystemTestCase
     assert_text "Title can't be blank"
     assert_text "Name can't be blank"
   end
+
+  # Deleting
 
   test 'staff deletes a teacher' do
     first('.list-group-item').click_link('Delete')
