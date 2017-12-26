@@ -7,8 +7,8 @@ class ActivitiesTest < ApplicationSystemTestCase
   end
 
   test 'staff views a list of activites for the current week' do
-    assert_selector 'h2', text: 'This Week'
     d = Date.today
+    assert_selector 'h2', text: 'This Week'
     [d.tuesday, d.thursday, d.friday].each do |day|
       assert_selector 'h4', text: day.strftime("%B %-e")
       assert_selector 'h5', text: "Fake #{day.day_name} Activity"
@@ -16,13 +16,13 @@ class ActivitiesTest < ApplicationSystemTestCase
   end
 
   test 'staff views a list of activities for the previous week' do
+    d = Date.today.prev_week
     click_link 'Previous week'
-    assert_selector 'h4', text: (Date.today.monday - 6).strftime("%B %-e")
-    assert_selector 'h5', text: 'Fake Previous Tuesday Activity'
-    assert_selector 'h4', text: (Date.today.monday - 4).strftime("%B %-e")
-    assert_selector 'h5', text: 'Fake Previous Thursday Activity'
-    assert_selector 'h4', text: (Date.today.monday - 3).strftime("%B %-e")
-    assert_selector 'h5', text: 'Fake Previous Friday Activity'
+    assert_selector 'h2', text: "Week of #{d.to_s(:long)}"
+    [d.tuesday, d.thursday, d.friday].each do |day|
+      assert_selector 'h4', text: day.strftime("%B %-e")
+      assert_selector 'h5', text: "Fake Previous #{day.day_name} Activity"
+    end
   end
 
   test 'staff views a list of activities for next week' do
