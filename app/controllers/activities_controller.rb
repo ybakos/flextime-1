@@ -1,14 +1,13 @@
 class ActivitiesController < ApplicationController
 
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
+  before_action :set_date, only: [:index]
 
   def index
-    @week_offset = params[:week_offset]&.to_i || 0
-    day_offset = @week_offset * 7
     @activities = {
-      Date.today.monday + 1 + day_offset => Activity.where(date: Date.today.monday + 1 + day_offset),
-      Date.today.monday + 3 + day_offset => Activity.where(date: Date.today.monday + 3 + day_offset),
-      Date.today.monday + 4 + day_offset => Activity.where(date: Date.today.monday + 4 + day_offset)
+      @date.tuesday => Activity.where(date: @date.tuesday),
+      @date.thursday => Activity.where(date: @date.thursday),
+      @date.friday => Activity.where(date: @date.friday)
     }
   end
 
@@ -71,6 +70,13 @@ class ActivitiesController < ApplicationController
       @activity = Activity.find(params[:id])
     end
 
+    def set_date
+      @date = if params[:date] =~ /^\d{4}-\d{2}-\d{2}$/
+        params[:date].to_date.beginning_of_week
+      else
+        Date.today.beginning_of_week
+      end
+    end
 
     def activity_params
       params.require(:activity).permit(:name, :room, :capacity, :date)

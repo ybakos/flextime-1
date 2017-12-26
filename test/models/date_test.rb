@@ -22,4 +22,9 @@ class DateTest < ActiveSupport::TestCase
     assert_equal @date.friday, Date.today.monday + 4
   end
 
+  test "current_week? is true when date is of the current week" do
+    assert @date.current_week?
+    refute (@date - 7).current_week?
+  end
+
 end

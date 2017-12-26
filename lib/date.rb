@@ -16,4 +16,8 @@ class Date
     monday + 4
   end
 
+  def current_week?
+    cweek == Date.today.cweek
+  end
+
 end
