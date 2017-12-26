@@ -44,15 +44,19 @@ class ActivitiesTest < ApplicationSystemTestCase
   end
 
   test 'staff creates a new activity' do
+    date_text = I18n.l(Date.today.tuesday, format: :without_year)
+    activity_name = 'New Fake Tuesday Activity'
+    activity_room = 'New Fake Room'
     first('a', text: 'Add New Activity').click
     assert_selector 'h2', text: 'New Activity'
-    fill_in 'activity_name', with: 'New Fake Tuesday Activity'
+    fill_in 'activity_name', with: activity_name
     fill_in 'activity_room', with: 'New Fake Room'
     fill_in 'activity_capacity', with: 10
-    select I18n.l(Date.today.monday + 1, format: :without_year), from: 'activity_date'
+    select date_text, from: 'activity_date'
     click_button 'Create Activity'
-    assert_selector 'h2', text: 'New Fake Tuesday Activity'
-    assert_selector 'h3', text: "#{I18n.l(Date.today.monday + 1, format: :without_year)} in New Fake Room"
+    assert_text 'Activity was successfully created'
+    assert_selector 'h2', text: activity_name
+    assert_selector 'h3', text: "#{date_text} in #{activity_room}"
   end
 
 end
