@@ -1,17 +1,39 @@
-one:
-  email: 'fake@example.com'
+unknown:
+  email: 'unknown@example.com'
   encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
   provider: 'FAKE'
   uid: 'FAKE'
   first_name: 'Fake'
-  last_name: 'User'
+  last_name: 'Unknown'
   image_url: 'http://fake.com/fake.jpg'
+  # no explicit role
 
-two:
-  email: 'fake2@example.com'
+student:
+  email: 'student@example.com'
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
+  provider: 'FAKE'
+  uid: 'FAKE'
+  first_name: 'Fake'
+  last_name: 'Student'
+  image_url: 'http://fake.com/fake.jpg'
+  role: 'student'
+
+staff:
+  email: 'staff@example.com'
   encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
   provider: 'FAKE'
   uid: 'FAKE 2'
-  first_name: 'Second Fake'
-  last_name: 'User'
+  first_name: 'Fake'
+  last_name: 'Staff'
   image_url: 'http://fake.com/fake.jpg'
+  role: 'staff'
+
+admin:
+  email: 'admin@example.com'
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
+  provider: 'FAKE'
+  uid: 'FAKE 2'
+  first_name: 'Fake'
+  last_name: 'Admin'
+  image_url: 'http://fake.com/fake.jpg'
+  role: 'admin'

@@ -1,8 +1,10 @@
 require 'application_system_test_case'
 
 class ActivitiesTest < ApplicationSystemTestCase
+  include Devise::Test::IntegrationHelpers
 
   setup do
+    sign_in users(:staff)
     visit activities_url
   end
 

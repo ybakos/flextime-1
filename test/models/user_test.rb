@@ -8,11 +8,11 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'pre-existing User without defined role has a default role of student' do
-    assert_equal users(:one).role, 'student'
+    assert_equal users(:unknown).role, 'student'
   end
 
   test 'has a string representation of first_name last_name' do
-    assert_equal users(:one).to_s, 'Fake User'
+    assert_equal users(:student).to_s, 'Fake Student'
   end
 
 end
