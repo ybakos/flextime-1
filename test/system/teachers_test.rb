@@ -1,4 +1,4 @@
-require "application_system_test_case"
+require 'application_system_test_case'
 
 class TeachersTest < ApplicationSystemTestCase
 
@@ -64,6 +64,16 @@ class TeachersTest < ApplicationSystemTestCase
     assert_selector 'h2', text: 'Mr. FAKE UPDATE'
   end
 
+  test 'staff sees an error when updating a teacher and neither a title nor name are specified' do
+    edit_first_teacher
+    select 'Choose...', from: 'teacher_title'
+    fill_in 'teacher_name', with: ''
+    click_button 'Update Teacher'
+    assert_text '2 errors prohibited this teacher from being saved'
+    assert_text "Title can't be blank"
+    assert_text "Name can't be blank"
+  end
+
   # There can be only one "Mr. Smith"
   test 'staff sees an error when updating a teacher with a title/name pair matching an existing teacher' do
     edit_first_teacher
@@ -73,16 +83,6 @@ class TeachersTest < ApplicationSystemTestCase
     assert_selector 'h2', text: 'Editing Mr. Fake'
     assert_text '1 error prohibited this teacher from being saved'
     assert_text 'Name has already been taken'
-  end
-
-  test 'staff sees an error when updating a teacher and neither a title nor name are specified' do
-    edit_first_teacher
-    select 'Choose...', from: 'teacher_title'
-    fill_in 'teacher_name', with: ''
-    click_button 'Update Teacher'
-    assert_text '2 errors prohibited this teacher from being saved'
-    assert_text "Title can't be blank"
-    assert_text "Name can't be blank"
   end
 
   # Deleting
