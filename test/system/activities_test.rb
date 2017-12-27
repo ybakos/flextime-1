@@ -77,6 +77,8 @@ class ActivitiesTest < ApplicationSystemTestCase
       assert has_select?('activity_date', selected: I18n.l(day, format: :complete))
     end
     # No date parameter? Nothing pre-selected.
+    # Note: May fail when not using rack_test driver.
+    #       See https://github.com/teamcapybara/capybara/pull/1947.
     visit new_activity_url
     assert has_select?('activity_date', selected: [])
   end
