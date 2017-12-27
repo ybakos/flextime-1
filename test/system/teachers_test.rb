@@ -9,10 +9,6 @@ class TeachersTest < ApplicationSystemTestCase
     visit teachers_url
   end
 
-  test 'students cannot CRUD teachers' do
-    skip
-  end
-
   # Viewing
 
   test 'staff views a list of teachers' do

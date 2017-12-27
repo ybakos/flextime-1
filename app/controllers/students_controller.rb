@@ -1,6 +1,6 @@
 class StudentsController < ApplicationController
 
-  before_action :authenticate_user!
+  skip_before_action :restrict_from_students, only: :show
   before_action :set_student, only: [:show, :update]
 
   def index

@@ -1,9 +1,14 @@
 require "application_system_test_case"
 
 class StudentsTest < ApplicationSystemTestCase
-  # test "visiting the index" do
-  #   visit students_url
-  #
-  #   assert_selector "h1", text: "Student"
-  # end
+
+  include Devise::Test::IntegrationHelpers
+
+  test 'student views their own profile' do
+    student = users(:student)
+    sign_in student
+    visit student_path(student)
+    assert_selector 'h2', text: student.to_s
+  end
+
 end
