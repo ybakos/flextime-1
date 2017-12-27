@@ -1,6 +1,6 @@
 %h2.display-3= truncate @activity.name, length: 34
 
-%nav
+%nav.mt-3
   = link_to 'Back', activities_path, class: 'btn btn-outline-secondary'
   = link_to 'Edit', edit_activity_path(@activity), class: 'btn btn-outline-primary'
 
@@ -9,3 +9,19 @@
   in #{@activity.room}
   %span.badge.badge-pill.badge-light.text-muted= Random.new.rand(@activity.capacity)
   %span.badge.badge-pill.badge-secondary.h4= @activity.capacity
+
+%table.table
+  %thead
+    %th Student
+    %th Teacher
+    %th Tuesday
+    %th Thursday
+    %th Friday
+  %tbody
+    - [].each do |student|
+      %tr
+        %td= link_to student.to_s, student_path(student)
+        %td= 'Mrs. Smith'
+        %td= 'Ping Pong'
+        %td= 'Eating Grapes'
+        %td= 'Coding 101'

@@ -4,4 +4,20 @@
   = link_to 'Back', teachers_path, class: 'btn btn-outline-secondary'
   = link_to 'Edit', edit_teacher_path(@teacher), class: 'btn btn-outline-primary'
 
-%h3.display-4 Students
+%h3.display-4.mt-5
+  Students
+  %span.badge.badge-pill.badge-secondary.font-weight-light= 276
+
+%table.table
+  %thead
+    %th Student
+    %th Tuesday
+    %th Thursday
+    %th Friday
+  %tbody
+    - [].each do |student|
+      %tr
+        %td= link_to student.to_s, student_path(student)
+        %td= 'Ping Pong'
+        %td= 'Eating Grapes'
+        %td= 'Coding 101'

@@ -7,6 +7,7 @@
 %table.table.mt-5
   %thead
     %th Student
+    %th Teacher
     %th Tuesday
     %th Thursday
     %th Friday
@@ -14,6 +15,7 @@
     - @students.each do |student|
       %tr
         %td= link_to student.to_s, student_path(student)
+        %td= 'Mrs. Smith'
         %td= 'Ping Pong'
         %td= 'Eating Grapes'
         %td= 'Coding 101'
