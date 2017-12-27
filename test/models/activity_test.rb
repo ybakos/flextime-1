@@ -51,7 +51,15 @@ class ActivityTest < ActiveSupport::TestCase
   end
 
   test 'string representation includes name, room and date' do
-    assert_equal activity.to_s, "#{activity.name} (#{activity.room}) on #{activity.date.strftime("%A, %b %-e %Y")}"
+    assert_equal activity.to_s, "Fake Tuesday Activity (Fake Room) on #{activity.date.strftime("%A, %b %-e %Y")}"
+  end
+
+  test 'previous string representation includes name, room and date before modification' do
+    a = activity
+    assert_equal a.to_s, "Fake Tuesday Activity (Fake Room) on #{a.date.strftime("%A, %b %-e %Y")}"
+    a.name = 'FAKE'
+    assert_equal a.to_s, "FAKE (Fake Room) on #{a.date.strftime("%A, %b %-e %Y")}"
+    assert_equal a.to_s_was, "Fake Tuesday Activity (Fake Room) on #{a.date.strftime("%A, %b %-e %Y")}"
   end
 
 end

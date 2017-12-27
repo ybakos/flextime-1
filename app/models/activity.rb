@@ -11,6 +11,10 @@ class Activity < ApplicationRecord
     "#{name} (#{room}) on #{I18n.l date, format: :complete}"
   end
 
+  def to_s_was
+    "#{name_was} (#{room_was}) on #{I18n.l date_was, format: :complete}"
+  end
+
   private
 
     def date_must_be_tuesday_thursday_friday

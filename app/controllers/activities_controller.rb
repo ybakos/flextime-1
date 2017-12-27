@@ -55,6 +55,11 @@ class ActivitiesController < ApplicationController
         format.html { redirect_to @activity, notice: 'Activity was successfully updated.' }
         format.json { render :show, status: :ok, location: @activity }
       else
+        @dates_for_select = [
+          [I18n.l(@activity.date.tuesday, format: :complete), @activity.date.tuesday],
+          [I18n.l(@activity.date.thursday, format: :complete), @activity.date.thursday],
+          [I18n.l(@activity.date.friday, format: :complete), @activity.date.friday]
+        ]
         format.html { render :edit }
         format.json { render json: @activity.errors, status: :unprocessable_entity }
       end

@@ -91,15 +91,62 @@ class ActivitiesTest < ApplicationSystemTestCase
   end
 
   test 'staff sees an error when creating an activity with a name, room and date matching an existing activity' do
-    visit new_activity_url(date: Date.today.tuesday)
+    visit new_activity_url
     fill_in 'activity_name', with: activities(:tuesday_activity).name
     fill_in 'activity_room', with: activities(:tuesday_activity).room
     fill_in 'activity_capacity', with: 1
-    select I18n.l(Date.today.tuesday, format: :without_year), from: 'activity_date'
+    select I18n.l(activities(:tuesday_activity).date, format: :without_year), from: 'activity_date'
     click_button 'Create Activity'
     assert_selector 'h2', text: 'New Activity'
     assert_text '1 error prohibited this activity from being saved'
     assert_text 'Room has already been taken'
+  end
+
+  # Updating
+
+  def edit_activity
+    click_link activities(:tuesday_activity).name
+    click_link 'Edit'
+    assert_selector 'h2', text: "Editing #{activities(:tuesday_activity)}"
+  end
+
+  test 'staff updates an activity' do
+    edit_activity
+    fill_in 'activity_name', with: 'FAKE UPDATE'
+    click_button 'Update Activity'
+    assert_text 'Activity was successfully updated'
+    assert_selector 'h2', text: 'FAKE UPDATE'
+  end
+
+  test 'staff sees an error when updating an activity and neither a name, room, or capacity are specified' do
+    edit_activity
+    fill_in 'activity_name', with: ''
+    fill_in 'activity_room', with: ''
+    fill_in 'activity_capacity', with: ''
+    click_button 'Update Activity'
+    assert_selector 'h2', text: "Editing #{activities(:tuesday_activity)}"
+    assert_text '3 errors prohibited this activity from being saved'
+    assert_text "Name can't be blank"
+    assert_text "Room can't be blank"
+    assert_text 'Capacity is not a number'
+  end
+
+  test 'staff sees an error when updating an activity with a name, room and date matching an existing activity' do
+    edit_activity
+    fill_in 'activity_name', with: activities(:thursday_activity).name
+    fill_in 'activity_room', with: activities(:thursday_activity).room
+    fill_in 'activity_capacity', with: 1
+    select I18n.l(activities(:thursday_activity).date, format: :without_year), from: 'activity_date'
+    click_button 'Update Activity'
+    assert_selector 'h2', text: "Editing #{activities(:tuesday_activity)}"
+    assert_text '1 error prohibited this activity from being saved'
+    assert_text 'Room has already been taken'
+  end
+
+  # Delete
+
+  test 'staff deletes an activity' do
+    skip
   end
 
 end
