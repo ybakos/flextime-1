@@ -3,54 +3,54 @@ tuesday_activity:
   name: Fake Tuesday Activity
   room: Fake Room
   capacity: 1
-  date: <%= Date.today.monday + 1 %>
+  date: <%= Date.today.tuesday %>
 
 thursday_activity:
   name: Fake Thursday Activity
   room: Fake Room
   capacity: 1
-  date: <%= Date.today.monday + 3 %>
+  date: <%= Date.today.thursday %>
 
 friday_activity:
   name: Fake Friday Activity
   room: Fake Room
   capacity: 1
-  date: <%= Date.today.monday + 4 %>
+  date: <%= Date.today.friday %>
 
 # Previous week
 last_tuesday_activity:
   name: Fake Previous Tuesday Activity
   room: Fake Room
   capacity: 1
-  date: <%= Date.today.monday - 6 %>
+  date: <%= Date.today.prev_week.tuesday %>
 
 last_thursday_activity:
   name: Fake Previous Thursday Activity
   room: Fake Room
   capacity: 1
-  date: <%= Date.today.monday - 4 %>
+  date: <%= Date.today.prev_week.thursday %>
 
 last_friday_activity:
   name: Fake Previous Friday Activity
   room: Fake Room
   capacity: 1
-  date: <%= Date.today.monday - 3 %>
+  date: <%= Date.today.prev_week.friday %>
 
 # Next week
 next_tuesday_activity:
   name: Fake Next Tuesday Activity
   room: Fake Room
   capacity: 1
-  date: <%= Date.today.monday + 8 %>
+  date: <%= Date.today.next_week.tuesday %>
 
 next_thursday_activity:
   name: Fake Next Thursday Activity
   room: Fake Room
   capacity: 1
-  date: <%= Date.today.monday + 10 %>
+  date: <%= Date.today.next_week.thursday %>
 
 next_friday_activity:
   name: Fake Next Friday Activity
   room: Fake Room
   capacity: 1
-  date: <%= Date.today.monday + 11 %>
+  date: <%= Date.today.next_week.friday %>

@@ -1,4 +1,4 @@
-require "application_system_test_case"
+require 'application_system_test_case'
 
 class ActivitiesTest < ApplicationSystemTestCase
 
@@ -76,6 +76,30 @@ class ActivitiesTest < ApplicationSystemTestCase
       visit new_activity_url(date: day.to_s)
       assert has_select?('activity_date', selected: I18n.l(day, format: :complete))
     end
+    # No date parameter? Nothing pre-selected.
+    visit new_activity_url
+    assert has_select?('activity_date', selected: [])
+  end
+
+  test 'staff sees an error when creating an activity and neither a name, room, or capacity' do
+    visit new_activity_url
+    click_button 'Create Activity'
+    assert_text '3 errors prohibited this activity from being saved'
+    assert_text "Name can't be blank"
+    assert_text "Room can't be blank"
+    assert_text 'Capacity is not a number'
+  end
+
+  test 'staff sees an error when creating an activity with a name, room and date matching an existing activity' do
+    visit new_activity_url(date: Date.today.tuesday)
+    fill_in 'activity_name', with: activities(:tuesday_activity).name
+    fill_in 'activity_room', with: activities(:tuesday_activity).room
+    fill_in 'activity_capacity', with: 1
+    select I18n.l(Date.today.tuesday, format: :without_year), from: 'activity_date'
+    click_button 'Create Activity'
+    assert_selector 'h2', text: 'New Activity'
+    assert_text '1 error prohibited this activity from being saved'
+    assert_text 'Room has already been taken'
   end
 
 end
