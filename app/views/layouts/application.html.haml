@@ -18,10 +18,11 @@
         %span.navbar-toggler-icon
       #navbar.collapse.navbar-collapse.justify-content-md-center
         %ul.navbar-nav.ml-auto
-          %li.nav-item= link_to 'Schedule', activities_path, class: 'nav-link'
-          %li.nav-item= link_to 'Students', students_path, class: 'nav-link'
-          %li.nav-item= link_to 'Teachers', teachers_path, class: 'nav-link'
-          %li.nav-item.dropdown
+          - if signed_in? && current_user.staff?
+            %li.nav-item= link_to 'Schedule', activities_path, class: 'nav-link'
+            %li.nav-item= link_to 'Students', students_path, class: 'nav-link'
+            %li.nav-item= link_to 'Teachers', teachers_path, class: 'nav-link'
+          %li.nav-item
             - unless signed_in?
               = link_to 'Sign In', user_google_oauth2_omniauth_authorize_path, class: 'nav-link'
             - else
