@@ -2,9 +2,5 @@
 
 = render 'form'
 
-%ul.list-group.my-5
-  - @teachers.each do |teacher|
-    %li.list-group-item
-      %h3= link_to teacher.to_s, teacher
-      = link_to 'Edit', edit_teacher_path(teacher)
-      = link_to 'Delete', teacher, method: :delete, data: { confirm: 'Are you sure?' }
+%ul.list-group.mt-5
+  = render @teachers
