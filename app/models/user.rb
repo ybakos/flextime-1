@@ -1,7 +1,6 @@
 class User < ApplicationRecord
 
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
+  devise :database_authenticatable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
   enum role: [:student, :staff, :admin]
