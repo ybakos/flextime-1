@@ -1,1 +1,16 @@
-%h2.display-3= @student
+%h2.display-3
+  = @student
+
+%nav.mt-3
+  = link_to 'Previous week', '#', class: 'btn btn-outline-secondary'
+  = link_to 'Next week', '#', class: 'btn btn-outline-primary float-right'
+
+.row.my-5
+  - @activities.each do |date, activity|
+    .col
+      %h3.display-4= date.strftime("%A")
+      %h4.h3.text-muted.font-weight-light= date.strftime("%B %-e")
+      %ul.list-group
+        %li.list-group-item.my-2
+          %h5= activity.name
+          %h6= activity.room

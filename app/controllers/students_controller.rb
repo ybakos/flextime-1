@@ -7,7 +7,13 @@ class StudentsController < ApplicationController
     @students = User.student
   end
 
-  def show; end
+  def show
+    @activities = {
+      Date.today.tuesday => Activity.first,
+      Date.today.thursday => Activity.first,
+      Date.today.friday => Activity.first
+    }
+  end
 
   def update
     respond_to do |format|
@@ -24,9 +30,8 @@ class StudentsController < ApplicationController
   private
 
     def set_student
-      @student = User.find(params[:id])
+      @student = current_user.student? ? current_user : User.find(params[:id])
     end
-
 
     def student_params
       params.fetch(:student, {})
