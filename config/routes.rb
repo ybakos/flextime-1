@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  root to: 'students#show', constraints: lambda { |req| req.env['warden'].user&.student? }
   root to: 'activities#index'
 
   # https://github.com/zquestz/omniauth-google-oauth2
