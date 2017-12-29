@@ -4,8 +4,9 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:google_oauth2]
 
   enum role: [:student, :staff, :admin]
-
   after_initialize :set_default_role
+
+  belongs_to :teacher
 
   # https://github.com/zquestz/omniauth-google-oauth2
   def self.from_omniauth(auth)

@@ -11,6 +11,11 @@ class UserTest < ActiveSupport::TestCase
     assert_equal users(:unknown).role, 'student'
   end
 
+  test 'belongs to a teacher' do
+    assert_respond_to users(:student), :teacher
+    assert_kind_of Teacher, users(:student).teacher
+  end
+
   test 'has a string representation of first_name last_name' do
     assert_equal users(:student).to_s, 'Fake Student'
   end
