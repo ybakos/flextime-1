@@ -19,6 +19,6 @@
   .row
     .col-md-3.form-group
       = f.label :date
-      = f.select :date, options_for_select(@dates_for_select, @activity.date.to_s), {}, class: 'form-control', required: true
+      = f.select :date, options_for_select(@dates_for_select, @activity.date.to_s), {}, class: 'form-control'
     .col-md-3.form-group.align-self-end
       = f.submit class: 'btn btn-success'

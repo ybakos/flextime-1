@@ -111,7 +111,7 @@ class ActivitiesTest < ApplicationSystemTestCase
   def edit_activity
     click_link activities(:tuesday_activity).name
     click_link 'Edit'
-    assert_selector 'h2', text: "Editing #{activities(:tuesday_activity)}"
+    assert_selector 'h2', text: activities(:tuesday_activity).name
   end
 
   test 'staff updates an activity' do
@@ -128,7 +128,7 @@ class ActivitiesTest < ApplicationSystemTestCase
     fill_in 'activity_room', with: ''
     fill_in 'activity_capacity', with: ''
     click_button 'Update Activity'
-    assert_selector 'h2', text: "Editing #{activities(:tuesday_activity)}"
+    assert_selector 'h2', text: activities(:tuesday_activity).name_was
     assert_text '3 errors prohibited this activity from being saved'
     assert_text "Name can't be blank"
     assert_text "Room can't be blank"
@@ -142,7 +142,7 @@ class ActivitiesTest < ApplicationSystemTestCase
     fill_in 'activity_capacity', with: 1
     select I18n.l(activities(:thursday_activity).date, format: :without_year), from: 'activity_date'
     click_button 'Update Activity'
-    assert_selector 'h2', text: "Editing #{activities(:tuesday_activity)}"
+    assert_selector 'h2', text: activities(:tuesday_activity).name_was
     assert_text '1 error prohibited this activity from being saved'
     assert_text 'Room has already been taken'
   end
