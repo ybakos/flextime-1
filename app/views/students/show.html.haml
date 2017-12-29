@@ -5,6 +5,11 @@
   = link_to 'Previous week', '#', class: 'btn btn-outline-secondary'
   = link_to 'Next week', '#', class: 'btn btn-outline-primary float-right'
 
+= form_for @student, as: :student, url: student_path(@student) do |f|
+  .form-group
+    = f.label :teacher
+    = f.select :teacher_id, Teacher.all.collect { |t| [t.to_s, t.id] }, include_blank: 'Choose...'
+
 .row.my-5
   - @activities.each do |date, activity|
     .col
