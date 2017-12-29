@@ -32,11 +32,6 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
     # index
     get students_path
     assert_redirected_to student_path(student)
-    # update
-    patch student_path('fake')
-    assert_redirected_to student_path(student)
-    put student_path('fake')
-    assert_redirected_to student_path(student)
   end
 
   test 'does not redirect #show requests from student users' do

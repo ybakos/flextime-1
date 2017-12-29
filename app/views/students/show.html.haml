@@ -9,6 +9,7 @@
   .form-group
     = f.label :teacher
     = f.select :teacher_id, Teacher.all.collect { |t| [t.to_s, t.id] }, include_blank: 'Choose...'
+    = f.submit 'Set Teacher'
 
 .row.my-5
   - @activities.each do |date, activity|
