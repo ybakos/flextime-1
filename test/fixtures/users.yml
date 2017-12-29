@@ -17,6 +17,7 @@ student:
   last_name: 'Student'
   image_url: 'http://fake.com/fake.jpg'
   role: 'student'
+  teacher: miss_valid
 
 staff:
   email: 'staff@example.com'

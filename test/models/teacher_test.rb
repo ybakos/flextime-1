@@ -40,6 +40,7 @@ class TeacherTest < ActiveSupport::TestCase
 
   test 'has many students' do
     assert_respond_to(teachers(:miss_valid), :students)
+    assert_kind_of User, teachers(:miss_valid).students.first
   end
 
 end
