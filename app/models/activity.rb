@@ -7,6 +7,18 @@ class Activity < ApplicationRecord
   validate :date_must_be_tuesday_thursday_friday, unless: Proc.new { date.nil? }
   validates_uniqueness_of :room, scope: [:date, :name], case_sensitive: false
 
+  def self.for_week(date)
+    {
+      date.tuesday => Activity.where(date: date.tuesday),
+      date.thursday => Activity.where(date: date.thursday),
+      date.friday => Activity.where(date: date.friday)
+    }
+  end
+
+  def day_and_room
+    "#{I18n.l(date, format: :without_year)} in #{room}"
+  end
+
   def to_s
     "#{name} (#{room}) on #{I18n.l date, format: :complete}"
   end

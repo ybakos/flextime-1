@@ -1,23 +1,16 @@
 %h2.display-3= week_header(@date)
 
 %nav.mt-3
-  = link_to 'Previous week', activities_path(date: @date.prev_week), class: 'btn btn-outline-secondary'
-  = link_to 'Next week', activities_path(date: @date.next_week), class: 'btn btn-outline-primary float-right'
+  = link_to_previous_week(@date)
+  = link_to_next_week(@date)
 
-.row.my-5
-  - @activities.each do |date, activities|
+.row.mt-5
+  - @week_of_activities.each do |date, activities|
     .col
       .h4.float-right
         %span.badge.badge-pill.badge-secondary.font-weight-light= activities.sum(&:capacity)
-      %h3.display-4= date.strftime("%A")
+      %h3.display-4= date.day_name
       = link_to 'Add New Activity', new_activity_path(date: date.to_s), class: 'btn btn-sm btn-outline-success float-right'
       %h4.h3.text-muted.font-weight-light= date.strftime("%B %-e")
       %ul.list-group
-        - activities.each do |activity|
-          %li.list-group-item.my-2
-            %h5= link_to activity.name, activity
-            %h6
-              = activity.room
-              .float-right
-                %span.badge.badge-pill.badge-light.text-muted= Random.new.rand(activity.capacity)
-                %span.badge.badge-pill.badge-secondary= activity.capacity
+        = render activities

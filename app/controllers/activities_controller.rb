@@ -4,11 +4,7 @@ class ActivitiesController < ApplicationController
   before_action :set_date, only: [:index, :new]
 
   def index
-    @activities = {
-      @date.tuesday => Activity.where(date: @date.tuesday),
-      @date.thursday => Activity.where(date: @date.thursday),
-      @date.friday => Activity.where(date: @date.friday)
-    }
+    @week_of_activities = Activity.for_week(@date)
   end
 
   def show; end
