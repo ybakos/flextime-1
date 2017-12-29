@@ -1,0 +1,7 @@
+%li.list-group-item.my-2
+  %h5= link_to activity.name, activity
+  %h6
+    = activity.room
+    .float-right
+      %span.badge.badge-pill.badge-light.text-muted= Random.new.rand(activity.capacity)
+      %span.badge.badge-pill.badge-secondary= activity.capacity

@@ -9,16 +9,16 @@
   .row
     .col-md-6.form-group
       = f.label :name
-      = f.text_field :name, class: 'form-control'
+      = f.text_field :name, class: 'form-control', required: true
     .col-md-4.form-group
       = f.label :room
-      = f.text_field :room, class: 'form-control'
+      = f.text_field :room, class: 'form-control', required: true
     .col-md-2.form-group
       = f.label :capacity
-      = f.number_field :capacity, class: 'form-control'
+      = f.number_field :capacity, class: 'form-control', required: true, min: 0
   .row
     .col-md-3.form-group
       = f.label :date
-      = f.select :date, options_for_select(@dates_for_select, @activity.date.to_s), {class: 'form-control'}
-    .col-md-3.form-group
+      = f.select :date, options_for_select(@dates_for_select, @activity.date.to_s), {}, class: 'form-control', required: true
+    .col-md-3.form-group.align-self-end
       = f.submit class: 'btn btn-success'

@@ -8,7 +8,7 @@
 .row.my-5
   - @activities.each do |date, activity|
     .col
-      %h3.display-4= date.strftime("%A")
+      %h3.display-4= date.day_name
       %h4.h3.text-muted.font-weight-light= date.strftime("%B %-e")
       %ul.list-group
         %li.list-group-item.my-2
