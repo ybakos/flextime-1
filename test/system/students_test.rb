@@ -29,6 +29,11 @@ class StudentsTest < ApplicationSystemTestCase
     skip
   end
 
+  test 'student sees current home room teacher' do
+    sign_in_as_student_and_visit_profile
+    assert has_select?('student_teacher_id', selected: users(:student).teacher.to_s)
+  end
+
   test 'student specifies a teacher' do
     sign_in_as_student_and_visit_profile
     skip
