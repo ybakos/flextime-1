@@ -36,4 +36,16 @@ class RegistrationTest < ActiveSupport::TestCase
     refute registration.valid?
   end
 
+  # Students may only register for an activity once
+  test 'must be unique for the student and activity' do
+    existing_registration = registrations(:by_student)
+    new_registration = Registration.new(creator: existing_registration.creator,
+      student: existing_registration.student,
+      teacher: existing_registration.teacher,
+      activity: activities(:friday_activity))
+    assert new_registration.valid?
+    new_registration.activity = existing_registration.activity
+    refute new_registration.valid?
+  end
+
 end

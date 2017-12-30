@@ -8,6 +8,8 @@ class Registration < ApplicationRecord
   validate :student_must_be_student
   validate :teacher_must_be_student_teacher
 
+  validates :activity, uniqueness: {scope: :student}
+
   private
 
     def student_must_be_student
