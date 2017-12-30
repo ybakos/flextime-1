@@ -37,7 +37,7 @@ class StudentsTest < ApplicationSystemTestCase
   test 'student specifies a teacher' do
     sign_in_as_student_and_visit_profile
     select 'Mr. Valid', from: 'student_teacher_id'
-    click_button 'Set Teacher'
+    click_button 'Ok'
     assert_text 'Student was successfully updated'
     assert_selector 'h2', text: users(:student).to_s
   end
