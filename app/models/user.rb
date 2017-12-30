@@ -6,7 +6,8 @@ class User < ApplicationRecord
   enum role: [:student, :staff, :admin]
   after_initialize :set_default_role
 
-  belongs_to :teacher
+  belongs_to :teacher, optional: true
+  validates_presence_of :teacher_id, unless: Proc.new { |u| u.new_record? || !u.student? }
 
   # https://github.com/zquestz/omniauth-google-oauth2
   def self.from_omniauth(auth)
