@@ -29,4 +29,11 @@ class RegistrationTest < ActiveSupport::TestCase
     refute registration.valid?
   end
 
+  test 'is invalid if student teacher is not the same as the teacher' do
+    registration = registrations(:by_staff)
+    assert registration.valid?
+    registration.teacher = teachers(:mr_valid)
+    refute registration.valid?
+  end
+
 end

@@ -6,11 +6,16 @@ class Registration < ApplicationRecord
   belongs_to :activity
 
   validate :student_must_be_student
+  validate :teacher_must_be_student_teacher
 
   private
 
     def student_must_be_student
       errors.add(:student, 'must be a student') unless student.student?
+    end
+
+    def teacher_must_be_student_teacher
+      errors.add(:teacher, 'must be student teacher') unless student&.teacher == teacher
     end
 
 end
