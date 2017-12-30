@@ -12,6 +12,9 @@ class User < ApplicationRecord
   belongs_to :teacher, optional: true
   validates_presence_of :teacher_id, unless: Proc.new { |u| u.new_record? || !u.student? }
 
+  has_many :registrations, foreign_key: :student_id
+  has_many :created_registrations, foreign_key: :creator_id
+
   # https://github.com/zquestz/omniauth-google-oauth2
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|

@@ -1,0 +1,22 @@
+= form_for @registration do |f|
+  - if @registration.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@registration.errors.count, "error")} prohibited this registration from being saved:"
+      %ul
+        - @registration.errors.full_messages.each do |message|
+          %li= message
+
+  .field
+    = f.label :creator
+    = f.text_field :creator
+  .field
+    = f.label :student
+    = f.text_field :student
+  .field
+    = f.label :teacher
+    = f.text_field :teacher
+  .field
+    = f.label :activity
+    = f.text_field :activity
+  .actions
+    = f.submit 'Save'

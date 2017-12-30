@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171229191709) do
+ActiveRecord::Schema.define(version: 20171230190143) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -23,6 +23,20 @@ ActiveRecord::Schema.define(version: 20171229191709) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["date", "name", "room"], name: "index_activities_on_date_and_name_and_room", unique: true
+  end
+
+  create_table "registrations", force: :cascade do |t|
+    t.bigint "creator_id", null: false
+    t.bigint "student_id", null: false
+    t.bigint "teacher_id", null: false
+    t.bigint "activity_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["activity_id", "student_id"], name: "index_registrations_on_activity_id_and_student_id", unique: true
+    t.index ["activity_id"], name: "index_registrations_on_activity_id"
+    t.index ["creator_id"], name: "index_registrations_on_creator_id"
+    t.index ["student_id"], name: "index_registrations_on_student_id"
+    t.index ["teacher_id"], name: "index_registrations_on_teacher_id"
   end
 
   create_table "teachers", force: :cascade do |t|
@@ -58,5 +72,9 @@ ActiveRecord::Schema.define(version: 20171229191709) do
     t.index ["teacher_id"], name: "index_users_on_teacher_id"
   end
 
+  add_foreign_key "registrations", "activities"
+  add_foreign_key "registrations", "teachers"
+  add_foreign_key "registrations", "users", column: "creator_id"
+  add_foreign_key "registrations", "users", column: "student_id"
   add_foreign_key "users", "teachers"
 end

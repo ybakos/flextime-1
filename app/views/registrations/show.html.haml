@@ -1,0 +1,18 @@
+%p#notice= notice
+
+%p
+  %b Creator:
+  = @registration.creator
+%p
+  %b Student:
+  = @registration.student
+%p
+  %b Teacher:
+  = @registration.teacher
+%p
+  %b Activity:
+  = @registration.activity
+
+= link_to 'Edit', edit_registration_path(@registration)
+\|
+= link_to 'Back', registrations_path

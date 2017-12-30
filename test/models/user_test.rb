@@ -56,6 +56,11 @@ class UserTest < ActiveSupport::TestCase
     assert student.invalid?
   end
 
+  test 'has many registrations' do
+    assert_respond_to users(:student), :registrations
+    assert_kind_of Registration, users(:student).registrations.first
+  end
+
   test 'has a string representation of first_name last_name' do
     assert_equal users(:student).to_s, 'Fake Student'
   end

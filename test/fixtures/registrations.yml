@@ -1,0 +1,11 @@
+by_student:
+  creator: student
+  student: student
+  teacher: miss_valid
+  activity: tuesday_activity
+
+by_staff:
+  creator: staff
+  student: student
+  teacher: miss_valid
+  activity: thursday_activity

@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
 
+  resources :registrations
   root to: 'students#show', constraints: lambda { |req| req.env['warden'].user&.student? }
   root to: 'activities#index'
 
