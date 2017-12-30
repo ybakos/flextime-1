@@ -8,6 +8,20 @@ class UserTest < ActiveSupport::TestCase
       first_name: 'New Fake', last_name: 'User')
   end
 
+  test 'has a required first name' do
+    u = new_user
+    assert u.valid?
+    u.first_name = ''
+    refute u.valid?
+  end
+
+  test 'has a required last name' do
+    u = new_user
+    assert u.valid?
+    u.last_name = ''
+    refute u.valid?
+  end
+
   test 'has a default role of student' do
     new_user = User.new
     assert_equal new_user.role, 'student'

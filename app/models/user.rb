@@ -6,6 +6,9 @@ class User < ApplicationRecord
   enum role: [:student, :staff, :admin]
   after_initialize :set_default_role
 
+  validates_presence_of :first_name
+  validates_presence_of :last_name
+
   belongs_to :teacher, optional: true
   validates_presence_of :teacher_id, unless: Proc.new { |u| u.new_record? || !u.student? }
 
