@@ -21,7 +21,7 @@ class StudentsController < ApplicationController
         format.html { redirect_to student_path(@student), notice: 'Student was successfully updated.' }
         format.json { render :show, status: :ok, location: student_path(@student) }
       else
-        format.html { render :edit }
+        format.html { redirect_to student_path(@student), alert: 'Please specify a teacher.' }
         format.json { render json: @student.errors, status: :unprocessable_entity }
       end
     end
