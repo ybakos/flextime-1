@@ -5,10 +5,10 @@ class Registration < ApplicationRecord
   belongs_to :teacher
   belongs_to :activity
 
+  validates :activity, uniqueness: {scope: :student}
   validate :student_must_be_student
   validate :teacher_must_be_student_teacher
-
-  validates :activity, uniqueness: {scope: :student}
+  validate :student_not_registered_for_another_activity_on_same_date, on: :create
 
   private
 
@@ -18,6 +18,12 @@ class Registration < ApplicationRecord
 
     def teacher_must_be_student_teacher
       errors.add(:teacher, 'must be student teacher') unless student&.teacher == teacher
+    end
+
+    def student_not_registered_for_another_activity_on_same_date
+      if student.is_registered_for_activity_on?(activity.date)
+        errors.add(:activity, 'has the same date as another registered activity')
+      end
     end
 
 end

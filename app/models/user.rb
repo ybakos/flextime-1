@@ -15,6 +15,8 @@ class User < ApplicationRecord
   has_many :registrations, foreign_key: :student_id
   has_many :created_registrations, foreign_key: :creator_id
 
+  has_many :activities, through: :registrations
+
   # https://github.com/zquestz/omniauth-google-oauth2
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
@@ -26,6 +28,10 @@ class User < ApplicationRecord
       user.last_name = auth.info.last_name
       user.image_url = auth.info.image
     end
+  end
+
+  def is_registered_for_activity_on?(date)
+    activities.exists?(["date = ?", date])
   end
 
   def to_s
