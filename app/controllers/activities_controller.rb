@@ -75,7 +75,7 @@ class ActivitiesController < ApplicationController
       @activity = Activity.find(params[:id])
     end
 
-    # The application's index and new actions typically expect a date parameter,
+    # The controller's index and new actions typically expect a date parameter,
     # used to determine 1) the week of the schedule to display and 2) which date
     # option to mark as selected in the activity form.
     # When there is a date, use it. Otherwise, use the beginning of the week.
