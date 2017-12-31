@@ -48,7 +48,7 @@ class RegistrationTest < ActiveSupport::TestCase
     refute new_registration.valid?
   end
 
-  test 'when new, is invalid if the student has another registration for an activity on the same date' do
+  test 'is invalid if the student has another registration for an activity on the same date' do
     existing_registration = registrations(:by_student)
     new_registration = Registration.new(creator: existing_registration.creator,
       student: existing_registration.student,

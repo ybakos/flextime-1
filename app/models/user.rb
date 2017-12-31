@@ -30,10 +30,6 @@ class User < ApplicationRecord
     end
   end
 
-  def is_registered_for_activity_on?(date)
-    activities.exists?(["date = ?", date])
-  end
-
   def to_s
     "#{first_name} #{last_name}"
   end

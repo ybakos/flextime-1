@@ -8,12 +8,12 @@ class Registration < ApplicationRecord
   validates :activity, uniqueness: {scope: :student}
   validate :student_must_be_student
   validate :teacher_must_be_student_teacher
-  validate :student_not_registered_for_another_activity_on_same_date, on: :create
+  validate :student_not_registered_for_another_activity_on_same_date
 
   private
 
     def student_must_be_student
-      errors.add(:student, 'must be a student') unless student.student?
+      errors.add(:student, 'must be a student') unless student&.student?
     end
 
     def teacher_must_be_student_teacher
@@ -21,9 +21,9 @@ class Registration < ApplicationRecord
     end
 
     def student_not_registered_for_another_activity_on_same_date
-      if student.is_registered_for_activity_on?(activity.date)
-        errors.add(:activity, 'has the same date as another registered activity')
-      end
+      activities = student&.activities&.where('date = ?', activity&.date)&.includes(:registrations)
+      return if activities.nil? || activities&.empty? || (activities&.length == 1 && activities&.first.registrations.length == 1 && activities.first.registrations.first.id == id)
+      errors.add(:activity, 'has the same date as another registered activity')
     end
 
 end

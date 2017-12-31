@@ -50,6 +50,11 @@ class ActivityTest < ActiveSupport::TestCase
     assert_raises { activity.save! }
   end
 
+  test 'has registrations' do
+    assert_respond_to activities(:tuesday_activity), :registrations
+    assert_kind_of Registration, activities(:tuesday_activity).registrations.first
+  end
+
   test 'string representation includes name, room and date' do
     assert_equal activity.to_s, "Fake Tuesday Activity (Fake Room) on #{activity.date.strftime("%A, %b %-e %Y")}"
   end
