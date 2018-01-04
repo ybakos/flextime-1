@@ -29,6 +29,14 @@ class RegistrationTest < ActiveSupport::TestCase
     refute registration.valid?
   end
 
+  test 'is invalid if teacher is not present' do
+    registration = registrations(:by_student)
+    assert registration.valid?
+    registration.student = users(:new_student_without_teacher)
+    registration.teacher = nil
+    refute registration.valid?
+  end
+
   test 'is invalid if student teacher is not the same as the teacher' do
     registration = registrations(:by_staff)
     assert registration.valid?

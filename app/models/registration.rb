@@ -8,6 +8,7 @@ class Registration < ApplicationRecord
   validates :activity, uniqueness: {scope: :student}
   validate :student_must_be_student
   validate :student_not_registered_for_another_activity_on_same_date
+  validates_presence_of :teacher
   validate :teacher_must_be_student_teacher
 
   private
@@ -17,7 +18,9 @@ class Registration < ApplicationRecord
     end
 
     def teacher_must_be_student_teacher
-      errors.add(:teacher, 'must be student teacher') unless student&.teacher == teacher
+      if student.nil? || student.teacher != teacher
+        errors.add(:teacher, 'must be student teacher')
+      end
     end
 
     def student_not_registered_for_another_activity_on_same_date

@@ -5,6 +5,10 @@ class RegistrationsController < ApplicationController
 
   def create
     student = User.student.where("id = ?", params[:student_id].to_i).first
+    if student.teacher.nil?
+      redirect_back(fallback_location: student_path(student), alert: 'Please choose a Falcon Time teacher.')
+      return
+    end
     activity = Activity.find(params[:registration][:activity_id].to_i)
     @registration = Registration.new(creator: current_user, student: student, teacher: student.teacher, activity: activity)
     respond_to do |format|
