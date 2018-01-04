@@ -1,6 +1,5 @@
 Rails.application.routes.draw do
 
-  resources :registrations
   root to: 'students#show', constraints: lambda { |req| req.env['warden'].user&.student? }
   root to: 'activities#index'
 
@@ -9,6 +8,8 @@ Rails.application.routes.draw do
 
   resources :activities
   resources :teachers, except: [:new]
-  resources :students, only: [:index, :show, :update]
+  resources :students, only: [:index, :show, :update] do
+    resources :registrations, only: [:create, :update, :destroy]
+  end
 
 end
