@@ -1,14 +1,14 @@
 class Registration < ApplicationRecord
 
+  belongs_to :activity
   belongs_to :creator, class_name: 'User'
   belongs_to :student, class_name: 'User'
   belongs_to :teacher
-  belongs_to :activity
 
   validates :activity, uniqueness: {scope: :student}
   validate :student_must_be_student
-  validate :teacher_must_be_student_teacher
   validate :student_not_registered_for_another_activity_on_same_date
+  validate :teacher_must_be_student_teacher
 
   private
 
