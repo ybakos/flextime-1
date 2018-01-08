@@ -3,7 +3,7 @@
 
 %nav.row.mt-3
   .col
-    = link_to 'Previous week', '#', class: 'btn btn-outline-secondary'
+    = link_to_previous_week_for_student(@student, @date)
   .col
     = form_for @student, as: :student, url: student_path(@student), html: {class: 'form-inline'} do |f|
       .form-group
@@ -11,7 +11,7 @@
         = f.select :teacher_id, Teacher.all.collect { |t| [t.to_s, t.id] }, {include_blank: 'Choose...'}, {class: 'form-control mx-2'}
         = f.submit 'Ok', class: 'btn btn-outline-success'
   .col
-    = link_to 'Next week', '#', class: 'btn btn-outline-primary float-right'
+    = link_to_next_week_for_student(@student, @date)
 
 .row.my-5
   - @activities.each do |date, activities|
