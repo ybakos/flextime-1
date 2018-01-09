@@ -61,4 +61,12 @@ class StudentsTest < ApplicationSystemTestCase
     assert_selector 'h5', text: 'Fake Friday Activity'
   end
 
+  test 'student should be able to register for activities one week in advance' do
+    skip
+  end
+
+  test 'student should not be able to register for activities more than one week in advance' do
+    skip
+  end
+
 end
