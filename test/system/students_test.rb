@@ -41,7 +41,7 @@ class StudentsTest < ApplicationSystemTestCase
     sign_in_as_student_and_visit_profile
     select 'Mr. Valid', from: 'student_teacher_id'
     click_button 'Ok'
-    assert_text 'Student was successfully updated'
+    assert_text 'Falcon Time teacher set to Mr. Valid'
     assert_selector 'h2', text: users(:student).to_s
   end
 
