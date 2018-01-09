@@ -43,4 +43,8 @@ class TeacherTest < ActiveSupport::TestCase
     assert_kind_of User, teachers(:miss_valid).students.first
   end
 
+  test 'raises an exception when destroyed if it has students' do
+    assert_raises { teachers(:miss_valid).destroy }
+  end
+
 end

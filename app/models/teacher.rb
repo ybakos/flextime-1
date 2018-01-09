@@ -6,7 +6,7 @@ class Teacher < ApplicationRecord
   validates_presence_of :title
   validates :name, uniqueness: { scope: :title, case_sensitive: false }
 
-  has_many :students, class_name: 'User'
+  has_many :students, class_name: 'User', dependent: :restrict_with_exception
 
   def to_s
     "#{title} #{name}"

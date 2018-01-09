@@ -84,15 +84,10 @@ class TeachersTest < ApplicationSystemTestCase
     assert_text 'Name has already been taken'
   end
 
-  # Deleting
+  # Deactivating
 
-  test 'staff deletes a teacher' do
-    first('.list-group-item').click_link('Delete')
-    assert_no_link 'Mr. Fake'
-  end
-
-  # https://github.com/osu-cascades/falcon-time/issues/27
-  test 'staff cannot delete a teacher that has students' do
+  # https://github.com/osu-cascades/falcon-time/issues/39
+  test 'staff deactivates a teacher' do
     skip
   end
 

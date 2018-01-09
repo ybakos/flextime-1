@@ -1,6 +1,6 @@
 class TeachersController < ApplicationController
 
-  before_action :set_teacher, only: [:show, :edit, :update, :destroy]
+  before_action :set_teacher, only: [:show, :edit, :update]
 
   def index
     @teacher = Teacher.new
@@ -34,14 +34,6 @@ class TeachersController < ApplicationController
         format.html { render :edit }
         format.json { render json: @teacher.errors, status: :unprocessable_entity }
       end
-    end
-  end
-
-  def destroy
-    @teacher.destroy
-    respond_to do |format|
-      format.html { redirect_to teachers_url, notice: "#{@teacher} was successfully removed." }
-      format.json { head :no_content }
     end
   end
 

@@ -26,9 +26,6 @@ class TeachersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
     put teacher_path(id: 'fake')
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
-    # destroy
-    delete teacher_path(id: 'fake')
-    assert_redirected_to(controller: 'devise/sessions', action: 'new')
   end
 
   test 'restricts student access' do
@@ -54,9 +51,6 @@ class TeachersControllerTest < ActionDispatch::IntegrationTest
     patch teacher_path(id: 'fake')
     assert_redirected_to student_path(student)
     put teacher_path(id: 'fake')
-    assert_redirected_to student_path(student)
-    # destroy
-    delete teacher_path(id: 'fake')
     assert_redirected_to student_path(student)
   end
 
