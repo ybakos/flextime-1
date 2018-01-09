@@ -9,3 +9,15 @@ by_staff:
   student: student
   teacher: miss_valid
   activity: thursday_activity
+
+previous_week:
+  creator: student
+  student: student
+  teacher: miss_valid
+  activity: last_tuesday_activity
+
+next_week:
+  creator: student
+  student: student
+  teacher: miss_valid
+  activity: next_tuesday_activity
