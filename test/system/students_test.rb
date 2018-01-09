@@ -16,7 +16,8 @@ class StudentsTest < ApplicationSystemTestCase
 
   test 'student views their Falcon Time for the current week' do
     sign_in_as_student_and_visit_profile
-    skip
+    within('#tuesday') { assert_selector 'h5', text: 'Fake Tuesday Activity' }
+    within('#thursday') { assert_selector 'h5', text: 'Fake Thursday Activity' }
   end
 
   test 'student views their Falcon Time for the previous week' do
