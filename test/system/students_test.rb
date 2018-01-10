@@ -78,4 +78,8 @@ class StudentsTest < ApplicationSystemTestCase
     skip
   end
 
+  test 'student cannot register for activities on past dates' do
+    skip
+  end
+
 end
