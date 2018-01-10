@@ -71,7 +71,17 @@ class StudentsTest < ApplicationSystemTestCase
   end
 
   test 'student should be able to register for activities one week in advance' do
-    skip
+    sign_in_as_student_and_visit_profile
+    one_pm_thursday = DateTime.now.thursday.change({hour:13, min:0, sec: 0})
+    travel_to one_pm_thursday do
+      click_link 'Next week'
+      within '#thursday' do
+        select 'Fake Next Thursday Activity', from: 'registration_activity_id'
+        click_button 'Sign Up'
+      end
+      assert_text 'Successfully registered for Fake Next Thursday Activity'
+      assert_selector 'h5', text: 'Fake Next Thursday Activity'
+    end
   end
 
   test 'student should not be able to register for activities more than one week in advance' do
