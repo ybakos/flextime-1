@@ -18,14 +18,14 @@
     .col{id: date.day_name.downcase}
       %h3.display-4= date.day_name
       %h4.h3.text-muted.font-weight-light= date.strftime("%B %-e")
-      - if activities.empty?
+      - if activities.empty? && Date.today < date
         = form_for [@student, Registration.new], url: student_registrations_path(@student) do |f|
           = f.hidden_field :date, value: date
           .form-group
             = f.label :activity_id, class: 'sr-only'
             = f.select :activity_id, @week_of_activities[date].collect { |a| [a.name, a.id] }, {include_blank: 'Choose...'}, required: true, class: 'form-control'
           = f.submit 'Sign Up', class: 'btn btn-success'
-      - else
+      - elsif !activities.empty?
         %ul.list-group
           %li.list-group-item.my-2
             %h5= activities.first.name

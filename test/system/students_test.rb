@@ -89,7 +89,9 @@ class StudentsTest < ApplicationSystemTestCase
   end
 
   test 'student cannot register for activities on past dates' do
-    skip
+    sign_in_as_student_and_visit_profile
+    click_link 'Previous week'
+    refute has_select?('registration_activity_id')
   end
 
 end
