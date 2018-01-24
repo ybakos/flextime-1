@@ -18,7 +18,7 @@
         %span.navbar-toggler-icon
       #navbar.collapse.navbar-collapse
         %ul.navbar-nav.ml-auto
-          - if current_user&.staff?
+          - if current_user&.staff? || current_user&.admin?
             %li.nav-item= link_to 'Schedule', activities_path, class: 'nav-link'
             %li.nav-item= link_to 'Students', students_path, class: 'nav-link'
             %li.nav-item= link_to 'Teachers', teachers_path, class: 'nav-link'
