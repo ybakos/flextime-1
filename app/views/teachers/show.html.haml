@@ -6,7 +6,7 @@
 
 %h3.display-4.mt-5
   Students
-  %span.badge.badge-pill.badge-secondary.font-weight-light= 276
+  %span.badge.badge-pill.badge-secondary.font-weight-light= @teacher.students.count
 
 %table.table
   %thead
@@ -15,9 +15,9 @@
     %th Thursday
     %th Friday
   %tbody
-    - [].each do |student|
+    - @teacher.students.each do |student|
       %tr
         %td= link_to student.to_s, student_path(student)
-        %td= 'Ping Pong'
-        %td= 'Eating Grapes'
-        %td= 'Coding 101'
+        %td= 'TODO'
+        %td= 'TODO'
+        %td= 'TODO'
