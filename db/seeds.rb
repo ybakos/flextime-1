@@ -161,3 +161,9 @@ Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capac
 Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday - 6)
 Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday - 4)
 Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday - 3)
+
+
+10.times do |i|
+  User.create(email: "example#{i}@example.com", password: 'password', password_confirmation: 'password', provider: 'FAKE', uid: "FAKE#{i}", first_name: 'Example', last_name: "Student #{i}", teacher: Teacher.find(1))
+end
+

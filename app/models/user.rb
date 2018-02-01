@@ -34,6 +34,10 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def activity_for_day_of_week(day, date)
+    activities.where(date: date.send(day)).first
+  end
+
   private
 
     def set_default_role

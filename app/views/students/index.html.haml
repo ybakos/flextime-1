@@ -1,8 +1,10 @@
 %h2.display-3 Students
 
-%nav.mt-3
-  = link_to 'Previous week', '#', class: 'btn btn-outline-secondary'
-  = link_to 'Next week', '#', class: 'btn btn-outline-primary float-right'
+%nav.row.mt-3
+  .col= link_to 'Previous week', students_path(date: @date.prev_week), class: 'btn btn-outline-secondary'
+  .col.text-center
+    %h3= @date.current_week? ? 'This Week' : "Week of #{@date.beginning_of_week.to_s(:long)}"
+  .col.text-right= link_to 'Next week', students_path(date: @date.next_week), class: 'btn btn-outline-primary'
 
 %table.table.mt-5
   %thead
@@ -14,8 +16,8 @@
   %tbody
     - @students.each do |student|
       %tr
-        %td= link_to student.to_s, student_path(student)
-        %td= 'Mrs. Smith'
-        %td= 'Ping Pong'
-        %td= 'Eating Grapes'
-        %td= 'Coding 101'
+        %td= link_to student.to_s, student_path(student, date: @date)
+        %td= student.teacher
+        %td= student.activity_for_day_of_week(:tuesday, @date)&.name
+        %td= student.activity_for_day_of_week(:thursday, @date)&.name
+        %td= student.activity_for_day_of_week(:friday, @date)&.name
