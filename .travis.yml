@@ -1,10 +1,12 @@
 language: ruby
 rvm:
  - 2.4.2
+
 script: bundle exec rails test
 
 services:
   - postgresql
+
 install:
   - bundle install
 
@@ -12,6 +14,12 @@ bundler_args: --without production
 
 before_script:
   - psql -c 'create database falcon_time_test;' -U postgres
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
+
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 test:
   adapter: postgresql
@@ -19,7 +27,7 @@ test:
 
 env:
   global:
-    - CODECLIMATE_REPO_TOKEN=414b92000d57b35b08a18dd42f2eb68e2bf1bba78473d6f13161d5a049e4fa95
+    - CC_TEST_REPORTER_ID=414b92000d57b35b08a18dd42f2eb68e2bf1bba78473d6f13161d5a049e4fa95
 
 after_success:
   - bundle exec codeclimate-test-reporter
