@@ -39,10 +39,6 @@ group :development do
   gem 'guard-minitest'
 end
 
-group :test do
-  gem 'codeclimate-test-reporter'
-end
-
 group :production do
   gem 'airbrake'
 end
