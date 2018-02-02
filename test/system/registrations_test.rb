@@ -9,6 +9,20 @@ class RegistrationsTest < ApplicationSystemTestCase
     visit student_path(users(:student))
   end
 
+  # Staff registers student for activities
+
+  test 'staff registers a student for an activity' do
+    sign_in users(:staff)
+    visit student_path(users(:student))
+    assert_no_selector 'h5', text: 'Fake Friday Activity'
+    within '#friday' do
+      select 'Fake Friday Activity', from: 'registration_activity_id'
+      click_button 'Sign Up'
+    end
+    assert_text 'Successfully registered for Fake Friday Activity'
+    assert_selector 'h5', text: 'Fake Friday Activity'
+  end
+
   # Student registering for activities
 
   test 'student registers for an activity' do
