@@ -38,3 +38,7 @@ group :development do
   gem 'guard'
   gem 'guard-minitest'
 end
+
+group :production do
+  gem 'airbrake'
+end
