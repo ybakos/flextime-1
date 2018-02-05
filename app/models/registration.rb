@@ -10,6 +10,7 @@ class Registration < ApplicationRecord
   validate :student_not_registered_for_another_activity_on_same_date
   validates_presence_of :teacher
   validate :teacher_must_be_student_teacher
+  validate :activity_cannot_be_full, if: Proc.new { |r| r.activity_id_changed? }
 
   private
 
@@ -27,6 +28,11 @@ class Registration < ApplicationRecord
       activities = student&.activities&.where('date = ?', activity&.date)&.includes(:registrations)
       return if activities.nil? || activities&.empty? || (activities&.length == 1 && activities&.first.registrations.length == 1 && activities.first.registrations.first.id == id)
       errors.add(:activity, 'has the same date as another registered activity')
+    end
+
+    def activity_cannot_be_full
+      return if activity.nil? || !activity.full?
+      errors.add(:activity, 'is full')
     end
 
 end

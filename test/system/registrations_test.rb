@@ -12,8 +12,8 @@ class RegistrationsTest < ApplicationSystemTestCase
   # Staff registers student for activities
 
   test 'staff registers a student for an activity' do
-    sign_in users(:staff)
     travel_to Date.today.monday do
+      sign_in users(:staff)
       visit student_path(users(:student))
       assert_no_selector 'h5', text: 'Fake Friday Activity'
       within '#friday' do
@@ -22,6 +22,17 @@ class RegistrationsTest < ApplicationSystemTestCase
       end
       assert_text 'Successfully registered for Fake Friday Activity'
       assert_selector 'h5', text: 'Fake Friday Activity'
+    end
+  end
+
+  test 'staff cannot register student for activities that are full' do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit student_path(users(:second_student))
+      within '#thursday' do
+        assert has_select?('registration_activity_id')
+        refute has_select?('registration_activity_id', with_options: ['Second Fake Thursday Activity'])
+      end
     end
   end
 
@@ -63,6 +74,17 @@ class RegistrationsTest < ApplicationSystemTestCase
       sign_in_as_student_and_visit_profile
       click_link 'Previous week'
       refute has_select?('registration_activity_id')
+    end
+  end
+
+  test 'student cannot register for activities that are full' do
+    travel_to Date.today.monday do
+      sign_in users(:second_student)
+      visit student_path(users(:second_student))
+      within '#thursday' do
+        assert has_select?('registration_activity_id')
+        refute has_select?('registration_activity_id', with_options: ['Second Fake Thursday Activity'])
+      end
     end
   end
 

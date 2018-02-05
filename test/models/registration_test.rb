@@ -67,4 +67,14 @@ class RegistrationTest < ActiveSupport::TestCase
     refute new_registration.valid?
   end
 
+  test 'is invalid if the activity is full' do
+    full_activity = activities(:tuesday_activity)
+    new_registration = Registration.new(
+      creator: users(:second_student),
+      student: users(:second_student),
+      teacher: users(:second_student).teacher,
+      activity: full_activity
+    )
+    refute new_registration.valid?
+  end
 end

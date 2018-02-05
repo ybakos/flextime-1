@@ -19,6 +19,17 @@ student:
   role: 'student'
   teacher: miss_valid
 
+second_student:
+  email: 'student2@example.com'
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
+  provider: 'FAKE'
+  uid: 'FAKE 2'
+  first_name: 'Fake'
+  last_name: 'Student 2'
+  image_url: 'http://fake.com/fake.jpg'
+  role: 'student'
+  teacher: miss_valid
+
 new_student_without_teacher:
   email: 'new-student@example.com'
   encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>

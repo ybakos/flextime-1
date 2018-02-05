@@ -8,7 +8,7 @@ by_staff:
   creator: staff
   student: student
   teacher: miss_valid
-  activity: thursday_activity
+  activity: second_thursday_activity
 
 previous_week:
   creator: student

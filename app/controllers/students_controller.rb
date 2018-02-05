@@ -10,7 +10,7 @@ class StudentsController < ApplicationController
 
   def show
     @activities = @student.activities.for_week(@date)
-    @week_of_activities = Activity.for_week(@date)
+    @week_of_activities = available_activities_for_week
   end
 
   def update
@@ -39,9 +39,16 @@ class StudentsController < ApplicationController
       end
     end
 
-
     def student_params
       params.require(:student).permit(:teacher_id)
+    end
+
+    def available_activities_for_week
+      activities_for_week = Activity.for_week(@date)
+      activities_for_week.each do |date, activities|
+        activities.delete_if(&:full?)
+      end
+      activities_for_week
     end
 
 end

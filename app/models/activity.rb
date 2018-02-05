@@ -11,10 +11,14 @@ class Activity < ApplicationRecord
 
   def self.for_week(date)
     {
-      date.tuesday => Activity.where(date: date.tuesday),
-      date.thursday => Activity.where(date: date.thursday),
-      date.friday => Activity.where(date: date.friday)
+      date.tuesday => Activity.where(date: date.tuesday).to_a,
+      date.thursday => Activity.where(date: date.thursday).to_a,
+      date.friday => Activity.where(date: date.friday).to_a
     }
+  end
+
+  def full?
+    registrations.count >= capacity
   end
 
   def day_and_room
