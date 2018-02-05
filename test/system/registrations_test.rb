@@ -1,4 +1,21 @@
-require "application_system_test_case"
+# Registration Tests
+# The fixtures create the following activities and registrations.
+# It's important to travel_to Date.today.monday, as the fixtures
+# for activities have particular dates.
+# See registrations, activities, teachers, and users fixtures.
+#
+# Activities
+# ----------
+# T  R  F    T  R  F    T  R  F
+# a  b  c    d  f  h    i  j  k
+#            e  g
+#
+# Registrations
+# -------------
+# T  R  F    T  R  F    T  R  F
+# a          d  g       i
+#
+require 'application_system_test_case'
 
 class RegistrationsTest < ApplicationSystemTestCase
 
@@ -84,6 +101,22 @@ class RegistrationsTest < ApplicationSystemTestCase
       within '#thursday' do
         assert has_select?('registration_activity_id')
         refute has_select?('registration_activity_id', with_options: ['Second Fake Thursday Activity'])
+      end
+    end
+  end
+
+  # Staff viewing lists of student registrations
+
+  test 'staff can view list of all student registrations for the current week' do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit students_path
+      within "#student_#{users(:student).id}" do
+        within('.student') { assert_text 'Fake Student' }
+        within('.teacher') { assert_text 'Miss Valid' }
+        within('.tuesday') { assert_text 'Fake Tuesday Activity' }
+        within('.thursday') { assert_text 'Second Fake Thursday Activity' }
+        assert find('.friday').text == ''
       end
     end
   end

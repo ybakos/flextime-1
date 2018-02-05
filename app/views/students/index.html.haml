@@ -15,9 +15,9 @@
     %th Friday
   %tbody
     - @students.each do |student|
-      %tr
-        %td= link_to student.to_s, student_path(student, date: @date)
-        %td= student.teacher
-        %td= student.activity_for_day_of_week(:tuesday, @date)&.name
-        %td= student.activity_for_day_of_week(:thursday, @date)&.name
-        %td= student.activity_for_day_of_week(:friday, @date)&.name
+      %tr{ id: "student_#{student.id}"}
+        %td.student= link_to student.to_s, student_path(student, date: @date)
+        %td.teacher= student.teacher
+        %td.tuesday= student.activity_for_day_of_week(:tuesday, @date)&.name
+        %td.thursday= student.activity_for_day_of_week(:thursday, @date)&.name
+        %td.friday= student.activity_for_day_of_week(:friday, @date)&.name
