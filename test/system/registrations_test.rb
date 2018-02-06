@@ -153,4 +153,33 @@ class RegistrationsTest < ApplicationSystemTestCase
     end
   end
 
+  # /students/:id
+
+  test 'staff can view list of specific student registrations for the current week' do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit student_path(users(:student))
+      within('#tuesday') { assert_selector 'h5', text: 'Fake Tuesday Activity' }
+      within('#thursday') { assert_selector 'h5', text: 'Second Fake Thursday Activity' }
+    end
+  end
+
+  test 'staff can view list of specific student registrations for the previous week' do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit student_path(users(:student))
+      click_link 'Previous week'
+      within('#tuesday') { assert_selector 'h5', text: 'Fake Previous Tuesday Activity' }
+    end
+  end
+
+  test 'staff can view list of specific student registrations for the next week' do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit student_path(users(:student))
+      click_link 'Next week'
+      within('#tuesday') { assert_selector 'h5', text: 'Fake Next Tuesday Activity' }
+    end
+  end
+
 end
