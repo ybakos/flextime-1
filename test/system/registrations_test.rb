@@ -107,6 +107,8 @@ class RegistrationsTest < ApplicationSystemTestCase
 
   # Staff viewing lists of student registrations
 
+  # /students
+
   test 'staff can view list of all student registrations for the current week' do
     travel_to Date.today.monday do
       sign_in users(:staff)
@@ -116,6 +118,36 @@ class RegistrationsTest < ApplicationSystemTestCase
         within('.teacher') { assert_text 'Miss Valid' }
         within('.tuesday') { assert_text 'Fake Tuesday Activity' }
         within('.thursday') { assert_text 'Second Fake Thursday Activity' }
+        assert find('.friday').text == ''
+      end
+    end
+  end
+
+  test 'staff can view list of all student registrations for the previous week' do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit students_path
+      click_link 'Previous week'
+      within "#student_#{users(:student).id}" do
+        within('.student') { assert_text 'Fake Student' }
+        within('.teacher') { assert_text 'Miss Valid' }
+        within('.tuesday') { assert_text 'Fake Previous Tuesday Activity' }
+        assert find('.thursday').text == ''
+        assert find('.friday').text == ''
+      end
+    end
+  end
+
+  test 'staff can view list of all student registrations for the next week' do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit students_path
+      click_link 'Next week'
+      within "#student_#{users(:student).id}" do
+        within('.student') { assert_text 'Fake Student' }
+        within('.teacher') { assert_text 'Miss Valid' }
+        within('.tuesday') { assert_text 'Fake Next Tuesday Activity' }
+        assert find('.thursday').text == ''
         assert find('.friday').text == ''
       end
     end
