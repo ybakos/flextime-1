@@ -1,6 +1,7 @@
 class TeachersController < ApplicationController
 
   before_action :set_teacher, only: [:show, :edit, :update]
+  before_action :set_date, only: [:show]
 
   def index
     @teacher = Teacher.new
@@ -41,6 +42,14 @@ class TeachersController < ApplicationController
 
     def set_teacher
       @teacher = Teacher.find(params[:id])
+    end
+
+    def set_date
+      @date = if params[:date] =~ /^\d{4}-\d{2}-\d{2}$/
+        params[:date].to_date
+      else
+        Date.today.beginning_of_week
+      end
     end
 
     def teacher_params

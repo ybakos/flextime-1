@@ -182,4 +182,19 @@ class RegistrationsTest < ApplicationSystemTestCase
     end
   end
 
+  # /teachers/:id
+
+  test "staff can view list of a teacher's students' registrations for the current week" do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit teacher_path(teachers(:miss_valid))
+      within "#student_#{users(:student).id}" do
+        within('.student') { assert_text 'Fake Student' }
+        within('.tuesday') { assert_text 'Fake Tuesday Activity' }
+        within('.thursday') { assert_text 'Second Fake Thursday Activity' }
+        assert find('.friday').text == ''
+      end
+    end
+  end
+
 end
