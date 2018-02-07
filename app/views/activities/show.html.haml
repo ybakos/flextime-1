@@ -6,21 +6,15 @@
 
 %h3.display-4.mt-5
   = @activity.day_and_room
-  %span.badge.badge-pill.badge-light.text-muted= Random.new.rand(@activity.capacity)
+  %span.badge.badge-pill.badge-light.text-muted= @activity.registrations.count
   %span.badge.badge-pill.badge-secondary.h4= @activity.capacity
 
 %table.table
   %thead
     %th Student
     %th Teacher
-    %th Tuesday
-    %th Thursday
-    %th Friday
   %tbody
-    - [].each do |student|
-      %tr
-        %td= link_to student.to_s, student_path(student)
-        %td= 'Mrs. Smith'
-        %td= 'Ping Pong'
-        %td= 'Eating Grapes'
-        %td= 'Coding 101'
+    - @activity.registrations.each do |registration|
+      %tr{ id: "student_#{registration.student.id}" }
+        %td.student= link_to registration.student.to_s, student_path(registration.student)
+        %td.teacher= registration.teacher

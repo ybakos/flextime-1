@@ -225,4 +225,17 @@ class RegistrationsTest < ApplicationSystemTestCase
     end
   end
 
+  # /activities/:id
+
+  test 'staff can view list of student registrations for a specific activity' do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit activity_path(activities(:tuesday_activity))
+      within "#student_#{users(:student).id}" do
+        within('.student') { assert_text 'Fake Student' }
+        within('.teacher') { assert_text 'Miss Valid' }
+      end
+    end
+  end
+
 end
