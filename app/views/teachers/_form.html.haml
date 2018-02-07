@@ -4,7 +4,7 @@
     %ul
       - @teacher.errors.full_messages.each do |message|
         %li= message
-= form_for @teacher, html: {class: 'form-inline mt-3'} do |f|
+= form_for @teacher, html: {class: 'form-inline'} do |f|
   .form-group
     = f.label :title, class: 'sr-only'
     = f.select :title, Teacher.titles.keys, {include_blank: 'Choose...'}, {class: 'form-control mr-1', required: true}

@@ -197,4 +197,32 @@ class RegistrationsTest < ApplicationSystemTestCase
     end
   end
 
+  test "staff can view list of a teacher's students' registrations for the previous week" do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit teacher_path(teachers(:miss_valid))
+      click_link 'Previous week'
+      within "#student_#{users(:student).id}" do
+        within('.student') { assert_text 'Fake Student' }
+        within('.tuesday') { assert_text 'Fake Previous Tuesday Activity' }
+        assert find('.thursday').text == ''
+        assert find('.friday').text == ''
+      end
+    end
+  end
+
+  test "staff can view list of a teacher's students' registrations for the next week" do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit teacher_path(teachers(:miss_valid))
+      click_link 'Next week'
+      within "#student_#{users(:student).id}" do
+        within('.student') { assert_text 'Fake Student' }
+        within('.tuesday') { assert_text 'Fake Next Tuesday Activity' }
+        assert find('.thursday').text == ''
+        assert find('.friday').text == ''
+      end
+    end
+  end
+
 end
