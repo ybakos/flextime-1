@@ -1,13 +1,16 @@
 %h2.display-3= @teacher
 
-%nav.mt-3
-  = link_to 'Back', teachers_path, class: 'btn btn-outline-secondary'
-  = link_to 'Edit', edit_teacher_path(@teacher), class: 'btn btn-outline-primary'
+%nav.row.mt-3
+  .col
+    = link_to_previous_week_for_teacher(@teacher, @date)
+  .col.text-center
+    %h3= @date.current_week? ? 'This Week' : "Week of #{@date.beginning_of_week.to_s(:long)}"
+  .col
+    = link_to_next_week_for_teacher(@teacher, @date)
 
 %h3.display-4.mt-5
   Students
   %span.badge.badge-pill.badge-secondary.font-weight-light= @teacher.students.count
-
 %table.table
   %thead
     %th Student
