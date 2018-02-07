@@ -149,21 +149,30 @@ rooms = [
 capacity = (10..26).to_a
 
 10.times do |i|
-  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday + 1)
-  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday + 3)
-  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday + 4)
+  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.tuesday)
+  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.thursday)
+  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.friday)
+
+  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.prev_week.tuesday)
+  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.prev_week.thursday)
+  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.prev_week.friday)
+
+  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.next_week.tuesday)
+  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.next_week.thursday)
+  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.next_week.friday)
 end
 
-Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday + 8)
-Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday + 10)
-Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday + 11)
+all_teachers = Teacher.all
 
-Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday - 6)
-Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday - 4)
-Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.monday - 3)
-
-
-10.times do |i|
-  User.create(email: "example#{i}@example.com", password: 'password', password_confirmation: 'password', provider: 'FAKE', uid: "FAKE#{i}", first_name: 'Example', last_name: "Student #{i}", teacher: Teacher.find(1))
+100.times do |i|
+  User.create(email: "example#{i}@example.com", password: 'password', password_confirmation: 'password', provider: 'FAKE', uid: "FAKE#{i}", first_name: 'Example', last_name: "Student #{i}", teacher: all_teachers.sample)
 end
 
+all_students = User.student
+all_activities = Activity.all
+
+
+400.times do |i|
+  student = all_students.sample
+  Registration.create(creator: student, student: student, teacher: student.teacher, activity: all_activities.sample)
+end
