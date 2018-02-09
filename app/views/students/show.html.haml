@@ -28,5 +28,5 @@
       - elsif !activities.empty?
         %ul.list-group
           %li.list-group-item.my-2
-            %h5= activities.first.name
+            %h5= link_to_if !current_user.student?, activities.first.name, activities_path(activities.first)
             %h6= activities.first.room

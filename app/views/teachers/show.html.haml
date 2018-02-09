@@ -21,6 +21,6 @@
     - @teacher.students.each do |student|
       %tr{ id: "student_#{student.id}"}
         %td.student= link_to student.to_s, student_path(student, date: @date)
-        %td.tuesday= student.activity_for_day_of_week(:tuesday, @date)&.name
-        %td.thursday= student.activity_for_day_of_week(:thursday, @date)&.name
-        %td.friday= student.activity_for_day_of_week(:friday, @date)&.name
+        %td.tuesday= link_to student.activity_for_day_of_week(:tuesday, @date)&.name, activity_path(student.activity_for_day_of_week(:tuesday, @date)) if student.activity_for_day_of_week(:tuesday, @date)
+        %td.thursday= link_to student.activity_for_day_of_week(:thursday, @date)&.name, activity_path(student.activity_for_day_of_week(:thursday, @date)) if student.activity_for_day_of_week(:thursday, @date)
+        %td.friday= link_to student.activity_for_day_of_week(:friday, @date)&.name, activity_path(student.activity_for_day_of_week(:friday, @date)) if student.activity_for_day_of_week(:friday, @date)
