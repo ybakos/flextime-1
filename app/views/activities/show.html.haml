@@ -17,4 +17,4 @@
     - @activity.registrations.each do |registration|
       %tr{ id: "student_#{registration.student.id}" }
         %td.student= link_to registration.student.to_s, student_path(registration.student)
-        %td.teacher= registration.teacher
+        %td.teacher= link_to registration.teacher, teacher_path(registration.teacher)
