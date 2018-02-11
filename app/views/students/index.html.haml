@@ -8,11 +8,12 @@
 
 %table.table.mt-5
   %thead
-    %th Student
-    %th Teacher
-    %th Tuesday
-    %th Thursday
-    %th Friday
+    %tr
+      %th Student
+      %th Teacher
+      %th Tuesday
+      %th Thursday
+      %th Friday
   %tbody
     - @students.each do |student|
       %tr{ id: "student_#{student.id}"}

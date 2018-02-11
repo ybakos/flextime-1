@@ -13,10 +13,11 @@
   %span.badge.badge-pill.badge-secondary.font-weight-light= @teacher.students.count
 %table.table
   %thead
-    %th Student
-    %th Tuesday
-    %th Thursday
-    %th Friday
+    %tr
+      %th Student
+      %th Tuesday
+      %th Thursday
+      %th Friday
   %tbody
     - @teacher.students.each do |student|
       %tr{ id: "student_#{student.id}"}

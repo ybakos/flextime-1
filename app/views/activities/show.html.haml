@@ -11,8 +11,9 @@
 
 %table.table
   %thead
-    %th Student
-    %th Teacher
+    %tr
+      %th Student
+      %th Teacher
   %tbody
     - @activity.registrations.each do |registration|
       %tr{ id: "student_#{registration.student.id}" }
