@@ -6,7 +6,7 @@
     %h3= @date.current_week? ? 'This Week' : "Week of #{@date.beginning_of_week.to_s(:long)}"
   .col.text-right= link_to 'Next week', students_path(date: @date.next_week), class: 'btn btn-outline-primary'
 
-%table.table.mt-5
+%table#student_registrations.table.mt-5
   %thead
     %tr
       %th Student
@@ -18,7 +18,19 @@
     - @students.each do |student|
       %tr{ id: "student_#{student.id}"}
         %td.student= link_to student.to_s, student_path(student, date: @date)
-        %td.teacher= link_to(student.teacher, teacher_path(student.teacher)) if student.teacher
+        %td.teacher= link_to(student.teacher.name, teacher_path(student.teacher)) if student.teacher
         %td.tuesday= link_to student.activity_for_day_of_week(:tuesday, @date)&.name, activity_path(student.activity_for_day_of_week(:tuesday, @date)) if student.activity_for_day_of_week(:tuesday, @date)
         %td.thursday= link_to student.activity_for_day_of_week(:thursday, @date)&.name, activity_path(student.activity_for_day_of_week(:thursday, @date)) if student.activity_for_day_of_week(:thursday, @date)
         %td.friday= link_to student.activity_for_day_of_week(:friday, @date)&.name, activity_path(student.activity_for_day_of_week(:friday, @date)) if student.activity_for_day_of_week(:friday, @date)
+
+- content_for :head do
+  = stylesheet_link_tag '//cdn.datatables.net/1.10.16/css/jquery.dataTables.css'
+  = javascript_include_tag '//cdn.datatables.net/1.10.16/js/jquery.dataTables.js'
+  :javascript
+    $(document).on('turbolinks:load', function() {
+      $('#student_registrations').DataTable({
+      paging: false,
+      searching: false,
+      info: false
+      });
+    });
