@@ -18,7 +18,8 @@ class User < ApplicationRecord
   has_many :activities, through: :registrations
 
   # https://github.com/zquestz/omniauth-google-oauth2
-  def self.from_omniauth(auth)
+  def self.from_omniauth(auth, allowed_domains)
+    return unless allowed_domains.include? auth&.extra&.raw_info&.hd
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
       user.provider = auth.provider
       user.uid = auth.uid
