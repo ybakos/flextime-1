@@ -42,7 +42,7 @@ class User < ApplicationRecord
   private
 
     def set_default_role
-      role = :student
+      role = :staff
     end
 
 end
