@@ -4,7 +4,7 @@ class User < ApplicationRecord
          :omniauthable, omniauth_providers: [:google_oauth2]
 
   enum role: [:student, :staff, :admin]
-  after_initialize :set_default_role
+  attribute :role, :integer, default: :student
 
   validates_presence_of :first_name
   validates_presence_of :last_name
@@ -35,14 +35,12 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
+  def foo
+    first_name = :admin
+  end
+
   def activity_for_day_of_week(day, date)
     activities.where(date: date.send(day)).first
   end
-
-  private
-
-    def set_default_role
-      role = :staff
-    end
 
 end
