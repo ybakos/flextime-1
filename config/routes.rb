@@ -9,7 +9,7 @@ Rails.application.routes.draw do
   resources :activities
   resources :teachers, except: [:new, :destroy]
   resources :students, only: [:index, :show, :update] do
-    resources :registrations, only: [:create, :update, :destroy]
+    resources :registrations, only: [:create, :edit, :update, :destroy]
   end
 
 end

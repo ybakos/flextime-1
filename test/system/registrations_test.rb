@@ -238,4 +238,19 @@ class RegistrationsTest < ApplicationSystemTestCase
     end
   end
 
+  # Staff editing student activities
+
+  # /students/:id
+
+  test 'staff can edit upcoming student registrations' do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit student_path(users(:student))
+      within '#tuesday' do
+        click_link 'edit'
+
+      end
+    end
+  end
+
 end
