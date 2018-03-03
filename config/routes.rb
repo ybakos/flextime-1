@@ -12,4 +12,8 @@ Rails.application.routes.draw do
     resources :registrations, only: [:create, :edit, :update, :destroy]
   end
 
+  scope '/admin' do
+    resources :users, except: [:new, :create]
+  end
+
 end
