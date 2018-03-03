@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 
-  before_filter :ignore_password_and_password_confirmation, only: :update
+  before_action :ignore_password_and_password_confirmation, only: :update
 
   def index
 
