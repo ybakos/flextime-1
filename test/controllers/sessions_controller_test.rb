@@ -22,4 +22,10 @@ class SessionsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to new_user_session_path
   end
 
+  test 'deactivated user can not sign in' do
+    deactivated_user = users(:deactivated)
+    sign_in deactivated_user
+    assert_raises { get root_url }
+  end
+
 end

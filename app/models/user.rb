@@ -40,4 +40,8 @@ class User < ApplicationRecord
     activities.where(date: date.send(day)).first
   end
 
+  def active_for_authentication?
+    super && active?
+  end
+
 end

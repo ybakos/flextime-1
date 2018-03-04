@@ -9,6 +9,17 @@ unknown:
   # no explicit role
   # no explicit 'active' status
 
+deactivated:
+  email: 'deactivated@example.com'
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
+  provider: 'FAKE'
+  uid: 'FAKE'
+  first_name: 'Fake'
+  last_name: 'Deactivated'
+  image_url: 'http://fake.com/fake.jpg'
+  active: false
+  # no explicit role
+
 student:
   email: 'student@example.com'
   encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
