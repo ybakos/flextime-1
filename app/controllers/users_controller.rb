@@ -9,6 +9,10 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
+    if @user == current_user
+      redirect_to users_path, alert: 'You are restricted from changing your own status.'
+      return
+    end
     respond_to do |format|
       if @user.update(user_params)
         format.html { redirect_to users_path, notice: 'User was successfully updated.' }
