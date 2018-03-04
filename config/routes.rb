@@ -13,7 +13,7 @@ Rails.application.routes.draw do
   end
 
   scope '/admin' do
-    resources :users, except: [:new, :create]
+    resources :users, only: [:index, :update]
   end
 
 end

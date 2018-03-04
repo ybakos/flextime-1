@@ -12,19 +12,10 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # index
     get users_path
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
-    # show
-    get user_path(id: 'fake')
-    assert_redirected_to(controller: 'devise/sessions', action: 'new')
-    # edit
-    get edit_user_path(id: 'fake')
-    assert_redirected_to(controller: 'devise/sessions', action: 'new')
     # update
     patch user_path(id: 'fake')
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
     put user_path(id: 'fake')
-    assert_redirected_to(controller: 'devise/sessions', action: 'new')
-    # destroy
-    delete user_path(id: 'fake')
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
   end
 
@@ -38,19 +29,10 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # index
     get users_path
     assert_redirected_to student_path(student)
-    # show
-    get user_path(id: 'fake')
-    assert_redirected_to student_path(student)
-    # edit
-    get edit_user_path(id: 'fake')
-    assert_redirected_to student_path(student)
     # update
     patch user_path(id: 'fake')
     assert_redirected_to student_path(student)
     put user_path(id: 'fake')
-    assert_redirected_to student_path(student)
-    # destroy
-    delete user_path(id: 'fake')
     assert_redirected_to student_path(student)
   end
 
@@ -64,19 +46,10 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # index
     get users_path
     assert_redirected_to root_url
-    # show
-    get user_path(id: 'fake')
-    assert_redirected_to root_url
-    # edit
-    get edit_user_path(id: 'fake')
-    assert_redirected_to root_url
     # update
     patch user_path(id: 'fake')
     assert_redirected_to root_url
     put user_path(id: 'fake')
-    assert_redirected_to root_url
-    # destroy
-    delete user_path(id: 'fake')
     assert_redirected_to root_url
   end
 
@@ -86,6 +59,11 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     # index
     get users_path
     assert_response(:success)
+    # update
+    patch user_path(id: users(:staff), 'user[active]': true)
+    assert_redirected_to users_path
+    put user_path(id: users(:staff), 'user[active]': true)
+    assert_redirected_to users_path
   end
 
 end

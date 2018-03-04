@@ -7,27 +7,29 @@ class UsersController < ApplicationController
     @users = User.order(:last_name)
   end
 
-  def show
-
-  end
-
-  def edit
-  end
-
   def update
-  end
-
-  def destroy
+    @user = User.find(params[:id])
+    respond_to do |format|
+      if @user.update(user_params)
+        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
+      else
+        format.html { redirect_to users_path, alert: 'Failed to update user' }
+      end
+    end
   end
 
   private
 
-  # https://github.com/plataformatec/devise/wiki/how-to:-manage-users-through-a-crud-interface
-  def ignore_password_and_password_confirmation
-    if params[:user][:password].blank?
-      params[:user].delete(:password)
-      params[:user].delete(:password_confirmation)
+    # https://github.com/plataformatec/devise/wiki/how-to:-manage-users-through-a-crud-interface
+    def ignore_password_and_password_confirmation
+      if params[:user][:password].blank?
+        params[:user].delete(:password)
+        params[:user].delete(:password_confirmation)
+      end
     end
-  end
+
+    def user_params
+      params.require(:user).permit(:role, :active)
+    end
 
 end

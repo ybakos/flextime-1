@@ -5,7 +5,7 @@
     %tr
       %th Name
       %th E-mail Address
-      %th
+      %th Status
   %tbody
     - @users.each do |u|
       %tr
@@ -13,5 +13,6 @@
         %td= u.email
         %td
           = form_for u, html: {class: 'form-inline'} do |f|
-            = f.select :role, User.roles.keys.map {|k| [k.capitalize, k]}, {} , class: 'form-control form-control-sm mr-1'
+            = f.select :active, [['Active', true], ['Deactivated', false]], {}, class: 'form-control form-control-sm mr-3'
+            = f.select :role, User.roles.keys.map {|k| [k.capitalize, k]}, {} , class: 'form-control form-control-sm mr-3'
             = f.submit 'Update', class: 'btn btn-outline-success btn-sm'
