@@ -3,3 +3,15 @@
 %table#student_registrations.table.mt-5
   %thead
     %tr
+      %th Name
+      %th E-mail Address
+      %th
+  %tbody
+    - @users.each do |u|
+      %tr
+        %td= "#{u.last_name}, #{u.first_name}"
+        %td= u.email
+        %td
+          = form_for u, html: {class: 'form-inline'} do |f|
+            = f.select :role, User.roles.keys.map {|k| [k.capitalize, k]}, {} , class: 'form-control form-control-sm mr-1'
+            = f.submit 'Update', class: 'btn btn-outline-success btn-sm'
