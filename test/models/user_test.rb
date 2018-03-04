@@ -55,6 +55,10 @@ class UserTest < ActiveSupport::TestCase
     assert_equal users(:unknown).role, 'student'
   end
 
+  test 'is active by default' do
+    assert new_user.active?
+  end
+
   test 'belongs to a teacher' do
     assert_respond_to users(:student), :teacher
     assert_kind_of Teacher, users(:student).teacher

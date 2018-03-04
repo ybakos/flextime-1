@@ -7,6 +7,7 @@ unknown:
   last_name: 'Unknown'
   image_url: 'http://fake.com/fake.jpg'
   # no explicit role
+  # no explicit 'active' status
 
 student:
   email: 'student@example.com'
@@ -17,6 +18,7 @@ student:
   last_name: 'Student'
   image_url: 'http://fake.com/fake.jpg'
   role: 'student'
+  active: true
   teacher: miss_valid
 
 second_student:
@@ -28,6 +30,7 @@ second_student:
   last_name: 'Student 2'
   image_url: 'http://fake.com/fake.jpg'
   role: 'student'
+  active: true
   teacher: miss_valid
 
 new_student_without_teacher:
@@ -39,6 +42,7 @@ new_student_without_teacher:
   last_name: 'Student'
   image_url: 'http://fake.com/fake.jpg'
   role: 'student'
+  active: true
 
 staff:
   email: 'staff@example.com'
@@ -49,6 +53,7 @@ staff:
   last_name: 'Staff'
   image_url: 'http://fake.com/fake.jpg'
   role: 'staff'
+  active: true
 
 admin:
   email: 'admin@example.com'
@@ -59,3 +64,4 @@ admin:
   last_name: 'Admin'
   image_url: 'http://fake.com/fake.jpg'
   role: 'admin'
+  active: true
