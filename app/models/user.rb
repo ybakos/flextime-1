@@ -35,10 +35,6 @@ class User < ApplicationRecord
     "#{first_name} #{last_name}"
   end
 
-  def foo
-    first_name = :admin
-  end
-
   def activity_for_day_of_week(day, date)
     activities.where(date: date.send(day)).first
   end
