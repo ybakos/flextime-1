@@ -10,6 +10,10 @@ class ApplicationController < ActionController::Base
       redirect_to(student_path(current_user), alert: 'Access denied.') if current_user.student?
     end
 
+    def restrict_unless_admin
+      redirect_to(root_url, alert: 'Access denied.') unless current_user.admin?
+    end
+
     def after_sign_out_path_for(resource)
       new_user_session_path
     end
