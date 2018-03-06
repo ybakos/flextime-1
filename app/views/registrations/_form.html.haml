@@ -1,22 +1,16 @@
-= form_for student_registration_path([@registration.student, @registration]) do |f|
-  - if @registration.errors.any?
-    #error_explanation
-      %h2= "#{pluralize(@registration.errors.count, "error")} prohibited this registration from being saved:"
-      %ul
-        - @registration.errors.full_messages.each do |message|
-          %li= message
+- if @registration.errors.any?
+  #error_explanation
+    %h2= "#{pluralize(@registration.errors.count, "error")} prohibited this registration from being saved:"
+    %ul
+      - @registration.errors.full_messages.each do |message|
+        %li= message
 
-  .field
-    = f.label :creator
-    = f.text_field :creator
-  .field
-    = f.label :student
-    = f.text_field :student
-  .field
-    = f.label :teacher
-    = f.text_field :teacher
-  .field
-    = f.label :activity
-    = f.text_field :activity
-  .actions
-    = f.submit 'Save'
+= form_for [@registration.student, @registration], url: student_registrations_path(@registration.student) do |f|
+  = f.hidden_field :date, value: @registration.activity.date
+  %h3.display-4= @registration.student
+  %p= @registration.teacher
+  %p= I18n.l(@registration.activity.date, format: :complete)
+  .form-group
+    = f.label :activity_id, 'Activity'
+    = f.select :activity_id, @activities.collect { |a| [a.name, a.id] }, {include_blank: 'Choose...'}, required: true, class: 'form-control'
+  = f.submit 'Save', class: 'btn btn-success'

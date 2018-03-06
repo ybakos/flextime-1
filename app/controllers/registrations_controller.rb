@@ -23,6 +23,7 @@ class RegistrationsController < ApplicationController
   end
 
   def edit
+    @activities = Activity.where('date = ?', @registration.activity.date)
   end
 
   def update
