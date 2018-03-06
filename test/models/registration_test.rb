@@ -77,4 +77,8 @@ class RegistrationTest < ActiveSupport::TestCase
     )
     refute new_registration.valid?
   end
+
+  test '::for_week returns hash of activities for tuesday, thursday and friday' do
+    skip
+  end
 end

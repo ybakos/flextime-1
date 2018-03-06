@@ -16,7 +16,7 @@ class Registration < ApplicationRecord
     {
       date.tuesday => Registration.includes(:activity).where('activities.date = ?', date.tuesday).references(:activities).first,
       date.thursday => Registration.includes(:activity).where('activities.date = ?', date.thursday).references(:activities).first,
-      date.friday => Registration.includes(:activity).where('activities.date = ?', date.tuesday).references(:activities).first
+      date.friday => Registration.includes(:activity).where('activities.date = ?', date.friday).references(:activities).first
     }
   end
 
