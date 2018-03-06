@@ -12,6 +12,14 @@ class Registration < ApplicationRecord
   validate :teacher_must_be_student_teacher
   validate :activity_cannot_be_full, if: Proc.new { |r| r.activity_id_changed? }
 
+  def self.for_week(date)
+    {
+      date.tuesday => Registration.includes(:activity).where('activities.date = ?', date.tuesday).references(:activities).first,
+      date.thursday => Registration.includes(:activity).where('activities.date = ?', date.thursday).references(:activities).first,
+      date.friday => Registration.includes(:activity).where('activities.date = ?', date.tuesday).references(:activities).first
+    }
+  end
+
   private
 
     def student_must_be_student

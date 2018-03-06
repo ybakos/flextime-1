@@ -9,7 +9,7 @@ class StudentsController < ApplicationController
   end
 
   def show
-    @activities = @student.activities.for_week(@date)
+    @registrations = @student.registrations.for_week(@date)
     @week_of_activities = available_activities_for_week
   end
 

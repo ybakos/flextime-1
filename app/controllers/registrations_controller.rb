@@ -1,7 +1,7 @@
 class RegistrationsController < ApplicationController
 
   skip_before_action :restrict_from_students, only: :create
-  before_action :set_registration, only: [:update, :destroy]
+  before_action :set_registration, only: [:edit, :update, :destroy]
 
   def create
     student = User.student.where("id = ?", params[:student_id].to_i).first
@@ -20,6 +20,9 @@ class RegistrationsController < ApplicationController
         format.json { render json: @registration.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def edit
   end
 
   def update
