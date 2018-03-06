@@ -5,7 +5,7 @@
       - @registration.errors.full_messages.each do |message|
         %li= message
 
-= form_for [@registration.student, @registration], url: student_registrations_path(@registration.student) do |f|
+= form_for [@registration.student, @registration], url: student_registration_path(@registration.student, @registration) do |f|
   = f.hidden_field :date, value: @registration.activity.date
   %h3.display-4= @registration.student
   %p= @registration.teacher
