@@ -28,6 +28,7 @@ class RegistrationsController < ApplicationController
 
   def update
     respond_to do |format|
+      byebug
       if @registration.update(registration_params)
         format.html { redirect_back(fallback_location: student_path(@registration.student), notice: 'Registration was successfully updated.') }
         format.json { render :show, status: :ok, location: @registration }
