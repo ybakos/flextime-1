@@ -77,4 +77,42 @@ class ActivityTest < ActiveSupport::TestCase
     refute activities(:friday_activity).full?
   end
 
+  # ::for_week
+
+  test 'returns a hash of tuesday, thursday and friday activities for the current week given any date this week' do
+    date = Date.today.beginning_of_week
+    expected = {
+      date.tuesday => [activities(:tuesday_activity), activities(:second_tuesday_activity)],
+      date.thursday => [activities(:thursday_activity), activities(:second_thursday_activity)],
+      date.friday => [activities(:friday_activity)]
+    }
+    (0..6).each do |offset|
+      assert_equal expected, Activity.for_week(date + offset)
+    end
+  end
+
+  test 'returns a hash of tuesday, thursday and friday activities for the previous week given any date in the previous week' do
+    date = Date.today.beginning_of_week
+    expected = {
+      date.prev_week.tuesday => [activities(:last_tuesday_activity)],
+      date.prev_week.thursday => [activities(:last_thursday_activity)],
+      date.prev_week.friday => [activities(:last_friday_activity)]
+    }
+    (-6..-1).each do |offset|
+      assert_equal expected, Activity.for_week(date + offset)
+    end
+  end
+
+  test 'returns a hash of tuesday, thursday and friday activities for next week given any date next week' do
+    date = Date.today.beginning_of_week
+    expected = {
+      date.next_week.tuesday => [activities(:next_tuesday_activity)],
+      date.next_week.thursday => [activities(:next_thursday_activity)],
+      date.next_week.friday => [activities(:next_friday_activity)]
+    }
+    (7..13).each do |offset|
+      assert_equal expected, Activity.for_week(date + offset)
+    end
+  end
+
 end
