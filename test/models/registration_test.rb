@@ -78,7 +78,18 @@ class RegistrationTest < ActiveSupport::TestCase
     refute new_registration.valid?
   end
 
-  test '::for_week returns hash of activities for tuesday, thursday and friday' do
-    skip
+  # ::for_week
+
+  test 'returns a hash of tuesday, thursday and friday registrations for the current week given any date this week' do
+    date = Date.today.beginning_of_week
+    expected = {
+      date.tuesday => registrations(:by_student),
+      date.thursday => registrations(:by_staff),
+      date.friday => nil
+    }
+    (0..6).each do |offset|
+      assert_equal expected, Registration.for_week(date + offset)
+    end
   end
+
 end
