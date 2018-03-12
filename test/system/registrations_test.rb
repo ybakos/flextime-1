@@ -246,9 +246,12 @@ class RegistrationsTest < ApplicationSystemTestCase
     travel_to Date.today.monday do
       sign_in users(:staff)
       visit student_path(users(:student))
+      within('#tuesday') { click_link('edit') }
+      select 'Second Fake Tuesday Activity', from: 'registration_activity_id'
+      click_button 'Save'
+      assert_text 'Registration was successfully updated'
       within '#tuesday' do
-        click_link 'edit'
-
+        assert_selector 'h5', text: 'Second Fake Tuesday Activity'
       end
     end
   end

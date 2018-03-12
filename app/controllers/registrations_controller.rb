@@ -29,7 +29,7 @@ class RegistrationsController < ApplicationController
   def update
     respond_to do |format|
       if @registration.update(registration_params)
-        format.html { redirect_back(fallback_location: student_path(@registration.student), notice: 'Registration was successfully updated.') }
+        format.html { redirect_to student_path(@registration.student, date: @registration.activity.date), notice: 'Registration was successfully updated.' }
         format.json { render :show, status: :ok, location: @registration }
       else
         format.html { redirect_back(fallback_location: student_path(@registration.student)) }
