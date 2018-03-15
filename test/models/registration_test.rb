@@ -78,6 +78,18 @@ class RegistrationTest < ActiveSupport::TestCase
     refute new_registration.valid?
   end
 
+  test 'is invalid if the creator is a student and the activity is more than eight days away' do
+    student = users(:student)
+    activity = activities(:next_friday_activity)
+    registration = Registration.new(activity: activity, creator: student, student: student, teacher: student.teacher)
+    travel_to Date.today.thursday do
+      refute registration.valid?
+    end
+    travel_to Date.today.friday do
+      assert registration.valid?
+    end
+  end
+
   # ::for_week
 
   test 'returns a hash of tuesday, thursday and friday registrations for the current week given any date this week' do
