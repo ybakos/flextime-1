@@ -1,9 +1,5 @@
-- if @teacher.errors.any?
-  #error_explanation
-    %h2= "#{pluralize(@teacher.errors.count, "error")} prohibited this teacher from being saved:"
-    %ul
-      - @teacher.errors.full_messages.each do |message|
-        %li= message
+= render 'form_errors', model: @teacher
+
 = form_for @teacher, html: {class: 'form-inline'} do |f|
   .form-group
     = f.label :title, class: 'sr-only'

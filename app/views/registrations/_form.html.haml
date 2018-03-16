@@ -1,9 +1,4 @@
-- if @registration.errors.any?
-  #error_explanation
-    %h2= "#{pluralize(@registration.errors.count, "error")} prohibited this registration from being saved:"
-    %ul
-      - @registration.errors.full_messages.each do |message|
-        %li= message
+= render 'form_errors', model: @registration
 
 = form_for [@registration.student, @registration], url: student_registration_path(@registration.student, @registration) do |f|
   %h3.display-4= @registration.student
