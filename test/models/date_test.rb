@@ -14,6 +14,10 @@ class DateTest < ActiveSupport::TestCase
     assert_equal @date.tuesday, Date.today.monday + 1
   end
 
+  test "wednesday returns this wednesday's date" do
+    assert_equal @date.wednesday, Date.today.monday + 2
+  end
+
   test "thursday returns this tuesday's date" do
     assert_equal @date.thursday, Date.today.monday + 3
   end

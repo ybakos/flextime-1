@@ -8,6 +8,10 @@ class Date
     monday + 1
   end
 
+  def wednesday
+    monday + 2
+  end
+
   def thursday
     monday + 3
   end
