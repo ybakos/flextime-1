@@ -83,7 +83,16 @@ class RegistrationsTest < ApplicationSystemTestCase
   end
 
   test 'student should not be able to register for activities more than one week in advance' do
-    skip
+    travel_to Date.today.wednesday do
+      sign_in_as_student_and_visit_profile
+      click_link 'Next week'
+      within '#thursday' do
+        refute has_select?('registration_activity_id')
+      end
+      within '#friday' do
+        refute has_select?('registration_activity_id')
+      end
+    end
   end
 
   test 'student cannot register for activities on past dates' do

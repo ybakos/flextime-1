@@ -24,4 +24,8 @@ class Date
     cweek == Date.today.cweek
   end
 
+  def less_than_a_week_away?
+    (self - Date.today).to_i <= 7
+  end
+
 end

@@ -18,7 +18,7 @@
     .col{id: date.day_name.downcase}
       %h3.display-4= date.day_name
       %h4.h3.text-muted.font-weight-light= date.strftime("%B %-e")
-      - if registration.nil? && Date.today < date
+      - if registration.nil? && Date.today < date && date.less_than_a_week_away?
         = form_for [@student, Registration.new], url: student_registrations_path(@student) do |f|
           = f.hidden_field :date, value: date
           .form-group

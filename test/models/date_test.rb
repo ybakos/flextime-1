@@ -31,4 +31,11 @@ class DateTest < ActiveSupport::TestCase
     refute (@date - 7).current_week?
   end
 
+  test "less_than_a_week_away?" do
+    assert @date.less_than_a_week_away?
+    travel_to Date.today.monday do
+      refute (Date.today.next_week + 1).less_than_a_week_away?
+    end
+  end
+
 end
