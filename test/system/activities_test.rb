@@ -149,8 +149,21 @@ class ActivitiesTest < ApplicationSystemTestCase
 
   # Delete
 
-  test 'staff deletes an activity' do
-    skip
+  test 'staff does not see delete link' do
+    visit activity_url(activities(:tuesday_activity))
+    assert_no_link 'Delete'
+  end
+
+  test 'admin deletes an activity' do
+    sign_in users(:admin)
+    visit activity_url(activities(:tuesday_activity))
+    assert_link 'Delete'
+    # See activities_controller_test.rb. Avoiding this here since the delete
+    # link uses js to display a confirmation dialog. (slow test)
+    # accept_confirm do
+    #   click_link 'Delete'
+    # end
+    # assert_text 'Fake Tuesday Activity was successfully destroyed'
   end
 
 end

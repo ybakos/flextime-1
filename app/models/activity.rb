@@ -7,7 +7,7 @@ class Activity < ApplicationRecord
   validate :date_must_be_tuesday_thursday_friday, unless: Proc.new { date.nil? }
   validates_uniqueness_of :room, scope: [:date, :name], case_sensitive: false
 
-  has_many :registrations
+  has_many :registrations, dependent: :destroy
 
   def self.for_week(date)
     {

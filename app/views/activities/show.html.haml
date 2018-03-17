@@ -3,6 +3,8 @@
 %nav.mt-3
   = link_to 'Back', activities_path(date: @activity.date), class: 'btn btn-outline-secondary'
   = link_to 'Edit', edit_activity_path(@activity), class: 'btn btn-outline-primary'
+  - if current_user.admin?
+    = link_to 'Delete', activity_path(@activity, date: @activity.date), method: :delete, data: {confirm: 'Are you sure? Any students will no longer be registered for this activity.'}, class: 'btn btn-outline-danger float-right'
 
 %h3.display-4.mt-5
   = @activity.day_and_room
