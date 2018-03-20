@@ -67,6 +67,11 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal a.to_s_was, "Fake Tuesday Activity (Fake Room) on #{a.date.strftime("%A, %b %-e %Y")}"
   end
 
+  test '#day_and_room' do
+    a = activity
+    assert_equal a.day_and_room, "#{I18n.l(a.date, format: :without_year)} in #{a.room}"
+  end
+
   # full?
 
   test 'is full when the number of registrations equal capacity' do
