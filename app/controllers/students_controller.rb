@@ -28,7 +28,7 @@ class StudentsController < ApplicationController
   private
 
     def set_student
-      @student = current_user&.student? ? current_user : User.find(params[:id])
+      @student = current_user&.student? ? current_user : User.student.find(params[:id])
     end
 
     def set_date
