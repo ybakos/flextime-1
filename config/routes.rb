@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   devise_for :users, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   resources :activities
-  resources :teachers, except: [:new, :destroy]
+  resources :teachers, except: [:new, :destroy] do
+    put 'deactivate', on: :member
+  end
   resources :students, only: [:index, :show, :update] do
     resources :registrations, only: [:create, :edit, :update, :destroy]
   end

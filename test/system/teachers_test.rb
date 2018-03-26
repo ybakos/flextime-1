@@ -52,7 +52,7 @@ class TeachersTest < ApplicationSystemTestCase
 
   def edit_first_teacher
     first('.list-group-item').click_link('Edit')
-    assert_selector 'h2', text: 'Editing Mr. Fake'
+    assert_selector 'h2', text: 'Editing Mrs. Fake'
   end
 
   test 'staff updates a teacher' do
@@ -60,7 +60,7 @@ class TeachersTest < ApplicationSystemTestCase
     fill_in 'teacher_name', with: 'FAKE UPDATE'
     click_button 'Update Teacher'
     assert_text 'Teacher was successfully updated'
-    assert_selector 'h2', text: 'Mr. FAKE UPDATE'
+    assert_selector 'h2', text: 'Mrs. FAKE UPDATE'
   end
 
   test 'staff sees an error when updating a teacher and neither a title nor name are specified' do
@@ -76,10 +76,10 @@ class TeachersTest < ApplicationSystemTestCase
   # There can be only one "Mr. Smith"
   test 'staff sees an error when updating a teacher with a title/name pair matching an existing teacher' do
     edit_first_teacher
-    select 'Mrs.', from: 'teacher_title'
+    select 'Mr.', from: 'teacher_title'
     fill_in 'teacher_name', with: 'Fake'
     click_button 'Update Teacher'
-    assert_selector 'h2', text: 'Editing Mr. Fake'
+    assert_selector 'h2', text: 'Editing Mrs. Fake'
     assert_text '1 error prohibited this teacher from being saved'
     assert_text 'Name has already been taken'
   end
@@ -87,8 +87,15 @@ class TeachersTest < ApplicationSystemTestCase
   # Deactivating
 
   # https://github.com/osu-cascades/falcon-time/issues/39
-  test 'staff deactivates a teacher' do
-    skip
+  test 'admin deactivates a teacher' do
+    sign_in users(:admin)
+    visit teachers_url
+    # See teachers_controller_test.rb. Avoiding this here since the deactivate
+    # link uses js to display a confirmation dialog. (slow test)
+    # accept_confirm do
+    #   first('.list-group-item').click_link('Deactivate')
+    # end
+    # assert_text 'Fake was successfully deactivated'
   end
 
 end

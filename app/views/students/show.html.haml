@@ -8,7 +8,7 @@
     = form_for @student, as: :student, url: student_path(@student), html: {class: 'form-inline'} do |f|
       .form-group
         = f.label :teacher
-        = f.select :teacher_id, Teacher.all.collect { |t| [t.to_s, t.id] }, {include_blank: 'Choose...'}, {class: 'form-control mx-2'}
+        = f.select :teacher_id, Teacher.where(active: true).collect { |t| [t.to_s, t.id] }, {include_blank: 'Choose...'}, {class: 'form-control mx-2'}
         = f.submit 'Ok', class: 'btn btn-outline-success'
   .col
     = link_to_next_week_for_student(@student, @date)

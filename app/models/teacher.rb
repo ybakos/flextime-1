@@ -5,8 +5,14 @@ class Teacher < ApplicationRecord
   validates_presence_of :name
   validates_presence_of :title
   validates :name, uniqueness: { scope: :title, case_sensitive: false }
+  validates :active, inclusion: { in: [true, false] }
 
   has_many :students, class_name: 'User', dependent: :restrict_with_exception
+
+  def deactivate!
+    self.active = false
+    save!
+  end
 
   def to_s
     "#{title} #{name}"

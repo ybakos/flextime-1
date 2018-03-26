@@ -1,6 +1,6 @@
 class TeachersController < ApplicationController
 
-  before_action :set_teacher, only: [:show, :edit, :update]
+  before_action :set_teacher, only: [:show, :edit, :update, :deactivate]
   before_action :set_date, only: [:show]
 
   def index
@@ -33,6 +33,18 @@ class TeachersController < ApplicationController
         format.json { render :show, status: :ok, location: @teacher }
       else
         format.html { render :edit }
+        format.json { render json: @teacher.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def deactivate
+    respond_to do |format|
+      if @teacher.deactivate!
+        format.html { redirect_to teachers_path, notice: 'Teacher was successfully deactivated.' }
+        format.json { render :show, status: :ok, location: @teacher }
+      else
+        format.html { render :index }
         format.json { render json: @teacher.errors, status: :unprocessable_entity }
       end
     end

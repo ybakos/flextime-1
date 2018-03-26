@@ -47,4 +47,16 @@ class TeacherTest < ActiveSupport::TestCase
     assert_raises { teachers(:miss_valid).destroy }
   end
 
+  test 'is active by default' do
+    teacher = Teacher.new
+    assert teacher.active?
+  end
+
+  test '#deactivate!' do
+    teacher = teachers(:miss_valid)
+    assert teacher.active?
+    teacher.deactivate!
+    refute teacher.active?
+  end
+
 end

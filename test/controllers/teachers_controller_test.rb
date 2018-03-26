@@ -54,4 +54,12 @@ class TeachersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to student_path(student)
   end
 
+  test 'allows admins to deactivate a teacher' do
+    sign_in users(:admin)
+    teacher = teachers(:miss_valid)
+    put deactivate_teacher_path(teacher)
+    assert_redirected_to teachers_path
+    assert_match /Teacher was successfully deactivated/, flash[:notice]
+  end
+
 end
