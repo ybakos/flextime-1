@@ -77,7 +77,7 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     activity = activities(:tuesday_activity)
     delete activity_path(activity)
     assert_redirected_to activities_path(date: activity.date.monday)
-    assert_match /Fake Tuesday Activity was successfully destroyed/, flash[:notice]
+    assert_match /Fake Tuesday Activity was successfully deleted/, flash[:notice]
   end
 
 end

@@ -163,7 +163,7 @@ class ActivitiesTest < ApplicationSystemTestCase
     # accept_confirm do
     #   click_link 'Delete'
     # end
-    # assert_text 'Fake Tuesday Activity was successfully destroyed'
+    # assert_text 'Fake Tuesday Activity was successfully deleted'
   end
 
 end
