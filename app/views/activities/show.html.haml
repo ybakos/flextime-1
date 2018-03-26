@@ -8,10 +8,11 @@
 
 %h3.display-4.mt-5
   = @activity.day_and_room
-  %span.badge.badge-pill.badge-light.text-muted= @activity.registrations.count
-  %span.badge.badge-pill.badge-secondary.h4= @activity.capacity
+  .float-right
+    %span.badge.badge-pill.badge-secondary= @activity.registrations.count
+    %span.badge.badge-pill.badge-light.text-muted= @activity.capacity
 
-%table.table
+%table.table.mt-3
   %thead
     %tr
       %th Student

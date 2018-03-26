@@ -8,7 +8,7 @@
   - @week_of_activities.each do |date, activities|
     .col
       .h4.float-right
-        %span.badge.badge-pill.badge-secondary.font-weight-light= activities.sum(&:capacity)
+        %span.badge.badge-pill.badge-light.text-muted.font-weight-light= activities.sum(&:capacity)
       %h3.display-4= date.day_name
       = link_to 'Add New Activity', new_activity_path(date: date.to_s), class: 'btn btn-sm btn-outline-success float-right'
       %h4.h3.text-muted.font-weight-light= date.strftime("%B %-e")

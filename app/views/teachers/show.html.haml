@@ -10,8 +10,10 @@
 
 %h3.display-4.mt-5
   Students
-  %span.badge.badge-pill.badge-secondary.font-weight-light= @teacher.students.count
-%table.table
+  .float-right
+    %span.badge.badge-pill.badge-secondary.font-weight-light= @teacher.students.count
+
+%table.table.mt-3
   %thead
     %tr
       %th Student
