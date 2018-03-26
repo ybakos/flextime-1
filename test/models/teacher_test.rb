@@ -52,11 +52,20 @@ class TeacherTest < ActiveSupport::TestCase
     assert teacher.active?
   end
 
-  test '#deactivate!' do
+  test 'is not active after being deactivated' do
     teacher = teachers(:miss_valid)
     assert teacher.active?
     teacher.deactivate!
     refute teacher.active?
+  end
+
+  test 'deactivation causes students to be disassociated' do
+    teacher = teachers(:miss_valid)
+    students = [users(:student), users(:second_student)]
+    students.each { |s| assert_equal(s.teacher, teacher) }
+    teacher.deactivate!
+    students.each(&:reload)
+    students.each { |s| assert(s.teacher.nil?) }
   end
 
 end

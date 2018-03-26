@@ -10,8 +10,14 @@ class Teacher < ApplicationRecord
   has_many :students, class_name: 'User', dependent: :restrict_with_exception
 
   def deactivate!
-    self.active = false
-    save!
+    transaction do
+      self.active = false
+      save!
+      students.each do |s|
+        s.teacher_id = nil
+        s.save!(validate: false)
+      end
+    end
   end
 
   def to_s
