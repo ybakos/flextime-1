@@ -18,14 +18,14 @@ class UserTest < ActiveSupport::TestCase
     mock = MiniTest::Mock.new
     mock.expect(:extra, MiniTest::Mock.new.expect(:raw_info, MiniTest::Mock.new.expect(:hd, domain)))
     mock.expect(:provider, 'fake provider')
-    mock.expect(:provider, 'fake provider')
-    mock.expect(:uid, 'fake uid')
     mock.expect(:uid, 'fake uid')
     mock_info = MiniTest::Mock.new
+    mock_info.expect(:email, 'fake@fake.com')
     mock_info.expect(:email, 'fake@fake.com')
     mock_info.expect(:first_name, 'Fake')
     mock_info.expect(:last_name, 'Fake')
     mock_info.expect(:image, 'Fake')
+    mock.expect(:info, mock_info)
     mock.expect(:info, mock_info)
     mock.expect(:info, mock_info)
     mock.expect(:info, mock_info)
