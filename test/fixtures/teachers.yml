@@ -29,6 +29,6 @@ invalid_title:
   active: true
 
 deactivated:
-  name: zDeactivated
+  name: zInactive Teacher
   title: 4
   active: false

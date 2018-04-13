@@ -1,11 +1,12 @@
 class TeachersController < ApplicationController
 
-  before_action :set_teacher, only: [:show, :edit, :update, :deactivate]
+  before_action :restrict_unless_admin, except: [:index, :show]
+  before_action :set_teacher, only: [:show, :edit, :update, :deactivate, :destroy]
   before_action :set_date, only: [:show]
 
   def index
     @teacher = Teacher.new
-    @teachers = Teacher.order(:name)
+    @teachers = params[:status] == 'deactivated' ? Teacher.deactivated : Teacher.active
   end
 
   def show; end
@@ -45,6 +46,18 @@ class TeachersController < ApplicationController
         format.json { render :show, status: :ok, location: @teacher }
       else
         format.html { render :index }
+        format.json { render json: @teacher.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def destroy
+    respond_to do |format|
+      if @teacher.destroy
+        format.html { redirect_to teachers_path, notice: "#{@teacher.name} was successfully deleted." }
+        format.json { head :no_content }
+      else
+        format.html { render :index, alert: 'You cannot delete this teacher. But, you can deactivate the teacher.'}
         format.json { render json: @teacher.errors, status: :unprocessable_entity }
       end
     end

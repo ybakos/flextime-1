@@ -1,5 +1,10 @@
 %li.list-group-item
   %h3= link_to teacher.to_s, teacher
-  = link_to 'Edit', edit_teacher_path(teacher)
   - if current_user.admin?
-    %span.ml-5= link_to 'Deactivate', deactivate_teacher_path(teacher), method: :put, data: {confirm: 'Are you sure?'}
+    = link_to 'Edit', edit_teacher_path(teacher)
+    - if teacher.active?
+      %span.ml-5= link_to 'Deactivate', deactivate_teacher_path(teacher), method: :put, data: {confirm: 'Are you sure?'}
+    - else
+      %span.ml-5.text-muted Deactivated
+    - if teacher.can_be_deleted?
+      %span.ml-5= link_to 'Delete', teacher_path(teacher), method: :delete, data: {confirm: 'Are you sure?'}

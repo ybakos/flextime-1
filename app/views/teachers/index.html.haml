@@ -1,10 +1,15 @@
 %h2.display-3 Teachers
 
-.row.mt-3.text-center
-  .col
-  .col
-    = render 'form'
-  .col
+- if current_user.admin?
+  .row.mt-3.text-center
+    .col
+    .col
+      = render 'form'
+    .col
 
 %ul.list-group.mt-5
+  - if params[:status] == 'deactivated'
+    %p= link_to 'View Active Teachers', teachers_path
+  - else
+    %p= link_to 'View Deactivated Teachers', teachers_path(status: 'deactivated')
   = render @teachers
