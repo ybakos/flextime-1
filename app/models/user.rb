@@ -19,6 +19,8 @@ class User < ApplicationRecord
   has_many :activities, through: :registrations
 
   default_scope { order(:last_name) }
+  scope :active, -> { where(active: true) }
+  scope :deactivated, -> { where(active: false) }
 
   # https://github.com/zquestz/omniauth-google-oauth2
   def self.from_omniauth(auth, allowed_domains)

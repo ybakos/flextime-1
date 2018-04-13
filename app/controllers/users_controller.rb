@@ -4,7 +4,13 @@ class UsersController < ApplicationController
   before_action :ignore_password_and_password_confirmation, only: :update
 
   def index
-    @users = User.order(:last_name)
+    if params[:status]
+      @users = params[:status] == 'active' ? User.active : User.deactivated
+    elsif params[:role]
+      @users = User.where(role: params[:role])
+    else
+      @users = User.all
+    end
   end
 
   def update

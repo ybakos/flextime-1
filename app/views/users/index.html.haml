@@ -1,5 +1,17 @@
 %h2.display-3 Users
 
+.nav
+  %h4 Filter
+  %ul
+    Status
+    %li= link_to 'Active', users_path(status: 'active')
+    %li= link_to 'Deactivated', users_path(status: 'deactivated')
+  %ul
+    Role
+    %li= link_to 'Admins', users_path(role: 'admin')
+    %li= link_to 'Staff', users_path(role: 'staff')
+    %li= link_to 'Students', users_path(role: 'student')
+
 %table#student_registrations.table.mt-5
   %thead
     %tr
