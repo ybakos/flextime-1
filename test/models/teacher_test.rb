@@ -9,6 +9,15 @@ class TeacherTest < ActiveSupport::TestCase
     assert teacher.invalid?
   end
 
+  test 'trims whitespace around any initial name' do
+    bad_names = [' FAKE', 'FAKE ', ' FAKE ']
+    teacher = Teacher.new
+    bad_names.each do |name|
+      teacher.name = name
+      assert_equal(teacher.name, 'FAKE')
+    end
+  end
+
   test 'without a title is invalid' do
     teacher = teachers(:miss_valid)
     assert teacher.valid?

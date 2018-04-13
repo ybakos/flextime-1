@@ -37,4 +37,8 @@ class Teacher < ApplicationRecord
     students.empty? && registrations.empty?
   end
 
+  def name=(name)
+    super(name&.strip)
+  end
+
 end
