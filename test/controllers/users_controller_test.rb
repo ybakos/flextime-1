@@ -41,8 +41,7 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'redirects requests from staff users to root url' do
-    staff = users(:staff)
-    sign_in staff
+    sign_in users(:staff)
     # index
     get users_path
     assert_redirected_to root_url
