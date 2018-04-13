@@ -3,6 +3,8 @@
 .nav
   %h4 Filter
   %ul
+    = link_to 'View All', users_path
+  %ul
     Status
     %li= link_to 'Active', users_path(status: 'active')
     %li= link_to 'Deactivated', users_path(status: 'deactivated')
