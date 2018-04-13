@@ -9,9 +9,8 @@
     = link_to_next_week_for_teacher(@teacher, @date)
 
 %h3.display-4.mt-5
+  = @teacher.students.count
   Students
-  .float-right
-    %span.badge.badge-pill.badge-secondary.font-weight-light= @teacher.students.count
 
 %table.table.mt-3
   %thead
