@@ -20,5 +20,5 @@
   %tbody
     - @activity.registrations.each do |registration|
       %tr{ id: "student_#{registration.student.id}" }
-        %td.student= link_to registration.student.to_s, student_path(registration.student, date: registration.activity.date)
-        %td.teacher= link_to registration.teacher, teacher_path(registration.teacher, date: registration.activity.date)
+        %td.student= link_to registration.student.last_name_first_name, student_path(registration.student, date: registration.activity.date)
+        %td.teacher= link_to registration.teacher.name, teacher_path(registration.teacher, date: registration.activity.date)

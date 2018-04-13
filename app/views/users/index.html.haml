@@ -9,7 +9,7 @@
   %tbody
     - @users.each do |u|
       %tr
-        %td= "#{u.last_name}, #{u.first_name}"
+        %td= u.last_name_first_name
         %td= u.email
         %td
           - if current_user == u

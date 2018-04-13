@@ -18,6 +18,8 @@ class User < ApplicationRecord
 
   has_many :activities, through: :registrations
 
+  default_scope { order(:last_name) }
+
   # https://github.com/zquestz/omniauth-google-oauth2
   def self.from_omniauth(auth, allowed_domains)
     return unless allowed_domains.include? auth&.extra&.raw_info&.hd
@@ -34,6 +36,10 @@ class User < ApplicationRecord
 
   def to_s
     "#{first_name} #{last_name}"
+  end
+
+  def last_name_first_name
+    "#{last_name}, #{first_name}"
   end
 
   def activity_for_day_of_week(day, date)

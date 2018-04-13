@@ -123,8 +123,8 @@ class RegistrationsTest < ApplicationSystemTestCase
       sign_in users(:staff)
       visit students_path
       within "#student_#{users(:student).id}" do
-        within('.student') { assert_text 'Fake Student' }
-        within('.teacher') { assert_text 'Miss Valid' }
+        within('.student') { assert_text 'Student, Fake' }
+        within('.teacher') { assert_text 'Valid' }
         within('.tuesday') { assert_text 'Fake Tuesday Activity' }
         within('.thursday') { assert_text 'Second Fake Thursday Activity' }
         assert find('.friday').text == ''
@@ -138,8 +138,8 @@ class RegistrationsTest < ApplicationSystemTestCase
       visit students_path
       click_link 'Previous week'
       within "#student_#{users(:student).id}" do
-        within('.student') { assert_text 'Fake Student' }
-        within('.teacher') { assert_text 'Miss Valid' }
+        within('.student') { assert_text 'Student, Fake' }
+        within('.teacher') { assert_text 'Valid' }
         within('.tuesday') { assert_text 'Fake Previous Tuesday Activity' }
         assert find('.thursday').text == ''
         assert find('.friday').text == ''
@@ -153,8 +153,8 @@ class RegistrationsTest < ApplicationSystemTestCase
       visit students_path
       click_link 'Next week'
       within "#student_#{users(:student).id}" do
-        within('.student') { assert_text 'Fake Student' }
-        within('.teacher') { assert_text 'Miss Valid' }
+        within('.student') { assert_text 'Student, Fake' }
+        within('.teacher') { assert_text 'Valid' }
         within('.tuesday') { assert_text 'Fake Next Tuesday Activity' }
         assert find('.thursday').text == ''
         assert find('.friday').text == ''
@@ -198,7 +198,7 @@ class RegistrationsTest < ApplicationSystemTestCase
       sign_in users(:staff)
       visit teacher_path(teachers(:miss_valid))
       within "#student_#{users(:student).id}" do
-        within('.student') { assert_text 'Fake Student' }
+        within('.student') { assert_text 'Student, Fake' }
         within('.tuesday') { assert_text 'Fake Tuesday Activity' }
         within('.thursday') { assert_text 'Second Fake Thursday Activity' }
         assert find('.friday').text == ''
@@ -212,7 +212,7 @@ class RegistrationsTest < ApplicationSystemTestCase
       visit teacher_path(teachers(:miss_valid))
       click_link 'Previous week'
       within "#student_#{users(:student).id}" do
-        within('.student') { assert_text 'Fake Student' }
+        within('.student') { assert_text 'Student, Fake' }
         within('.tuesday') { assert_text 'Fake Previous Tuesday Activity' }
         assert find('.thursday').text == ''
         assert find('.friday').text == ''
@@ -226,7 +226,7 @@ class RegistrationsTest < ApplicationSystemTestCase
       visit teacher_path(teachers(:miss_valid))
       click_link 'Next week'
       within "#student_#{users(:student).id}" do
-        within('.student') { assert_text 'Fake Student' }
+        within('.student') { assert_text 'Student, Fake' }
         within('.tuesday') { assert_text 'Fake Next Tuesday Activity' }
         assert find('.thursday').text == ''
         assert find('.friday').text == ''
@@ -241,8 +241,8 @@ class RegistrationsTest < ApplicationSystemTestCase
       sign_in users(:staff)
       visit activity_path(activities(:tuesday_activity))
       within "#student_#{users(:student).id}" do
-        within('.student') { assert_text 'Fake Student' }
-        within('.teacher') { assert_text 'Miss Valid' }
+        within('.student') { assert_text 'Student, Fake' }
+        within('.teacher') { assert_text 'Valid' }
       end
     end
   end
