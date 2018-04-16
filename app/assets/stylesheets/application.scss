@@ -64,6 +64,16 @@ pre.debug_dump {
   @extend .is-invalid;
 }
 
+#student_subnav {
+  margin: auto;
+  display: block;
+  text-align: center;
+}
+
+#student_subnav #btn_label {
+  pointer-events: none;
+}
+
 
 // @mixin box_sizing {
 //   -moz-box-sizing: border-box;

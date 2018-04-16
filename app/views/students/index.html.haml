@@ -6,7 +6,13 @@
     %h3= @date.current_week? ? 'This Week' : "Week of #{@date.beginning_of_week.to_s(:long)}"
   .col.text-right= link_to 'Next week', students_path(date: @date.next_week), class: 'btn btn-outline-primary'
 
-%table#student_registrations.table.mt-5
+%nav#student_subnav.mt-5
+  .btn-group
+    - links_to_student_lists_by_last_name(@date).each do |link|
+      = link
+    = link_to 'All', students_path(all: true, date: @date), class: 'btn btn-sm btn-outline-secondary'
+
+%table#student_registrations.table.mt-3
   %thead
     %tr
       %th Student

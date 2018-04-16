@@ -121,7 +121,7 @@ class RegistrationsTest < ApplicationSystemTestCase
   test 'staff can view list of all student registrations for the current week' do
     travel_to Date.today.monday do
       sign_in users(:staff)
-      visit students_path
+      visit students_path(all: true)
       within "#student_#{users(:student).id}" do
         within('.student') { assert_text 'Student, Fake' }
         within('.teacher') { assert_text 'Valid' }
@@ -137,6 +137,7 @@ class RegistrationsTest < ApplicationSystemTestCase
       sign_in users(:staff)
       visit students_path
       click_link 'Previous week'
+      click_link('All')
       within "#student_#{users(:student).id}" do
         within('.student') { assert_text 'Student, Fake' }
         within('.teacher') { assert_text 'Valid' }
@@ -152,6 +153,7 @@ class RegistrationsTest < ApplicationSystemTestCase
       sign_in users(:staff)
       visit students_path
       click_link 'Next week'
+      click_link('All')
       within "#student_#{users(:student).id}" do
         within('.student') { assert_text 'Student, Fake' }
         within('.teacher') { assert_text 'Valid' }

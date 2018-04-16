@@ -5,7 +5,12 @@ class StudentsController < ApplicationController
   before_action :set_date, only: [:index, :show]
 
   def index
-    @students = User.student
+    if params[:all]
+      @students = User.student
+    else
+      initial_letter_of_last_name = params[:last_name_starting_with] || 'A'
+      @students = User.student.starting_with(initial_letter_of_last_name)
+    end
   end
 
   def show

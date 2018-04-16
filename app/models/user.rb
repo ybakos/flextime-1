@@ -21,6 +21,7 @@ class User < ApplicationRecord
   default_scope { order(:last_name) }
   scope :active, -> { where(active: true) }
   scope :deactivated, -> { where(active: false) }
+  scope :starting_with, ->(letter) { where('last_name LIKE ?', "#{letter}%") }
 
   # https://github.com/zquestz/omniauth-google-oauth2
   def self.from_omniauth(auth, allowed_domains)

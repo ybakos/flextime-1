@@ -10,7 +10,7 @@ module StudentsHelper
 
   def links_to_student_lists_by_last_name(date)
     ('A'..'Z').map do |letter|
-      link_to letter, students_path(last_name_starting_with: letter, date: date)
+      link_to letter, students_path(last_name_starting_with: letter, date: date), class: 'btn btn-sm btn-outline-secondary'
     end
   end
 
