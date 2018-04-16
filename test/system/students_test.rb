@@ -34,8 +34,9 @@ class StudentsTest < ApplicationSystemTestCase
     within('#tuesday') { assert_selector 'h5', text: 'Fake Next Tuesday Activity' }
   end
 
-  test 'student sees current Falcon Time teacher' do
+  test 'student sees current Falcon Time teacher and not the form' do
     sign_in_as_student_and_visit_profile
+    assert_no_selector('student_teacher_id')
     assert_selector('h3#falcon_time_teacher', text: users(:student).teacher.to_s)
   end
 
@@ -57,6 +58,12 @@ class StudentsTest < ApplicationSystemTestCase
     click_button 'Ok'
     assert_text 'Please specify a teacher'
     assert has_select?('student_teacher_id')
+  end
+
+  test 'admins should see a teacher form even if the student has a teacher' do
+    sign_in users(:admin)
+    visit student_path(users(:student))
+    assert has_select?('student_teacher_id', selected: users(:student).teacher.to_s)
   end
 
 end
