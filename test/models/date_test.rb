@@ -38,4 +38,11 @@ class DateTest < ActiveSupport::TestCase
     end
   end
 
+  test "registration_cutoff_datetime is 9pm utc" do
+    d = Date.today
+    t = Time.parse("9:00PM UTC")
+    today_onepm = DateTime.new(d.year, d.month, d.day, t.hour, t.min, t.sec).utc
+    assert_equal Date.today.registration_cutoff_datetime, today_onepm
+  end
+
 end

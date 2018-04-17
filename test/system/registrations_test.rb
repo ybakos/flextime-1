@@ -68,6 +68,14 @@ class RegistrationsTest < ApplicationSystemTestCase
     end
   end
 
+  test 'student can register for activities up to 1pm the day of' do
+    skip
+  end
+
+  test 'student can notregister for activities after 1pm the day of' do
+    skip
+  end
+
   test 'student should be able to register for activities one week in advance' do
     sign_in_as_student_and_visit_profile
     one_pm_thursday = DateTime.now.thursday.change({hour:13, min:0, sec: 0})
