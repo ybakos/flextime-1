@@ -265,7 +265,7 @@ class RegistrationsTest < ApplicationSystemTestCase
     travel_to Date.today.monday do
       sign_in users(:staff)
       visit student_path(users(:student))
-      within('#tuesday') { click_link('edit') }
+      within('#tuesday') { click_link('change') }
       select 'Second Fake Tuesday Activity', from: 'registration_activity_id'
       click_button 'Save'
       assert_text 'Registration was successfully updated'
@@ -273,6 +273,26 @@ class RegistrationsTest < ApplicationSystemTestCase
         assert_selector 'h5', text: 'Second Fake Tuesday Activity'
       end
     end
+  end
+
+  test 'staff can delete upcoming student registrations' do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit student_path(users(:student))
+      within '#tuesday' do
+        assert_selector 'h5', text: 'Fake Tuesday Activity'
+        click_link('remove')
+      end
+      assert_text 'Fake Student was removed from Fake Tuesday Activity'
+      within '#tuesday' do
+        refute_selector 'h5', text: 'Fake Tuesday Activity'
+        assert has_select?('registration_activity_id')
+      end
+    end
+  end
+
+  test 'no one can edit or update past student registrations' do
+    skip
   end
 
 end

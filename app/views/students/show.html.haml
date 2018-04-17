@@ -38,7 +38,9 @@
                   %h6= registration.activity.room
                 .col
                   - unless current_user.student?
-                    %p.text-right.mb-0= link_to 'edit', edit_student_registration_path(@student, registration)
+                    %p.text-right.mb-0
+                      %span.mr-3= link_to 'remove', student_registration_path(@student, registration), method: :delete, data: {confirm: 'Are you sure? This student will no longer be registered this activity.'}, class: 'text-danger'
+                      = link_to 'change', edit_student_registration_path(@student, registration)
   - else
     .alert.alert-info.mx-auto
       %h3.my-2 Hi #{@student.first_name}, please select your Falcon Time teacher.

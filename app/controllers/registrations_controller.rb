@@ -41,7 +41,7 @@ class RegistrationsController < ApplicationController
   def destroy
     @registration.destroy
     respond_to do |format|
-      format.html { redirect_back(fallback_location: student_path(@registration.student), notice: 'Registration was successfully deleted.') }
+      format.html { redirect_back(fallback_location: student_path(@registration.student, date: @registration.activity.date), notice: "#{@registration.student} was removed from #{@registration.activity.name}.") }
       format.json { head :no_content }
     end
   end
