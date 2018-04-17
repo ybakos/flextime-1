@@ -4,6 +4,14 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!, unless: :devise_controller?
   before_action :restrict_from_students, unless: :devise_controller?
 
+  rescue_from ActionController::InvalidAuthenticityToken, with: :redirect_and_prompt_for_sign_in
+
+  protected
+
+    def redirect_and_prompt_for_sign_in
+      redirect_to(new_user_session_path, alert: 'Please sign in.')
+    end
+
   private
 
     def restrict_from_students

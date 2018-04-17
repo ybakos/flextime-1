@@ -8,4 +8,9 @@ class UsersTest < ApplicationSystemTestCase
     skip
   end
 
+  # https://github.com/osu-cascades/falcon-time/issues/72
+  test 'user who signs out, goes back, and POSTs is redirected to sign in' do
+    skip
+  end
+
 end
