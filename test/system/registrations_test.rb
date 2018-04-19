@@ -122,6 +122,18 @@ class RegistrationsTest < ApplicationSystemTestCase
     end
   end
 
+  test 'student does not see edit or remove links' do
+    travel_to Date.today.monday do
+      sign_in users(:student)
+      visit student_path(users(:student))
+      assert_selector 'h5', text: 'Fake Tuesday Activity'
+      assert_selector 'h5', text: 'Fake Thursday Activity'
+      assert_no_link 'edit'
+      assert_no_link 'remove'
+    end
+  end
+
+
   # Staff viewing lists of student registrations
 
   # /students
