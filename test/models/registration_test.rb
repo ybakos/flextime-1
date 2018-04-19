@@ -44,6 +44,16 @@ class RegistrationTest < ActiveSupport::TestCase
     refute registration.valid?
   end
 
+  # students may only register themselves
+  test 'is invalid if student registrant (creator) is not the registration student' do
+    student = users(:student)
+    new_registration = Registration.new(creator: student,
+      student: users(:second_student),
+      teacher: users(:second_student).teacher,
+      activity: activities(:friday_activity))
+    refute new_registration.valid?
+  end
+
   # Students may only register for an activity once
   test 'must be unique for the student and activity' do
     existing_registration = registrations(:by_student)

@@ -2,6 +2,7 @@ class RegistrationsController < ApplicationController
 
   skip_before_action :restrict_from_students, only: :create
   before_action :set_registration, only: [:edit, :update, :destroy]
+  before_action :check_student_id, only: :create
 
   def create
     student = User.student.where("id = ?", params[:student_id].to_i).first
@@ -29,7 +30,7 @@ class RegistrationsController < ApplicationController
   def update
     respond_to do |format|
       if @registration.update(registration_params)
-        format.html { redirect_to student_path(@registration.student, date: @registration.activity.date), notice: 'Registration was successfully updated.' }
+        format.html { redirect_to student_path(@registration.student, date: @registration.activity.date.monday), notice: 'Registration was successfully updated.' }
         format.json { render :show, status: :ok, location: @registration }
       else
         format.html { redirect_back(fallback_location: student_path(@registration.student)) }
@@ -41,7 +42,7 @@ class RegistrationsController < ApplicationController
   def destroy
     @registration.destroy
     respond_to do |format|
-      format.html { redirect_back(fallback_location: student_path(@registration.student, date: @registration.activity.date), notice: "#{@registration.student} was removed from #{@registration.activity.name}.") }
+      format.html { redirect_back(fallback_location: student_path(@registration.student, date: @registration.activity.date.monday), notice: "#{@registration.student} was removed from #{@registration.activity.name}.") }
       format.json { head :no_content }
     end
   end
@@ -54,6 +55,12 @@ class RegistrationsController < ApplicationController
 
     def registration_params
       params.require(:registration).permit(:activity_id)
+    end
+
+    def check_student_id
+      if current_user.student? && params[:student_id]&.to_i != current_user.id
+        redirect_back(fallback_location: student_path(current_user), alert: 'You may only register yourself for an activity.')
+      end
     end
 
 end

@@ -12,6 +12,8 @@ class Registration < ApplicationRecord
   validate :teacher_must_be_student_teacher
   validate :activity_cannot_be_full, if: Proc.new { |r| r.activity_id_changed? }
   validate :activity_must_not_be_more_than_a_week_away, if: Proc.new { |r| r.creator.student? }
+  validate :student_can_only_register_themselves, if: Proc.new { |r| r.creator.student? }
+
 
   def self.for_week(date)
     {
@@ -53,6 +55,10 @@ class Registration < ApplicationRecord
       if (activity.date - Date.today).to_i > 7
         errors.add(:activity, 'cannot be over a week in the future')
       end
+    end
+
+    def student_can_only_register_themselves
+      errors.add(:student, 'can only register themselves') if student.id != creator.id
     end
 
 end
