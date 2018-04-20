@@ -157,13 +157,8 @@ class ActivitiesTest < ApplicationSystemTestCase
   test 'admin deletes an activity' do
     sign_in users(:admin)
     visit activity_url(activities(:tuesday_activity))
-    assert_link 'Delete'
-    # See activities_controller_test.rb. Avoiding this here since the delete
-    # link uses js to display a confirmation dialog. (slow test)
-    # accept_confirm do
-    #   click_link 'Delete'
-    # end
-    # assert_text 'Fake Tuesday Activity was successfully deleted'
+    click_link 'Delete'
+    assert_text 'Fake Tuesday Activity was successfully deleted'
   end
 
 end
