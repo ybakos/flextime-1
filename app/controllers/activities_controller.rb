@@ -21,9 +21,9 @@ class ActivitiesController < ApplicationController
 
   def edit
     @dates_for_select = [
-      [I18n.l(@activity.date.monday + 1, format: :complete), @activity.date.monday + 1],
-      [I18n.l(@activity.date.monday + 3, format: :complete), @activity.date.monday + 3],
-      [I18n.l(@activity.date.monday + 4, format: :complete), @activity.date.monday + 4]
+      [I18n.l(@activity.date.tuesday, format: :complete), @activity.date.tuesday],
+      [I18n.l(@activity.date.thursday, format: :complete), @activity.date.thursday],
+      [I18n.l(@activity.date.friday, format: :complete), @activity.date.friday]
     ]
   end
 
