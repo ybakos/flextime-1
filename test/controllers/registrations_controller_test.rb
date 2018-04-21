@@ -4,11 +4,6 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
 
   include Devise::Test::IntegrationHelpers
 
-  def setup
-    @student = users(:student)
-    @registration = registrations(:by_student)
-  end
-
   test 'requires user authentication' do
     assert defines_before_filter?(RegistrationsController, :authenticate_user!)
   end
