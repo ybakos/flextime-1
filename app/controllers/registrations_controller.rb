@@ -30,7 +30,7 @@ class RegistrationsController < ApplicationController
   def update
     respond_to do |format|
       if @registration.update(registration_params)
-        format.html { redirect_to student_path(@registration.student, date: @registration.activity.date.monday), notice: 'Registration was successfully updated.' }
+        format.html { redirect_to student_path(@registration.student, date: @registration.activity.week_date), notice: 'Registration was successfully updated.' }
         format.json { render :show, status: :ok, location: @registration }
       else
         format.html { redirect_back(fallback_location: student_path(@registration.student)) }
@@ -42,7 +42,7 @@ class RegistrationsController < ApplicationController
   def destroy
     @registration.destroy
     respond_to do |format|
-      format.html { redirect_back(fallback_location: student_path(@registration.student, date: @registration.activity.date.monday), notice: "#{@registration.student} was removed from #{@registration.activity.name}.") }
+      format.html { redirect_back(fallback_location: student_path(@registration.student, date: @registration.activity.week_date), notice: "#{@registration.student} was removed from #{@registration.activity.name}.") }
       format.json { head :no_content }
     end
   end

@@ -65,16 +65,16 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     sign_in users(:staff)
     registration = registrations(:by_student)
     put student_registration_path(registration.student, registration, params: {registration: {activity_id: registration.activity_id}})
-    assert_redirected_to student_path(registration.student, date: registration.activity.date.monday)
+    assert_redirected_to student_path(registration.student, date: registration.activity.week_date)
     patch student_registration_path(registration.student, registration, params: {registration: {activity_id: registration.activity_id}})
-    assert_redirected_to student_path(registration.student, date: registration.activity.date.monday)
+    assert_redirected_to student_path(registration.student, date: registration.activity.week_date)
   end
 
   test 'allows staff to delete a registration' do
     sign_in users(:staff)
     registration = registrations(:by_student)
     delete student_registration_path(registration.student, registration)
-    assert_redirected_to student_path(registration.student, date: registration.activity.date.monday)
+    assert_redirected_to student_path(registration.student, date: registration.activity.week_date)
     assert_match /was removed from/, flash[:notice]
   end
 

@@ -82,6 +82,12 @@ class ActivityTest < ActiveSupport::TestCase
     refute activities(:friday_activity).full?
   end
 
+  # week_date
+
+  test 'returns the monday of the week of the activity' do
+    assert_equal activity.week_date, activity.date.monday
+  end
+
   # ::for_week
 
   test 'returns a hash of tuesday, thursday and friday activities for the current week given any date this week' do

@@ -27,6 +27,10 @@ class Activity < ApplicationRecord
     registrations.count >= capacity
   end
 
+  def week_date
+    date&.monday
+  end
+
   def day_and_room
     "#{I18n.l(date, format: :without_year)} in #{room}"
   end
