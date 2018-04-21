@@ -6,11 +6,14 @@
 
 .row.mt-5
   - @week_of_activities.each do |date, activities|
-    .col
+    .col{id: date.day_name.downcase}
       .h4.float-right
         %span.badge.badge-pill.badge-light.text-muted.font-weight-light= activities.sum(&:capacity)
       %h3.display-4= date.day_name
       = link_to 'Add New Activity', new_activity_path(date: date.to_s), class: 'btn btn-sm btn-outline-success float-right'
       %h4.h3.text-muted.font-weight-light= date.strftime("%B %-e")
-      %ul.list-group
-        = render activities
+      - if activities.empty? && current_user.admin?
+        %p.mt-5.text-center= link_to "copy last #{date.day_name}", copy_activities_path(from: 1.week.ago(date), to: date), method: :post, class: 'text-success'
+      - else
+        %ul.list-group
+          = render activities

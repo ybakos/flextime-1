@@ -17,6 +17,12 @@ class Activity < ApplicationRecord
     }
   end
 
+  def self.copy!(from_date, to_date)
+    Activity.where(date: from_date).each do |a|
+      Activity.create!(name: a.name, room: a.room, capacity: a.capacity, date: to_date)
+    end
+  end
+
   def full?
     registrations.count >= capacity
   end

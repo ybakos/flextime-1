@@ -120,4 +120,14 @@ class ActivityTest < ActiveSupport::TestCase
     end
   end
 
+  # ::copy!
+
+  test "creates new activities based on activities from another date" do
+    from = Date.today.tuesday
+    to = 2.weeks.from_now(from)
+    assert_empty Activity.where(date: to)
+    Activity.copy!(from, to)
+    assert_equal Activity.where(date: from).count, Activity.where(date: to).count
+  end
+
 end

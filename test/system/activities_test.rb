@@ -106,6 +106,20 @@ class ActivitiesTest < ApplicationSystemTestCase
     assert_text 'Room has already been taken'
   end
 
+  test 'admins can copy all the activities from one day to the same day the following week' do
+    sign_in users(:admin)
+    visit activities_url
+    click_link 'Next week'
+    within '#thursday' do
+      assert_selector 'h5', text: 'Fake Next Thursday Activity'
+    end
+    click_link 'Next week' # an empty week in the schedule
+    click_link 'copy last Thursday'
+    within '#thursday' do
+      assert_selector 'h5', text: 'Fake Next Thursday Activity'
+    end
+  end
+
   # Updating
 
   def edit_activity

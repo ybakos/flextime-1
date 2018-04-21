@@ -24,6 +24,9 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     # create
     post activities_path
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
+    # copy
+    post copy_activities_path
+    assert_redirected_to(controller: 'devise/sessions', action: 'new')
     # update
     patch activity_path(id: 'fake')
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
@@ -56,6 +59,9 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     # create
     post activities_path
     assert_redirected_to student_path(student)
+    # copy
+    post copy_activities_path
+    assert_redirected_to student_path(student)
     # update
     patch activity_path(id: 'fake')
     assert_redirected_to student_path(student)
@@ -78,6 +84,12 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     delete activity_path(activity)
     assert_redirected_to activities_path(date: activity.date.monday)
     assert_match /Fake Tuesday Activity was successfully deleted/, flash[:notice]
+  end
+
+  test 'redirects copy requests from staff users to root url' do
+    sign_in users(:staff)
+    post copy_activities_path
+    assert_redirected_to root_url
   end
 
 end

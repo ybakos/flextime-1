@@ -2,7 +2,7 @@ class ActivitiesController < ApplicationController
 
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
   before_action :set_date, only: [:index, :new, :destroy]
-  before_action :restrict_unless_admin, only: :destroy
+  before_action :restrict_unless_admin, only: [:destroy, :copy]
 
   def index
     @week_of_activities = Activity.for_week(@date)
@@ -42,6 +42,17 @@ class ActivitiesController < ApplicationController
         format.html { render :new }
         format.json { render json: @activity.errors, status: :unprocessable_entity }
       end
+    end
+  end
+
+  def copy
+    begin
+      from = params[:from].to_date
+      to = params[:to].to_date
+      Activity.copy!(from, to)
+      redirect_to activities_path(date: to.monday), notice: 'Activities were successfully copied.'
+    rescue
+      redirect_to activities_path(date: to.monday), alert: 'There was a problem copying the activities.'
     end
   end
 
