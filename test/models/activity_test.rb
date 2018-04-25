@@ -136,4 +136,13 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal Activity.where(date: from).count, Activity.where(date: to).count
   end
 
+  # ::find_with_registration_student_and_teacher
+
+  test "eager loads an activity's registration, student and teacher" do
+    activity = Activity.find_with_registration_student_and_teacher(activities(:tuesday_activity).id)
+    assert activity.association(:registrations).loaded?
+    assert activity.registrations.first.association(:student).loaded?
+    assert activity.registrations.first.association(:teacher).loaded?
+  end
+
 end

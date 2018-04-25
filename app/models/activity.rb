@@ -23,6 +23,10 @@ class Activity < ApplicationRecord
     end
   end
 
+  def self.find_with_registration_student_and_teacher(id)
+    includes(registrations: [:student, :teacher]).order('users.last_name').find(id)
+  end
+
   def full?
     registrations.count >= capacity
   end

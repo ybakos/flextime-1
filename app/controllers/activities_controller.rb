@@ -84,7 +84,7 @@ class ActivitiesController < ApplicationController
   private
 
     def set_activity
-      @activity = Activity.find(params[:id])
+      @activity = Activity.find_with_registration_student_and_teacher(params[:id])
     end
 
     # The controller's index and new actions typically expect a date parameter,
