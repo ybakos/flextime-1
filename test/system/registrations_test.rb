@@ -53,6 +53,21 @@ class RegistrationsTest < ApplicationSystemTestCase
     end
   end
 
+  test 'staff can register student for activities more than one week in advance' do
+    travel_to Date.today.wednesday do
+      sign_in users(:staff)
+      visit student_path(users(:student))
+      click_link 'Next week'
+      within '#thursday' do
+        assert has_select?('registration_activity_id')
+      end
+      within '#friday' do
+        assert has_select?('registration_activity_id')
+      end
+    end
+  end
+
+
   # Student registering for activities
 
   test 'student registers for an activity' do
