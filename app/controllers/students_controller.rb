@@ -9,7 +9,7 @@ class StudentsController < ApplicationController
       @students = User.student
     else
       initial_letter_of_last_name = params[:last_name_starting_with] || 'A'
-      @students = User.student.starting_with(initial_letter_of_last_name)
+      @students = User.student.starting_with(initial_letter_of_last_name).includes(:teacher)
     end
   end
 
