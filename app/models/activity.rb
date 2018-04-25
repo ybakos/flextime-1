@@ -11,9 +11,9 @@ class Activity < ApplicationRecord
 
   def self.for_week(date)
     {
-      date.tuesday => Activity.where(date: date.tuesday).to_a,
-      date.thursday => Activity.where(date: date.thursday).to_a,
-      date.friday => Activity.where(date: date.friday).to_a
+      date.tuesday => Activity.where(date: date.tuesday).order('name').to_a,
+      date.thursday => Activity.where(date: date.thursday).order('name').to_a,
+      date.friday => Activity.where(date: date.friday).order('name').to_a
     }
   end
 
