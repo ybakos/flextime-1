@@ -4,6 +4,7 @@ tuesday_activity:
   room: Fake Room
   capacity: 1
   date: <%= Date.today.tuesday %>
+  registrations_count: 1
 
 second_tuesday_activity:
   name: Second Fake Tuesday Activity
@@ -22,6 +23,7 @@ second_thursday_activity:
   room: Fake Room
   capacity: 1
   date: <%= Date.today.thursday %>
+  registrations_count: 1
 
 friday_activity:
   name: Fake Friday Activity
@@ -35,6 +37,7 @@ last_tuesday_activity:
   room: Fake Room
   capacity: 1
   date: <%= Date.today.prev_week.tuesday %>
+  registrations_count: 1
 
 last_thursday_activity:
   name: Fake Previous Thursday Activity
@@ -54,6 +57,7 @@ next_tuesday_activity:
   room: Fake Room
   capacity: 1
   date: <%= Date.today.next_week.tuesday %>
+  registrations_count: 1
 
 next_thursday_activity:
   name: Fake Next Thursday Activity

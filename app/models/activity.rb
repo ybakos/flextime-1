@@ -28,7 +28,7 @@ class Activity < ApplicationRecord
   end
 
   def full?
-    registrations.count >= capacity
+    registrations.size >= capacity
   end
 
   def week_date
