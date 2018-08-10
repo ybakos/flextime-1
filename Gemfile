@@ -1,4 +1,4 @@
-ruby '2.4.2'
+ruby '2.5.1'
 
 source 'https://rubygems.org'
 
@@ -19,7 +19,7 @@ gem 'bootstrap'
 gem 'jquery-rails'
 gem 'haml'
 gem 'haml-rails'
-gem 'devise'
+gem 'devise', '~> 4.4.3'
 gem 'omniauth'
 gem 'omniauth-google-oauth2'
 
