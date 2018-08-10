@@ -289,7 +289,7 @@ DEPENDENCIES
   omniauth-google-oauth2
   pg (~> 0.18)
   puma (~> 3.7)
-  rails (~> 5.1.5)
+  rails (~> 5.1.6)
   sass-rails (~> 5.0)
   selenium-webdriver
   spring
