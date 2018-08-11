@@ -27,3 +27,9 @@
 
 /public/system
 /coverage
+
+# Rails 5.2.1
+/storage/*
+!/storage/.keep
+/public/assets
+/config/master.key
