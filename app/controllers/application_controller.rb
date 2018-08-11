@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
 
-  protect_from_forgery with: :exception
   before_action :authenticate_user!, unless: :devise_controller?
   before_action :restrict_from_students, unless: :devise_controller?
 
