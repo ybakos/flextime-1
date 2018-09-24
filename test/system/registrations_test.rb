@@ -199,6 +199,13 @@ class RegistrationsTest < ApplicationSystemTestCase
     end
   end
 
+  test 'staff does not see deactivated students' do
+    sign_in users(:staff)
+    visit students_path
+    click_link 'All'
+    refute_text 'Student, Fake Deactivated'
+  end
+
   # /students/:id
 
   test 'staff can view list of specific student registrations for the current week' do
@@ -269,6 +276,12 @@ class RegistrationsTest < ApplicationSystemTestCase
         assert find('.friday').text == ''
       end
     end
+  end
+
+  test 'staff does not see deactivated students in teacher list' do
+    sign_in users(:staff)
+    visit teacher_path(teachers(:miss_valid))
+    refute_text 'Student, Fake Deactivated'
   end
 
   # /activities/:id

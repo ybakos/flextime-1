@@ -6,10 +6,10 @@ class StudentsController < ApplicationController
 
   def index
     if params[:all]
-      @students = User.student
+      @students = User.student.active
     else
       initial_letter_of_last_name = params[:last_name_starting_with] || 'A'
-      @students = User.student.starting_with(initial_letter_of_last_name).includes(:teacher)
+      @students = User.student.active.starting_with(initial_letter_of_last_name).includes(:teacher)
     end
   end
 

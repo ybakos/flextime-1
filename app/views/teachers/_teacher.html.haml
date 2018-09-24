@@ -1,6 +1,6 @@
 %li.list-group-item
   %h3.mb-0= link_to teacher.to_s, teacher
-  %p.text-muted= pluralize(teacher.students.count, 'student')
+  %p.text-muted= pluralize(teacher.students.active.count, 'student')
   - if current_user.admin?
     = link_to 'Edit', edit_teacher_path(teacher)
     - if teacher.active?

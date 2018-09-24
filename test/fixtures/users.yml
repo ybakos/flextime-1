@@ -44,6 +44,18 @@ second_student:
   active: true
   teacher: miss_valid
 
+deactivated_student:
+  email: 'deactivated_student@example.com'
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
+  provider: 'FAKE'
+  uid: 'FAKE'
+  first_name: 'Fake Deactivated'
+  last_name: 'Student'
+  image_url: 'http://fake.com/fake.jpg'
+  role: 'student'
+  active: false
+  teacher: miss_valid
+
 new_student_without_teacher:
   email: 'new-student@example.com'
   encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>

@@ -9,7 +9,7 @@
     = link_to_next_week_for_teacher(@teacher, @date)
 
 %h3.display-4.mt-5
-  = @teacher.students.count
+  = @teacher.students.active.count
   Students
 
 %table.table.mt-3
@@ -20,7 +20,7 @@
       %th Thursday
       %th Friday
   %tbody
-    - @teacher.students.each do |student|
+    - @teacher.students.active.each do |student|
       %tr{ id: "student_#{student.id}"}
         %td.student= link_to student.last_name_first_name, student_path(student, date: @date)
         %td.tuesday= link_to student.activity_for_day_of_week(:tuesday, @date)&.name, activity_path(student.activity_for_day_of_week(:tuesday, @date)) if student.activity_for_day_of_week(:tuesday, @date)
