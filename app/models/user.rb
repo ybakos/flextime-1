@@ -11,7 +11,7 @@ class User < ApplicationRecord
   validates :active, inclusion: { in: [true, false] }
 
   belongs_to :teacher, optional: true
-  validates_presence_of :teacher_id, unless: Proc.new { |u| u.new_record? || !u.student? }
+  validates_presence_of :teacher_id, unless: Proc.new { |u| u.new_record? || !u.student? || !u.active }
 
   has_many :registrations, foreign_key: :student_id
   has_many :created_registrations, foreign_key: :creator_id
