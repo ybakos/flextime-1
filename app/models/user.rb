@@ -21,7 +21,7 @@ class User < ApplicationRecord
   default_scope { order(:last_name) }
   scope :active, -> { where(active: true) }
   scope :deactivated, -> { where(active: false) }
-  scope :starting_with, ->(letter) { where('last_name LIKE ?', "#{letter}%") }
+  scope :starting_with, ->(letter) { where('upper(last_name) LIKE ?', "#{letter}%") }
 
   # https://github.com/zquestz/omniauth-google-oauth2
   def self.from_omniauth(auth, allowed_domains)
@@ -31,8 +31,8 @@ class User < ApplicationRecord
       user.uid = auth.uid
       user.password = Devise.friendly_token[0,20]
       user.email = auth.info.email
-      user.first_name = auth.info.first_name
-      user.last_name = auth.info.last_name
+      user.first_name = auth.info.first_name.capitalize
+      user.last_name = auth.info.last_name.capitalize
       user.image_url = auth.info.image
     end
   end
