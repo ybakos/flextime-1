@@ -16,11 +16,10 @@ class Registration < ApplicationRecord
 
 
   def self.for_week(date)
-    {
-      date.tuesday => Registration.includes(:activity).where('activities.date = ?', date.tuesday).references(:activities).first,
-      date.thursday => Registration.includes(:activity).where('activities.date = ?', date.thursday).references(:activities).first,
-      date.friday => Registration.includes(:activity).where('activities.date = ?', date.friday).references(:activities).first
-    }
+    [:tuesday, :thursday, :friday].reduce({}) do |week, day|
+      week[date.send(day)] = Registration.includes(:activity).where('activities.date = ?', date.send(day)).references(:activities).first
+      week
+    end
   end
 
   private
