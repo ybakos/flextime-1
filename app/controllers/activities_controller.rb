@@ -12,19 +12,11 @@ class ActivitiesController < ApplicationController
 
   def new
     @activity = Activity.new(date: @date)
-    @dates_for_select = [
-      [I18n.l(@activity.date.tuesday, format: :complete), @activity.date.tuesday],
-      [I18n.l(@activity.date.thursday, format: :complete), @activity.date.thursday],
-      [I18n.l(@activity.date.friday, format: :complete), @activity.date.friday]
-    ]
+    @dates_for_select = dates_for_select_for_week_of(@activity.date)
   end
 
   def edit
-    @dates_for_select = [
-      [I18n.l(@activity.date.tuesday, format: :complete), @activity.date.tuesday],
-      [I18n.l(@activity.date.thursday, format: :complete), @activity.date.thursday],
-      [I18n.l(@activity.date.friday, format: :complete), @activity.date.friday]
-    ]
+    @dates_for_select = dates_for_select_for_week_of(@activity.date)
   end
 
   def create
@@ -34,11 +26,7 @@ class ActivitiesController < ApplicationController
         format.html { redirect_to @activity, notice: 'Activity was successfully created.' }
         format.json { render :show, status: :created, location: @activity }
       else
-        @dates_for_select = [
-          [I18n.l(@activity.date.tuesday, format: :complete), @activity.date.tuesday],
-          [I18n.l(@activity.date.thursday, format: :complete), @activity.date.thursday],
-          [I18n.l(@activity.date.friday, format: :complete), @activity.date.friday]
-        ]
+        @dates_for_select = dates_for_select_for_week_of(@activity.date)
         format.html { render :new }
         format.json { render json: @activity.errors, status: :unprocessable_entity }
       end
@@ -62,11 +50,7 @@ class ActivitiesController < ApplicationController
         format.html { redirect_to @activity, notice: 'Activity was successfully updated.' }
         format.json { render :show, status: :ok, location: @activity }
       else
-        @dates_for_select = [
-          [I18n.l(@activity.date.tuesday, format: :complete), @activity.date.tuesday],
-          [I18n.l(@activity.date.thursday, format: :complete), @activity.date.thursday],
-          [I18n.l(@activity.date.friday, format: :complete), @activity.date.friday]
-        ]
+        @dates_for_select = dates_for_select_for_week_of(@activity.date)
         format.html { render :edit }
         format.json { render json: @activity.errors, status: :unprocessable_entity }
       end
@@ -101,6 +85,12 @@ class ActivitiesController < ApplicationController
 
     def activity_params
       params.require(:activity).permit(:name, :room, :capacity, :date)
+    end
+
+    def dates_for_select_for_week_of(date)
+      [:tuesday, :thursday, :friday].map do |day|
+        [I18n.l(date.send(day), format: :complete), date.send(day)]
+      end
     end
 
 end
