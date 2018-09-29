@@ -4,7 +4,7 @@ class Activity < ApplicationRecord
   validates_presence_of :room
   validates :capacity, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates_presence_of :date
-  validate :date_must_be_tuesday_thursday_friday, unless: Proc.new { date.nil? }
+  validate :date_must_be_valid_activity_day, unless: Proc.new { date.nil? }
   validates_uniqueness_of :room, scope: [:date, :name], case_sensitive: false
 
   has_many :registrations, dependent: :destroy
@@ -49,8 +49,10 @@ class Activity < ApplicationRecord
 
   private
 
-    def date_must_be_tuesday_thursday_friday
-      errors.add(:date, 'Must be a Tuesday, Thursday or Friday') unless ['Tuesday', 'Thursday', 'Friday'].include? date.day_name
+    def date_must_be_valid_activity_day
+      unless Week.to_string_array.include? date.day_name
+        errors.add(:date, "Must be a #{Week.to_s}")
+      end
     end
 
 end
