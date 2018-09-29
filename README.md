@@ -6,7 +6,7 @@ A scheduling application for Falcon Time at [Sky View Middle School](https://www
 
 # Prerequisites
 
-Please use Ruby 2.4.2 and Rails 5.1.4+. You'll need a Postresql server running.
+Please use Ruby 2.5.1 and Rails 5.2.1+. You'll need a PostgreSQL server running.
 
 # Development
 
