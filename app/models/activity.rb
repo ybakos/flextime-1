@@ -10,11 +10,10 @@ class Activity < ApplicationRecord
   has_many :registrations, dependent: :destroy
 
   def self.for_week(date)
-    {
-      date.tuesday => Activity.where(date: date.tuesday).order('name').to_a,
-      date.thursday => Activity.where(date: date.thursday).order('name').to_a,
-      date.friday => Activity.where(date: date.friday).order('name').to_a
-    }
+    Week::ACTIVITY_DAYS.reduce({}) do |week, day|
+      week[date.send(day)] = Activity.where(date: date.send(day)).order('name').to_a
+      week
+    end
   end
 
   def self.copy!(from_date, to_date)
