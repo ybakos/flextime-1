@@ -88,7 +88,7 @@ class ActivitiesController < ApplicationController
     end
 
     def dates_for_select_for_week_of(date)
-      [:tuesday, :thursday, :friday].map do |day|
+      Week::ACTIVITY_DAYS.map do |day|
         [I18n.l(date.send(day), format: :complete), date.send(day)]
       end
     end
