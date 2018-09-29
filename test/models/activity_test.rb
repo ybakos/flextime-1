@@ -38,7 +38,7 @@ class ActivityTest < ActiveSupport::TestCase
     assert activity.invalid?
   end
 
-  test "without a date on #{Week.to_sentence} is invalid" do
+  test "without a date on #{Week.to_sentence(' or ')} is invalid" do
     assert activity.valid?
     invalid_day = (Week::DAYS - Week::ACTIVITY_DAYS).first
     activity.date = activity.date.send(invalid_day)

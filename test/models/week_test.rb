@@ -13,7 +13,7 @@ class WeekTest < ActiveSupport::TestCase
   end
 
   test '#to_sentence' do
-    assert_equal Week::ACTIVITY_DAYS.map { |day| day.to_s.capitalize }.to_sentence(last_word_connector: ', or '), Week.to_sentence
+    assert_equal Week::ACTIVITY_DAYS.map { |day| day.to_s.capitalize }.to_sentence(last_word_connector: ', or '), Week.to_sentence(', or ')
   end
 
 end
