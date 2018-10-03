@@ -1,11 +1,11 @@
 %h2.display-3 Teachers
 
 - if current_user.admin?
-  .row.mt-3.text-center
-    .col
-    .col
+  .row.mt-3
+    .col-3
+    .col-6
       = render 'form'
-    .col
+    .col-3
 
 %ul.list-group.mt-5
   - if params[:status] == 'deactivated'
