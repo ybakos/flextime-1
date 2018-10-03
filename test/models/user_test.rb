@@ -132,4 +132,12 @@ class UserTest < ActiveSupport::TestCase
     assert_instance_of User, User.from_omniauth(mock_auth(fake_allowable_domains.first), fake_allowable_domains)
   end
 
+  test 'removes teacher when role changes from student to something else' do
+    student = users(:student)
+    assert_not_nil(student.teacher)
+    student.role = 'staff'
+    student.save
+    assert_nil student.teacher
+  end
+
 end

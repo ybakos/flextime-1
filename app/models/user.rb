@@ -23,6 +23,8 @@ class User < ApplicationRecord
   scope :deactivated, -> { where(active: false) }
   scope :starting_with, ->(letter) { where('upper(last_name) LIKE ?', "#{letter}%") }
 
+  before_save :remove_teacher, if: Proc.new { |u| u.role_changed?(from: 'student') }
+
   # https://github.com/zquestz/omniauth-google-oauth2
   def self.from_omniauth(auth, allowed_domains)
     return unless allowed_domains.include? auth&.extra&.raw_info&.hd
@@ -51,6 +53,10 @@ class User < ApplicationRecord
 
   def active_for_authentication?
     super && active?
+  end
+
+  def remove_teacher
+    self.teacher = nil
   end
 
 end
