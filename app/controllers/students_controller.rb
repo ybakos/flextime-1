@@ -21,7 +21,7 @@ class StudentsController < ApplicationController
   def update
     respond_to do |format|
       if @student.update(student_params)
-        format.html { redirect_to student_path(@student), notice: "Falcon Time teacher set to #{@student.teacher}" }
+        format.html { redirect_to student_path(@student), notice: "#{Rails.application.config.app_name} teacher set to #{@student.teacher}" }
         format.json { render :show, status: :ok, location: student_path(@student) }
       else
         format.html { redirect_to student_path(@student), alert: 'Please specify a teacher.' }

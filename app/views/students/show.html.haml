@@ -43,4 +43,4 @@
                       = link_to 'change', edit_student_registration_path(@student, registration)
   - else
     .alert.alert-info.mx-auto
-      %h3.my-2 Hi #{@student.first_name}, please select your Falcon Time teacher.
+      %h3.my-2 Hi #{@student.first_name}, please select your #{Rails.application.config.app_name} teacher.
