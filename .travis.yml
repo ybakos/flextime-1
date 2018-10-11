@@ -29,6 +29,9 @@ env:
   global:
     - CC_TEST_REPORTER_ID=414b92000d57b35b08a18dd42f2eb68e2bf1bba78473d6f13161d5a049e4fa95
     - ACTIVITY_DAYS="tuesday thursday friday"
+    - SCHOOL_NAME="Travis School"
+    - SCHOOL_URL="https://example.com"
+    - SCHOOL_APP_NAME="Travis Time"
 
 after_success:
   - bundle exec codeclimate-test-reporter
