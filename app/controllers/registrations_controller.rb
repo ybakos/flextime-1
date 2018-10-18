@@ -51,6 +51,8 @@ class RegistrationsController < ApplicationController
 
     def set_registration
       @registration = Registration.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to student_path(id: params[:student_id]), alert: "The registration seems to have been deleted. Please review the student's current activities and continue from there."
     end
 
     def registration_params
