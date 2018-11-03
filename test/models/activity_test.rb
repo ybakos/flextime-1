@@ -127,6 +127,13 @@ class ActivityTest < ActiveSupport::TestCase
     end
   end
 
+  # ::available_on_date
+
+  test 'returns a list of activities that are not full on a date' do
+    available_activities = Activity.available_on_date(Date.today.tuesday)
+    refute_includes(available_activities, activities(:tuesday_activity))
+  end
+
   # ::copy!
 
   test 'creates new activities based on activities from another date' do

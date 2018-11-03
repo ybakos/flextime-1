@@ -53,6 +53,21 @@ class RegistrationsTest < ApplicationSystemTestCase
     end
   end
 
+  test 'staff cannot register student for activities that are full when editing a student\'s existing registration' do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit student_path(users(:second_student))
+      within '#tuesday' do
+        select 'Second Fake Tuesday Activity', from: 'registration_activity_id'
+        click_button 'Sign Up'
+      end
+      assert_text 'Successfully registered for Second Fake Tuesday Activity'
+      click_link 'change'
+      select_list = find_field('registration_activity_id')
+      refute_selector(select_list, :option, 'Fake Tuesday Activity', exact: true)
+    end
+  end
+
   test 'staff can register student for activities more than one week in advance' do
     travel_to Date.today.wednesday do
       sign_in users(:staff)

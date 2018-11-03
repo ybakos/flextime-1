@@ -24,7 +24,7 @@ class RegistrationsController < ApplicationController
   end
 
   def edit
-    @activities = Activity.where('date = ?', @registration.activity.date)
+    @activities = Activity.available_on_date(@registration.activity.date).to_a << @registration.activity
   end
 
   def update

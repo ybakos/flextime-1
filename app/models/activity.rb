@@ -16,6 +16,10 @@ class Activity < ApplicationRecord
     end
   end
 
+  def self.available_on_date(date)
+    Activity.where('date = ?', date).to_a.delete_if(&:full?)
+  end
+
   def self.copy!(from_date, to_date)
     Activity.where(date: from_date).each do |a|
       Activity.create!(name: a.name, room: a.room, capacity: a.capacity, date: to_date)
