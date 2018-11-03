@@ -63,8 +63,7 @@ class RegistrationsTest < ApplicationSystemTestCase
       end
       assert_text 'Successfully registered for Second Fake Tuesday Activity'
       click_link 'change'
-      select_list = find_field('registration_activity_id')
-      refute_selector(select_list, :option, 'Fake Tuesday Activity', exact: true)
+      refute_select('registration_activity_id', with_options: ['Fake Tuesday Activity'], exact: true)
     end
   end
 
