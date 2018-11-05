@@ -24,7 +24,10 @@ class RegistrationsController < ApplicationController
   end
 
   def edit
-    @activities = Activity.available_on_date(@registration.activity.date).to_a << @registration.activity
+    @activities = Activity.available_on_date(@registration.activity.date)
+    # Add the existing activity to the list, unless it is already in the list of
+    # available activities.
+    @activities.to_a << @registration.activity unless @activities.include?(@registration.activity)
   end
 
   def update
