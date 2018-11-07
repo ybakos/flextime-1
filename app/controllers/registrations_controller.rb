@@ -10,7 +10,12 @@ class RegistrationsController < ApplicationController
       redirect_back(fallback_location: student_path(student), alert: "Please choose a #{Rails.application.config.app_name} teacher.")
       return
     end
-    activity = Activity.find(params[:registration][:activity_id].to_i)
+    begin
+      activity = Activity.find(params[:registration][:activity_id].to_i)
+    rescue ActiveRecord::RecordNotFound
+      redirect_to student_path(student), alert: "The activity has been removed. Please choose a different activity."
+      return
+    end
     @registration = Registration.new(creator: current_user, student: student, teacher: student.teacher, activity: activity)
     respond_to do |format|
       if @registration.save
