@@ -92,4 +92,11 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_url
   end
 
+  test 'redirects when the activity is not found' do
+    sign_in users(:staff)
+    get activity_path(id: 'fake')
+    assert_redirected_to activities_path
+    assert_match /activity seems to have just been removed/, flash[:alert]
+  end
+
 end
