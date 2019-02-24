@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '~> 5.2.1'
+gem 'rails', '~> 5.2.2'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0'
@@ -13,7 +13,7 @@ gem 'bootsnap', '>= 1.1.0', require: false
 gem 'coffee-rails', '~> 4.2'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
-gem 'bootstrap'
+gem 'bootstrap', '>= 4.3.1'
 gem 'jquery-rails'
 gem 'haml'
 gem 'haml-rails'
