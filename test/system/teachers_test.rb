@@ -24,7 +24,7 @@ class TeachersTest < ApplicationSystemTestCase
     assert_link 'Miss Valid'
     refute_link 'Edit'
     refute_link 'Delete'
-    refute_link /^Deactivate/
+    refute_link 'Deactivate', exact: true
   end
 
   test 'staff do not see creation form' do
