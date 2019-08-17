@@ -4,7 +4,7 @@ module ApplicationHelper
     if signed_in?
       link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'nav-link'
     else
-      link_to 'Sign In', user_google_oauth2_omniauth_authorize_path, class: 'nav-link'
+      link_to 'Sign In', user_google_oauth2_omniauth_authorize_path, method: :post, class: 'nav-link'
     end
   end
 
