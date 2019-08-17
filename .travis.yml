@@ -7,6 +7,9 @@ script: bundle exec rails test
 services:
   - postgresql
 
+before_install:
+  - gem install bundler
+
 install:
   - bundle install
 
