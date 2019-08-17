@@ -140,4 +140,11 @@ class UserTest < ActiveSupport::TestCase
     assert_nil student.teacher
   end
 
+  test 'disassociate_all_from_teachers' do
+    user_with_teacher_count = User.where('teacher_id IS NOT NULL').count
+    assert_difference -> { User.where('teacher_id IS NULL').count }, user_with_teacher_count do
+      User.disassociate_all_from_teachers
+    end
+  end
+
 end

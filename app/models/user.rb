@@ -39,6 +39,10 @@ class User < ApplicationRecord
     end
   end
 
+  def self.disassociate_all_from_teachers
+    update_all(teacher_id: nil)
+  end
+
   def to_s
     "#{first_name} #{last_name}"
   end

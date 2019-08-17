@@ -30,6 +30,14 @@ class StudentsController < ApplicationController
     end
   end
 
+  def reset_teachers
+    User.disassociate_all_from_teachers
+    respond_to do |format|
+      format.html { redirect_to teachers_url, notice: "All students have been removed from teacher rosters." }
+      format.json { render :show, status: :ok, location: student_path(@student) }
+    end
+  end
+
   private
 
     def set_student

@@ -7,9 +7,13 @@
       = render 'form'
     .col-3
 
-%ul.list-group.mt-5
+.mt-5
+  - if current_user.admin?
+    %p.float-right= link_to 'Reset student rosters', reset_teachers_students_path, method: :patch, data: {confirm: 'Are you sure? This should only be done just prior to the start of a new academic year. This will clear all teacher rosters, and cannnot be undone.'}, class: 'text-danger'
   - if params[:status] == 'deactivated'
     %p= link_to 'View Active Teachers', teachers_path
   - else
     %p= link_to 'View Deactivated Teachers', teachers_path(status: 'deactivated')
+
+%ul.list-group
   = render @teachers

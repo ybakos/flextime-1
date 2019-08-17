@@ -20,6 +20,11 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
     put student_path('fake')
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
+    # reset_teachers
+    patch reset_teachers_students_path
+    assert_redirected_to(controller: 'devise/sessions', action: 'new')
+    put reset_teachers_students_path
+    assert_redirected_to(controller: 'devise/sessions', action: 'new')
   end
 
   test 'restricts student access' do
@@ -31,6 +36,8 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
     sign_in student
     # index
     get students_path
+    assert_redirected_to student_path(student)
+    patch reset_teachers_students_path
     assert_redirected_to student_path(student)
   end
 

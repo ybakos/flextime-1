@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     put 'deactivate', on: :member
   end
   resources :students, only: [:index, :show, :update] do
+    patch 'reset_teachers', on: :collection
     resources :registrations, only: [:create, :edit, :update, :destroy]
   end
 
