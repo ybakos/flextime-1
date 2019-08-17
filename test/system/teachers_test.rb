@@ -25,6 +25,7 @@ class TeachersTest < ApplicationSystemTestCase
     refute_link 'Edit'
     refute_link 'Delete'
     refute_link 'Deactivate', exact: true
+    refute_link 'Reset student rosters'
   end
 
   test 'staff do not see creation form' do
@@ -106,6 +107,16 @@ class TeachersTest < ApplicationSystemTestCase
     assert_selector 'h2', text: 'Editing Mr. Fake'
     assert_text '1 error prohibited this teacher from being saved'
     assert_text 'Name has already been taken'
+  end
+
+  test 'admin clears all student rosters' do
+    sign_in users(:admin)
+    visit teachers_url
+    assert_text '2 students'
+    click_link 'Reset student rosters'
+    assert_text 'All students have been removed from teacher rosters'
+    refute_text '2 students'
+    assert_text '0 students'
   end
 
   # Deactivating
