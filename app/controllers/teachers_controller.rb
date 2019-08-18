@@ -45,7 +45,7 @@ class TeachersController < ApplicationController
         format.html { redirect_to teachers_path, notice: 'Teacher was successfully deactivated.' }
         format.json { render :show, status: :ok, location: @teacher }
       else
-        format.html { render :index }
+        format.html { render :index, alert: 'This teacher could not be deactivated.' }
         format.json { render json: @teacher.errors, status: :unprocessable_entity }
       end
     end
