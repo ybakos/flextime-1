@@ -1,10 +1,10 @@
 %h2.display-3 Students
 
 %nav.row.mt-3
-  .col= link_to 'Previous week', students_path(date: @date.prev_week), class: 'btn btn-outline-secondary'
+  .col= link_to_week('Previous', @date.prev_week, @filter_params)
   .col.text-center
     %h3= @date.current_week? ? 'This Week' : "Week of #{@date.beginning_of_week.to_s(:long)}"
-  .col.text-right= link_to 'Next week', students_path(date: @date.next_week), class: 'btn btn-outline-primary'
+  .col.text-right= link_to_week('Next', @date.next_week, @filter_params)
 
 %nav#student_subnav.mt-5
   .btn-group

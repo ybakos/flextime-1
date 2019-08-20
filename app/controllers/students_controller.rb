@@ -5,6 +5,7 @@ class StudentsController < ApplicationController
   before_action :set_date, only: [:index, :show]
 
   def index
+    @filter_params = params.slice(:all, :last_name_starting_with).permit!
     if params[:all]
       @students = User.student.active
     else

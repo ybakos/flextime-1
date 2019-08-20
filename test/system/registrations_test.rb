@@ -199,8 +199,8 @@ class RegistrationsTest < ApplicationSystemTestCase
     travel_to Date.today.monday do
       sign_in users(:staff)
       visit students_path
-      click_link 'Previous week'
       click_link('All')
+      click_link 'Previous week'
       within "#student_#{users(:student).id}" do
         within('.student') { assert_text 'Student, Fake' }
         within('.teacher') { assert_text 'Valid' }
@@ -215,8 +215,8 @@ class RegistrationsTest < ApplicationSystemTestCase
     travel_to Date.today.monday do
       sign_in users(:staff)
       visit students_path
-      click_link 'Next week'
       click_link('All')
+      click_link 'Next week'
       within "#student_#{users(:student).id}" do
         within('.student') { assert_text 'Student, Fake' }
         within('.teacher') { assert_text 'Valid' }
