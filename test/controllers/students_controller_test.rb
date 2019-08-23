@@ -15,6 +15,9 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
     # show
     get student_path('fake')
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
+    # edit
+    get edit_student_path('fake')
+    assert_redirected_to(controller: 'devise/sessions', action: 'new')
     # update
     patch student_path('fake')
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
@@ -37,6 +40,10 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
     # index
     get students_path
     assert_redirected_to student_path(student)
+    # edit
+    get edit_student_path('fake')
+    assert_redirected_to student_path(student)
+    # update
     patch reset_teachers_students_path
     assert_redirected_to student_path(student)
   end

@@ -1,0 +1,7 @@
+%h2.display-3 #{@student.first_name_was} #{@student.last_name_was}
+
+%nav.mt-3
+  = link_to 'Back', :back, class: 'btn btn-outline-secondary'
+
+.mt-5
+  = render 'form'

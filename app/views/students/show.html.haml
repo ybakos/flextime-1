@@ -1,5 +1,7 @@
 %h2.display-3
   = @student
+  - unless current_user.student?
+    = link_to 'Edit', edit_student_path(@student), class: 'btn btn-sm text-secondary'
 
 %nav.row.mt-3
   .col

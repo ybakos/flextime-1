@@ -1,0 +1,16 @@
+= render 'form_errors', model: @student
+
+= form_for @student, as: :student, url: student_path(@student) do |f|
+  .row
+    .col-md-6.form-group
+      = f.label :first_name
+      = f.text_field :first_name, class: 'form-control', required: true
+    .col-md-4.form-group
+      = f.label :last_name
+      = f.text_field :last_name, class: 'form-control', required: true
+  .row
+    .col-md-6.form-group
+      = f.label :email
+      = f.text_field :email, class: 'form-control', disabled: true
+    .col-md-6.form-group.align-self-end.text-center
+      = f.submit 'Save changes', class: 'btn btn-success'

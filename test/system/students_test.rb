@@ -66,4 +66,47 @@ class StudentsTest < ApplicationSystemTestCase
     assert has_select?('student_teacher_id', selected: users(:student).teacher.to_s)
   end
 
+  # Changing the student name
+
+  test 'students should not see an edit link for their name' do
+    sign_in_as_student_and_visit_profile
+    refute_link 'Edit'
+  end
+
+  test 'staff changes student name' do
+    sign_in users(:staff)
+    visit student_path(users(:student))
+    click_link 'Edit'
+    fill_in 'First name', with: 'FIRST CHANGED'
+    fill_in 'Last name', with: 'LAST CHANGED'
+    click_button 'Save changes'
+    assert_text 'FIRST CHANGED'
+    assert_text 'LAST CHANGED'
+  end
+
+  test 'admin changes student name' do
+    sign_in users(:admin)
+    visit student_path(users(:student))
+    click_link 'Edit'
+    fill_in 'First name', with: 'FIRST CHANGED'
+    fill_in 'Last name', with: 'LAST CHANGED'
+    click_button 'Save changes'
+    assert_text 'FIRST CHANGED'
+    assert_text 'LAST CHANGED'
+  end
+
+  test 'admin changes student name to something invalid' do
+    sign_in users(:admin)
+    visit student_path(users(:student))
+    click_link 'Edit'
+    fill_in 'First name', with: ''
+    fill_in 'Last name', with: 'LAST CHANGED'
+    click_button 'Save changes'
+    within first('h2') do
+      assert_text users(:student).first_name
+      assert_text users(:student).last_name
+    end
+    assert_text 'error'
+  end
+
 end

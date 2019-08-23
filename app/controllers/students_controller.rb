@@ -1,7 +1,7 @@
 class StudentsController < ApplicationController
 
   skip_before_action :restrict_from_students, only: [:show, :update]
-  before_action :set_student, only: [:show, :update]
+  before_action :set_student, only: [:show, :edit, :update]
   before_action :set_date, only: [:index, :show]
 
   def index
@@ -19,15 +19,14 @@ class StudentsController < ApplicationController
     @week_of_activities = available_activities_for_week
   end
 
+  def edit
+  end
+
   def update
-    respond_to do |format|
-      if @student.update(student_params)
-        format.html { redirect_to student_path(@student), notice: "#{Rails.application.config.app_name} teacher set to #{@student.teacher}" }
-        format.json { render :show, status: :ok, location: student_path(@student) }
-      else
-        format.html { redirect_to student_path(@student), alert: 'Please specify a teacher.' }
-        format.json { render json: @student.errors, status: :unprocessable_entity }
-      end
+    if updating_teacher?
+      update_teacher
+    elsif updating_name?
+      update_name
     end
   end
 
@@ -54,7 +53,7 @@ class StudentsController < ApplicationController
     end
 
     def student_params
-      params.require(:student).permit(:teacher_id)
+      params.require(:student).permit(:teacher_id, :first_name, :last_name)
     end
 
     def available_activities_for_week
@@ -63,6 +62,30 @@ class StudentsController < ApplicationController
         activities.delete_if(&:full?)
       end
       activities_for_week
+    end
+
+    def updating_teacher?
+      student_params.has_key?('teacher_id')
+    end
+
+    def updating_name?
+      student_params.has_key?('first_name') || student_params.has_key?('last_name')
+    end
+
+    def update_teacher
+      if @student.update(student_params)
+        redirect_to student_path(@student), notice: "#{Rails.application.config.app_name} teacher set to #{@student.teacher}"
+      else
+        redirect_to student_path(@student), alert: 'Please specify a teacher.'
+      end
+    end
+
+    def update_name
+      if @student.update(student_params)
+        redirect_to student_path(@student), notice: "#{@student.attribute_before_last_save(:first_name)} #{@student.attribute_before_last_save(:last_name)} changed to #{@student}."
+      else
+        render :edit
+      end
     end
 
 end

@@ -117,7 +117,6 @@ class UserTest < ActiveSupport::TestCase
     assert_equal users(:student).last_name_first_name, 'Student, Fake'
   end
 
-
   test '#activity_for_day_of_week' do
     assert_equal users(:student).activity_for_day_of_week(:tuesday, Date.today.monday),
       registrations(:by_student).activity
