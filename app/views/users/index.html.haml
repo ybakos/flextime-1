@@ -1,20 +1,21 @@
 %h2.display-3 Users
 
-.nav
-  %h4 Filter
-  %ul
-    = link_to 'View All', users_path
-  %ul
-    Status
-    %li= link_to 'Active', users_path(status: 'active')
-    %li= link_to 'Deactivated', users_path(status: 'deactivated')
-  %ul
-    Role
-    %li= link_to 'Admins', users_path(role: 'admin')
-    %li= link_to 'Staff', users_path(role: 'staff')
-    %li= link_to 'Students', users_path(role: 'student')
+%nav.row.mt-3
+  .col.text-center
+    = link_to_users('All', {}, @filter_params, excludes: ['status', 'role'], css_class: 'btn' << (params[:status].nil? && params[:role].nil? ? ' btn-secondary' : ' text-secondary'))
+    = link_to_users('Active', {status: 'active'}, @filter_params, css_class: 'btn' << (params[:status] == 'active' ? ' btn-secondary' : ' text-secondary'))
+    = link_to_users('Deactivated', {status: 'deactivated'}, @filter_params, css_class: 'btn' << (params[:status] == 'deactivated' ? ' btn-secondary' : ' text-secondary'))
+    = link_to_users('Admins', {role: 'admin'}, @filter_params, css_class: 'btn' << (params[:role] == 'admin' ? ' btn-secondary' : ' text-secondary'))
+    = link_to_users('Staff', {role: 'staff'}, @filter_params, css_class: 'btn' << (params[:role] == 'staff' ? ' btn-secondary' : ' text-secondary'))
+    = link_to_users('Students', {role: 'student'}, @filter_params, css_class: 'btn' << (params[:role] == 'student' ? ' btn-secondary' : ' text-secondary'))
 
-%table#student_registrations.table.mt-5
+%nav#student_subnav.mt-5
+  .btn-group
+    - pagination_links_by_last_name(@filter_params).each do |link|
+      = link
+    = link_to_users('All', {}, @filter_params, excludes: ['last_name_starting_with'], css_class: 'btn btn-sm' << (params[:last_name_starting_with] ? ' btn-outline-secondary' : ' btn-secondary'))
+
+%table#student_registrations.table.mt-3
   %thead
     %tr
       %th Name

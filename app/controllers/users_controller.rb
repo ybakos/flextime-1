@@ -4,12 +4,25 @@ class UsersController < ApplicationController
   before_action :ignore_password_and_password_confirmation, only: :update
 
   def index
-    if params[:status]
-      @users = params[:status] == 'active' ? User.active : User.deactivated
-    elsif params[:role]
-      @users = User.where(role: params[:role])
+    @filter_params = params.slice(:status, :role, :last_name_starting_with).permit!
+    if @filter_params.empty? then @users = User.all; return end
+    finders = []
+    if params[:status] == 'active'
+      finders << :active
+    elsif params[:status] == 'deactivated'
+      finders << :deactivated
+    end
+    if params[:role] == 'student'
+      finders << :student
+    elsif params[:role] == 'staff'
+      finders << :staff
+    elsif params[:role] == 'admin'
+      finders << :admin
+    end
+    if params[:last_name_starting_with]
+      @users = finders.inject(User, :send).starting_with(params[:last_name_starting_with])
     else
-      @users = User.all
+      @users = finders.inject(User, :send)
     end
   end
 
