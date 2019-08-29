@@ -30,7 +30,7 @@
           - if current_user == u
             = u.role.capitalize
           - else
-            = form_for u, html: {class: 'form-inline'} do |f|
+            = form_for u, url: user_path(u, @filter_params), html: {class: 'form-inline'} do |f|
               = f.select :active, [['Active', true], ['Deactivated', false]], {}, class: 'form-control form-control-sm mr-3'
               = f.select :role, User.roles.keys.map {|k| [k.capitalize, k]}, {} , class: 'form-control form-control-sm mr-3'
               = f.submit 'Update', class: 'btn btn-outline-success btn-sm'

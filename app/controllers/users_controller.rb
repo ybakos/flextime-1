@@ -27,16 +27,17 @@ class UsersController < ApplicationController
   end
 
   def update
+    filter_params = params.slice(:status, :role, :last_name_starting_with).permit!
     @user = User.find(params[:id])
     if @user == current_user
-      redirect_to users_path, alert: 'You are restricted from changing your own status.'
+      redirect_to users_url(filter_params), alert: 'You are restricted from changing your own status.'
       return
     end
     respond_to do |format|
       if @user.update(user_params)
-        format.html { redirect_to users_path, notice: 'User was successfully updated.' }
+        format.html { redirect_to users_url(filter_params), notice: 'User was successfully updated.' }
       else
-        format.html { redirect_to users_path, alert: 'Failed to update user' }
+        format.html { redirect_to users_url(filter_params), alert: 'Failed to update user' }
       end
     end
   end
