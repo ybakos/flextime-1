@@ -13,9 +13,10 @@ module StudentsHelper
     link_to 'Next week', student_path(student, date: date.next_week), class: 'btn btn-outline-primary float-right'
   end
 
-  def links_to_student_lists_by_last_name(date)
+  def links_to_student_lists_by_last_name(date, active_letter)
     ('A'..'Z').map do |letter|
-      link_to letter, students_path(last_name_starting_with: letter, date: date), class: 'btn btn-sm btn-outline-secondary'
+      link_to letter, students_path(last_name_starting_with: letter, date: date),
+        class: 'btn btn-sm' << (letter == active_letter ? ' btn-secondary' : ' btn-outline-secondary')
     end
   end
 

@@ -1,16 +1,16 @@
 %h2.display-3 Students
 
 %nav.row.mt-3
-  .col= link_to_week('Previous', @date.prev_week, @filter_params)
-  .col.text-center
+  .col-3= link_to_week('Previous', @date.prev_week, @filter_params)
+  .col-6.text-center
     %h3= @date.current_week? ? 'This Week' : "Week of #{@date.beginning_of_week.to_s(:long)}"
-  .col.text-right= link_to_week('Next', @date.next_week, @filter_params)
+  .col-3.text-right= link_to_week('Next', @date.next_week, @filter_params)
 
 %nav#student_subnav.mt-5
   .btn-group
-    - links_to_student_lists_by_last_name(@date).each do |link|
+    - links_to_student_lists_by_last_name(@date, params[:last_name_starting_with]).each do |link|
       = link
-    = link_to 'All', students_path(all: true, date: @date), class: 'btn btn-sm btn-outline-secondary'
+    = link_to 'All', students_path(all: true, date: @date), class: 'btn btn-sm' << (params[:all] ? ' btn-secondary' : ' btn-outline-secondary')
 
 %table#student_registrations.table.mt-3
   %thead
