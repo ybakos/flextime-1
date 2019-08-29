@@ -104,6 +104,13 @@ class UserTest < ActiveSupport::TestCase
     assert student.valid?
   end
 
+  test 'can be activated without a teacher' do
+    student = users(:deactivated)
+    assert_nil student.teacher
+    student.active = true
+    assert student.valid?
+  end
+
   test 'has many registrations' do
     assert_respond_to users(:student), :registrations
     assert_kind_of Registration, users(:student).registrations.first
