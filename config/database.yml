@@ -5,11 +5,11 @@ default: &default
 
 development:
   <<: *default
-  database: falcon_time_development
+  database: <%= ENV.fetch('DEVELOPMENT_DATABASE') { '' } %>
 
 test:
   <<: *default
-  database: falcon_time_test
+  database: <%= ENV.fetch('TEST_DATABASE') { '' } %>
 
 production:
   url: <%= ENV.fetch('DATABASE_URL') { '' } %>
