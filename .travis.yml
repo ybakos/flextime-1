@@ -36,6 +36,7 @@ env:
     - SCHOOL_NAME="Travis School"
     - SCHOOL_URL="https://example.com"
     - SCHOOL_APP_NAME="Travis Time"
+    - TEST_DATABASE="falcon_time_test"
 
 after_success:
   - bundle exec codeclimate-test-reporter
