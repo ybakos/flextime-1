@@ -22,6 +22,11 @@ class RegistrationTest < ActiveSupport::TestCase
     assert_kind_of Activity, registrations(:by_student).activity
   end
 
+  test 'has a default attendance of present' do
+    registration = Registration.new
+    assert_equal registration.attendance, 'present'
+  end
+
   test 'is invalid if associated student User does not have student role' do
     registration = registrations(:by_staff)
     assert registration.valid?

@@ -8,13 +8,16 @@ Rails.application.routes.draw do
 
   resources :activities do
     post 'copy', on: :collection
+    get 'attendance', on: :collection
   end
   resources :teachers, except: [:new] do
     put 'deactivate', on: :member
   end
   resources :students, only: [:index, :show, :update, :edit] do
     patch 'reset_teachers', on: :collection
-    resources :registrations, only: [:create, :edit, :update, :destroy]
+    resources :registrations, only: [:create, :edit, :update, :destroy] do
+      patch 'mark_attendance', on: :member
+    end
   end
 
   scope '/admin' do

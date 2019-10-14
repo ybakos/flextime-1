@@ -8,6 +8,11 @@ class ActivitiesController < ApplicationController
     @week_of_activities = Activity.for_week(@date)
   end
 
+  def attendance
+    @date = params[:date].to_date
+    @registrations = Registration.joins(:activity).includes(:activity, :teacher, :student).where.not(attendance: :present).where('activities.date = ?', @date).order('last_name')
+  end
+
   def show; end
 
   def new

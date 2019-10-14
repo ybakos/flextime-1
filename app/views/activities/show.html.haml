@@ -17,8 +17,13 @@
     %tr
       %th Student
       %th Teacher
+      %th Attendance
   %tbody
     - @activity.registrations.each do |registration|
       %tr{ id: "student_#{registration.student.id}" }
         %td.student= link_to registration.student.last_name_first_name, student_path(registration.student, date: registration.activity.date)
         %td.teacher= link_to registration.teacher.name, teacher_path(registration.teacher, date: registration.activity.date)
+        %td.attendance
+          = link_to 'present', mark_attendance_student_registration_path(registration.student, registration, attendance: 'present'), method: :patch, class: "badge badge-pill #{registration.present? ? 'badge-success' : 'badge-light font-weight-normal'}"
+          = link_to 'late', mark_attendance_student_registration_path(registration.student, registration, attendance: 'late'), method: :patch, class: "badge badge-pill #{registration.late? ? 'badge-warning' : 'badge-light font-weight-normal'}"
+          = link_to 'absent', mark_attendance_student_registration_path(registration.student, registration, attendance: 'absent'), method: :patch, class: "badge badge-pill #{registration.absent? ? 'badge-danger' : 'badge-light font-weight-normal'}"

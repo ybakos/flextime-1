@@ -1,7 +1,7 @@
 class RegistrationsController < ApplicationController
 
   skip_before_action :restrict_from_students, only: :create
-  before_action :set_registration, only: [:edit, :update, :destroy]
+  before_action :set_registration, only: [:edit, :update, :destroy, :mark_attendance]
   before_action :check_student_id, only: :create
 
   def create
@@ -52,6 +52,17 @@ class RegistrationsController < ApplicationController
     respond_to do |format|
       format.html { redirect_back(fallback_location: student_path(@registration.student, date: @registration.activity.week_date), notice: "#{@registration.student} was removed from #{@registration.activity.name}.") }
       format.json { head :no_content }
+    end
+  end
+
+  def mark_attendance
+    @registration.attendance = params[:attendance]
+    respond_to do |format|
+      if @registration.save
+        format.html { redirect_to @registration.activity, notice: 'Attendance marked.' }
+      else
+        format.html { redirect_to @regitration.activity, notice: "There was a problem marking this student's attendance." }
+      end
     end
   end
 
