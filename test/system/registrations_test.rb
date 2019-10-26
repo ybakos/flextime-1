@@ -265,6 +265,14 @@ class RegistrationsTest < ApplicationSystemTestCase
 
   # /teachers/:id
 
+  test "staff sees appropriate days of the week in the table of registrations" do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit teacher_path(teachers(:miss_valid))
+      assert_equal 'Student Tuesday Thursday Friday', find('thead tr').text
+    end
+  end
+
   test "staff can view list of a teacher's students' registrations for the current week" do
     travel_to Date.today.monday do
       sign_in users(:staff)

@@ -13,7 +13,6 @@ class TeachersTest < ApplicationSystemTestCase
     assert_link 'Miss Valid'
   end
 
-  # https://github.com/osu-cascades/falcon-time/issues/32
   test 'staff views a teacher and a list of student activities' do
     # see registrations test
   end

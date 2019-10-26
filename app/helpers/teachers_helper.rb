@@ -8,4 +8,8 @@ module TeachersHelper
     link_to 'Next week', teacher_path(teacher, date: date.next_week), class: 'btn btn-outline-primary float-right'
   end
 
+  def day_name_table_headers(days)
+    days.map { |day| tag.th day.capitalize }.join("\n")
+  end
+
 end
