@@ -3,7 +3,7 @@ class StudentsHelperTest < ActionView::TestCase
   test "#link_to_week with a label and date" do
     label = 'FAKELABEL'
     date = 'FAKEDATE'
-    assert_match("students?date=#{date}\"", link_to_week(label, date))
+    assert_match("students?date=#{date}\"", link_to_week(label, date, ''))
   end
 
   test "#link_to_week with a label, date and letter" do
@@ -12,7 +12,7 @@ class StudentsHelperTest < ActionView::TestCase
     letter = 'Q'
     assert_match(
       "students?date=#{date}&amp;last_name_starting_with=#{letter}\"",
-      link_to_week(label, date, {last_name_starting_with: letter})
+      link_to_week(label, date, '', {last_name_starting_with: letter})
     )
   end
 
@@ -21,7 +21,7 @@ class StudentsHelperTest < ActionView::TestCase
     date = 'FAKEDATE'
     assert_match(
       "students?all=true&amp;date=#{date}\"",
-      link_to_week(label, date, {all: true})
+      link_to_week(label, date, '', {all: true})
     )
   end
 

@@ -1,8 +1,8 @@
 module StudentsHelper
 
-  def link_to_week(label, date, filter_params = {})
+  def link_to_week(label, date, dom_classes, filter_params = {})
     link_to "#{label} week", students_path({date: date}.merge(filter_params)),
-      class: 'btn btn-outline-secondary'
+      class: dom_classes
   end
 
   def link_to_previous_week_for_student(student, date)
