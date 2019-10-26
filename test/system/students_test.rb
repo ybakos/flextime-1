@@ -37,7 +37,7 @@ class StudentsTest < ApplicationSystemTestCase
   test 'student sees current teacher and not the form' do
     sign_in_as_student_and_visit_profile
     assert_no_selector('student_teacher_id')
-    assert_selector('h3#falcon_time_teacher', text: users(:student).teacher.to_s)
+    assert_selector('h3#flex_time_teacher', text: users(:student).teacher.to_s)
   end
 
   # Specifying teacher
