@@ -17,7 +17,7 @@ install:
 bundler_args: --without production
 
 before_script:
-  - psql -c 'create database falcon_time_test;' -U postgres
+  - psql -c 'create database flex_time_test;' -U postgres
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
@@ -27,7 +27,7 @@ after_script:
 
 test:
   adapter: postgresql
-  database: falcon_time_test
+  database: flex_time_test
 
 env:
   global:
@@ -36,7 +36,7 @@ env:
     - SCHOOL_NAME="Travis School"
     - SCHOOL_URL="https://example.com"
     - SCHOOL_APP_NAME="Travis Time"
-    - TEST_DATABASE="falcon_time_test"
+    - TEST_DATABASE="flex_time_test"
 
-after_success:
-  - bundle exec codeclimate-test-reporter
+# after_success:
+#   - bundle exec codeclimate-test-reporter
