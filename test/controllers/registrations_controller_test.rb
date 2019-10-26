@@ -20,6 +20,9 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
     put student_registration_path(student_id: 'fake', id: 'fake')
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
+    # mark attendance
+    patch mark_attendance_student_registration_path(student_id: 'fake', id: 'fake')
+    assert_redirected_to(controller: 'devise/sessions', action: 'new')
     # destroy
     delete student_registration_path(student_id: 'fake', id: 'fake')
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
@@ -39,6 +42,9 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     patch student_registration_path(student_id: 'fake', id: 'fake')
     assert_redirected_to student_path(student)
     put student_registration_path(student_id: 'fake', id: 'fake')
+    assert_redirected_to student_path(student)
+    # mark attendance
+    patch mark_attendance_student_registration_path(student_id: 'fake', id: 'fake')
     assert_redirected_to student_path(student)
     # destroy
     delete student_registration_path(student_id: 'fake', id: 'fake')
@@ -68,6 +74,13 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to student_path(registration.student, date: registration.activity.week_date)
     patch student_registration_path(registration.student, registration, params: {registration: {activity_id: registration.activity_id}})
     assert_redirected_to student_path(registration.student, date: registration.activity.week_date)
+  end
+
+  test 'allows staff to update attendance' do
+    sign_in users(:staff)
+    registration = registrations(:by_student)
+    patch mark_attendance_student_registration_path(registration.student, registration, params: {attendance: 'late'})
+    assert_redirected_to activity_path(registration.activity)
   end
 
   test 'allows staff to delete a registration' do

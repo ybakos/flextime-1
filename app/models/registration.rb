@@ -14,6 +14,8 @@ class Registration < ApplicationRecord
   validate :activity_must_not_be_more_than_a_week_away, if: Proc.new { |r| r.creator.student? }
   validate :student_can_only_register_themselves, if: Proc.new { |r| r.creator.student? }
 
+  enum attendance: [:present, :late, :absent]
+  attribute :attendance, :integer, default: :present
 
   def self.for_week(date)
     Week::ACTIVITY_DAYS.reduce({}) do |week, day|

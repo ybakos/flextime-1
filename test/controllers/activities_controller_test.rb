@@ -15,6 +15,9 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     # show
     get activity_path(id: 'fake')
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
+    # attendance
+    get attendance_activities_path
+    assert_redirected_to(controller: 'devise/sessions', action: 'new')
     # new
     get new_activity_path
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
@@ -49,6 +52,9 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to student_path(student)
     # show
     get activity_path(id: 'fake')
+    assert_redirected_to student_path(student)
+    # attendance
+    get attendance_activities_path
     assert_redirected_to student_path(student)
     # new
     get new_activity_path
