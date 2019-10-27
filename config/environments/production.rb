@@ -43,7 +43,7 @@ Rails.application.configure do
   # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default_url_options = { host: ENV.fetch('ACTION_MAILER_URL_HOST') { '' } }
 
-  config.i18n.fallbacks = true
+  config.i18n.fallbacks = [I18n.default_locale]
 
   config.active_support.deprecation = :notify
 
