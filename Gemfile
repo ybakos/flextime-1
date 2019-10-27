@@ -4,7 +4,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-gem 'rails', '~> 5.2.2'
+gem 'rails', '~> 5.2.3'
 gem 'pg', '~> 0.18'
 gem 'puma', '~> 3.11'
 gem 'sass-rails', '~> 5.0'
@@ -26,7 +26,6 @@ gem 'omniauth-rails_csrf_protection'
 # gem 'mini_racer', platforms: :ruby
 # gem 'mini_magick', '~> 4.8'
 
-
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'dotenv-rails'
@@ -44,7 +43,7 @@ end
 group :test do
   gem 'capybara', '~> 3.10'
   gem 'selenium-webdriver'
-  gem 'chromedriver-helper'
+  gem 'webdrivers'
 end
 
 group :production do
