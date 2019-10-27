@@ -6,7 +6,7 @@ A scheduling application for flex time periods in K-12 schools.
 
 # Prerequisites
 
-Please use Ruby 2.6.5 and Rails 5.2.1+. You'll need a PostgreSQL server running.
+Please use Ruby 2.6.5 and Rails 5.2.3+. You'll need a PostgreSQL server running.
 
 # Development
 
