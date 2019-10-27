@@ -1,6 +1,6 @@
 language: ruby
 rvm:
- - 2.5.1
+ - 2.6.5
 
 script: bundle exec rails test
 
@@ -37,6 +37,8 @@ env:
     - SCHOOL_URL="https://example.com"
     - SCHOOL_APP_NAME="Travis Time"
     - TEST_DATABASE="flex_time_test"
+    - DEVISE_MAILER_SENDER=no-reply@example.com
+    - ACTION_MAILER_URL_HOST=travis
 
 # after_success:
 #   - bundle exec codeclimate-test-reporter
