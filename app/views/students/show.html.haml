@@ -24,7 +24,7 @@
       .col{id: date.day_name.downcase}
         %h3.display-4= date.day_name
         %h4.h3.text-muted.font-weight-light= date.strftime("%B %-e")
-        - if registration.nil? && Time.now.utc < date.registration_cutoff_datetime && (!current_user.student? || date.less_than_a_week_away?)
+        - if registration.nil? && Time.now.utc < date.registration_cutoff_datetime(ENV.fetch('REGISTRATION_CUTOFF_DATETIME') { '10:00PM UTC' }) && (!current_user.student? || date.less_than_a_week_away?)
           = form_for [@student, Registration.new], url: student_registrations_path(@student) do |f|
             = f.hidden_field :date, value: date
             .form-group

@@ -28,8 +28,8 @@ class Date
     (self - Date.today).to_i <= 7
   end
 
-  def registration_cutoff_datetime
-    t = Time.parse("9:00PM UTC") # 2pm PDT, 1pm PST
+  def registration_cutoff_datetime(hour_of_day)
+    t = Time.parse(hour_of_day)
     DateTime.new(year, month, day, t.hour, t.min, t.sec).utc
   end
 
