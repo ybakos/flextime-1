@@ -252,7 +252,7 @@ Devise.setup do |config|
     :google_oauth2,
     ENV.fetch('GOOGLE_CLIENT_ID') { 'FAKE' },
     ENV.fetch('GOOGLE_CLIENT_SECRET') { 'FAKE' },
-    { prompt: 'select_account'}
+    { prompt: 'select_account', :skip_jwt => true }
   )
 
   # ==> Warden configuration
