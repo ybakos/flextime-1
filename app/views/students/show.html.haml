@@ -4,18 +4,18 @@
     = link_to 'Edit', edit_student_path(@student), class: 'btn btn-sm text-secondary'
 
 %nav.row.mt-3
-  .col
+  .col-3
     = link_to_previous_week_for_student(@student, @date)
-  .col
+  .col-6
     - if @student.teacher.nil? || current_user.admin?
-      = form_for @student, as: :student, url: student_path(@student), html: {class: 'form-inline'} do |f|
+      = form_for @student, as: :student, url: student_path(@student), html: {class: 'form-inline justify-content-center'} do |f|
         .form-group
           = f.label :teacher
           = f.select :teacher_id, Teacher.where(active: true).collect { |t| [t.to_s, t.id] }, {include_blank: 'Choose...'}, {class: 'form-control mx-2'}
           = f.submit 'Ok', class: 'btn btn-outline-success'
     - else
       %h3.text-center.text-muted#flex_time_teacher= @student.teacher
-  .col
+  .col-3
     = link_to_next_week_for_student(@student, @date)
 
 .row.my-5
