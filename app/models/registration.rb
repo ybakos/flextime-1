@@ -13,6 +13,8 @@ class Registration < ApplicationRecord
   validate :activity_cannot_be_full, if: Proc.new { |r| r.activity_id_changed? }
   validate :activity_must_not_be_more_than_a_week_away, if: Proc.new { |r| r.creator.student? }
   validate :student_can_only_register_themselves, if: Proc.new { |r| r.creator.student? }
+  validate :student_cannot_register_for_restricted_activities, if: Proc.new { |r| r.creator.student? }
+
 
   enum attendance: [:present, :late, :absent]
   attribute :attendance, :integer, default: :present
@@ -60,6 +62,10 @@ class Registration < ApplicationRecord
 
     def student_can_only_register_themselves
       errors.add(:student, 'can only register themselves') if student.id != creator.id
+    end
+
+    def student_cannot_register_for_restricted_activities
+      errors.add(:activity, 'cannot be a restricted activity') if activity.restricted?
     end
 
 end

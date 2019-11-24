@@ -59,6 +59,17 @@ class RegistrationTest < ActiveSupport::TestCase
     refute new_registration.valid?
   end
 
+  # students may not register themselves for restricted activities
+  # https://github.com/osu-cascades/flex-time/issues/117
+  test 'is invalid if the student is the registrant and the activity is restricted' do
+    student = users(:student)
+    new_registration = Registration.new(creator: student,
+      student: student,
+      teacher: student.teacher,
+      activity: activities(:restricted))
+    refute new_registration.valid?
+  end
+
   # Students may only register for an activity once
   test 'must be unique for the student and activity' do
     existing_registration = registrations(:by_student)
