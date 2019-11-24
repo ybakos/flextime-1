@@ -17,3 +17,9 @@
       = f.select :date, options_for_select(@dates_for_select, @activity.date.to_s), {}, class: 'form-control'
     .col-md-3.form-group.align-self-end
       = f.submit class: 'btn btn-success'
+    .col-md-6.form-group.align-self-end
+      .custom-control.custom-switch
+        = f.check_box :restricted, class: 'custom-control-input'
+        = f.label :restricted, class: 'mb-0 custom-control-label' do
+          Restricted?
+          %span.hint.ml-3 Students won't be able to sign themselves up.

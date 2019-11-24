@@ -8,7 +8,7 @@
 # ----------
 # T  R  F    T  R  F    T  R  F
 # a  b  c    d  f  h    i  j  k
-#            e  g
+#            e  g  R
 #
 # Registrations
 # -------------
@@ -26,6 +26,7 @@ class RegistrationsTest < ApplicationSystemTestCase
     visit student_path(users(:student))
   end
 
+
   # Staff registers student for activities
 
   test 'staff registers a student for an activity' do
@@ -39,6 +40,20 @@ class RegistrationsTest < ApplicationSystemTestCase
       end
       assert_text 'Successfully registered for Fake Friday Activity'
       assert_selector 'h5', text: 'Fake Friday Activity'
+    end
+  end
+
+  # https://github.com/osu-cascades/flex-time/issues/117
+  test 'staff registers a student for a restricted activity' do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit student_path(users(:student))
+      within '#friday' do
+        select 'Restricted Activity', from: 'registration_activity_id'
+        click_button 'Sign Up'
+      end
+      assert_text 'Successfully registered for Restricted Activity'
+      assert_selector 'h5', text: 'Restricted Activity'
     end
   end
 
@@ -161,6 +176,16 @@ class RegistrationsTest < ApplicationSystemTestCase
       within '#thursday' do
         assert has_select?('registration_activity_id')
         refute has_select?('registration_activity_id', with_options: ['Second Fake Thursday Activity'])
+      end
+    end
+  end
+
+  test 'student does not see restricted activities' do
+    travel_to Date.today.monday do
+      sign_in_as_student_and_visit_profile
+      within '#friday' do
+        assert has_select?('registration_activity_id')
+        refute has_select?('registration_activity_id', with_options: ['Restricted Activity'])
       end
     end
   end

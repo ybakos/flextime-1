@@ -74,6 +74,10 @@ pre.debug_dump {
   pointer-events: none;
 }
 
+.hint {
+  color: $gray-400;
+}
+
 
 // @mixin box_sizing {
 //   -moz-box-sizing: border-box;

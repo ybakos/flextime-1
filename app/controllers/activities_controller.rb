@@ -92,7 +92,7 @@ class ActivitiesController < ApplicationController
     end
 
     def activity_params
-      params.require(:activity).permit(:name, :room, :capacity, :date)
+      params.require(:activity).permit(:name, :room, :capacity, :date, :restricted)
     end
 
     def dates_for_select_for_week_of(date)

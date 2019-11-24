@@ -54,6 +54,22 @@ class ActivitiesTest < ApplicationSystemTestCase
     assert_selector 'h3', text: "#{I18n.l(a.date, format: :without_year)} in #{a.room}"
   end
 
+  # https://github.com/osu-cascades/flex-time/issues/117
+  test 'staff can see restricted activities' do
+    d = Date.today
+    assert_selector 'h2', text: 'This Week'
+    assert_selector 'h5', text: 'Restricted Activity'
+    assert_text 'restricted'
+  end
+
+  # https://github.com/osu-cascades/flex-time/issues/117
+  test 'staff views a restricted activity' do
+    a = activities(:restricted)
+    click_link a.name
+    assert_selector 'h2', text: a.name
+    assert_selector 'h3', text: 'Restricted'
+  end
+
   # Creating
 
   test 'staff creates a new activity' do
@@ -70,6 +86,25 @@ class ActivitiesTest < ApplicationSystemTestCase
     assert_text 'Activity was successfully created'
     assert_selector 'h2', text: activity_name
     assert_selector 'h3', text: "#{date_text} in #{activity_room}"
+  end
+
+  # https://github.com/osu-cascades/flex-time/issues/117
+  test 'staff creates a restricted activity' do
+    date_text = I18n.l(Date.today.tuesday, format: :without_year)
+    activity_name = 'New Fake Tuesday Activity'
+    activity_room = 'New Fake Room'
+    first('a', text: 'Add New Activity').click
+    assert_selector 'h2', text: 'New Activity'
+    fill_in 'activity_name', with: activity_name
+    fill_in 'activity_room', with: 'New Fake Room'
+    fill_in 'activity_capacity', with: 10
+    select date_text, from: 'activity_date'
+    check 'Restricted?'
+    click_button 'Create Activity'
+    assert_text 'Activity was successfully created'
+    assert_selector 'h2', text: activity_name
+    assert_selector 'h3', text: "#{date_text} in #{activity_room}"
+    assert_selector 'h3', text: 'Restricted'
   end
 
   test 'staff creating a new activity sees appropriate date pre-selected' do

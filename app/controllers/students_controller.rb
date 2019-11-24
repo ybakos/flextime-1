@@ -16,7 +16,7 @@ class StudentsController < ApplicationController
 
   def show
     @registrations = @student.registrations.for_week(@date)
-    @week_of_activities = available_activities_for_week
+    @week_of_activities = available_activities_for_week(current_user.student?)
   end
 
   def edit
@@ -56,10 +56,10 @@ class StudentsController < ApplicationController
       params.require(:student).permit(:teacher_id, :first_name, :last_name)
     end
 
-    def available_activities_for_week
+    def available_activities_for_week(omit_restricted)
       activities_for_week = Activity.for_week(@date)
       activities_for_week.each do |date, activities|
-        activities.delete_if(&:full?)
+        activities.delete_if { |a| a.full? || (omit_restricted && a.restricted?) }
       end
       activities_for_week
     end

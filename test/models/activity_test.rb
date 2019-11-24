@@ -6,6 +6,10 @@ class ActivityTest < ActiveSupport::TestCase
     activities(:tuesday_activity)
   end
 
+  test 'is not restricted by default' do
+    refute Activity.new.restricted
+  end
+
   test 'without a name is invalid' do
     assert activity.valid?
     activity.name = nil
@@ -96,7 +100,7 @@ class ActivityTest < ActiveSupport::TestCase
     expected = {
       date.tuesday => [activities(:tuesday_activity), activities(:second_tuesday_activity)],
       date.thursday => [activities(:thursday_activity), activities(:second_thursday_activity)],
-      date.friday => [activities(:friday_activity)]
+      date.friday => [activities(:friday_activity), activities(:restricted)]
     }
     (0..6).each do |offset|
       assert_equal expected, Activity.for_week(date + offset)

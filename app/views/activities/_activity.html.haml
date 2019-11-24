@@ -3,5 +3,7 @@
   %h6
     = activity.room
     .float-right
+      - if activity.restricted?
+        %span.badge.badge-pill.badge-warning{title: 'Only staff may register students for this activity.'} restricted
       %span.badge.badge-pill.badge-secondary= activity.registrations.count
       %span.badge.badge-pill.badge-light.text-muted= activity.capacity
