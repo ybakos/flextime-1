@@ -61,7 +61,7 @@ class RegistrationsController < ApplicationController
       if @registration.save
         format.html { redirect_to @registration.activity, notice: 'Attendance marked.' }
       else
-        format.html { redirect_to @regitration.activity, notice: "There was a problem marking this student's attendance." }
+        format.html { redirect_to @registration.activity, notice: "There was a problem marking this student's attendance." }
       end
     end
   end
