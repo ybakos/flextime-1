@@ -73,6 +73,13 @@ class TeacherTest < ActiveSupport::TestCase
     students.each { |s| assert(s.teacher.nil?) }
   end
 
+  test 'is active after being activated' do
+    teacher = teachers(:deactivated)
+    refute teacher.active?
+    teacher.activate!
+    assert teacher.active?
+  end
+
   test '#can_be_deleted? is true when it has neither students nor registrations' do
     teacher = teachers(:mr_fake)
     assert_empty(teacher.students)

@@ -26,6 +26,9 @@ class TeachersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
     put teacher_path(id: 'fake')
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
+    # activate
+    put activate_teacher_path(id: 'fake')
+    assert_redirected_to(controller: 'devise/sessions', action: 'new')
     # deactivate
     put deactivate_teacher_path(id: 'fake')
     assert_redirected_to(controller: 'devise/sessions', action: 'new')
@@ -58,6 +61,9 @@ class TeachersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to student_path(student)
     put teacher_path(id: 'fake')
     assert_redirected_to student_path(student)
+    # activate
+    put activate_teacher_path(id: 'fake')
+    assert_redirected_to student_path(student)
     # deactivate
     put deactivate_teacher_path(id: 'fake')
     assert_redirected_to student_path(student)
@@ -83,12 +89,23 @@ class TeachersControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to root_url
     put teacher_path(id: 'fake')
     assert_redirected_to root_url
+    # activate
+    put activate_teacher_path(id: 'fake')
+    assert_redirected_to root_url
     # deactivate
     put deactivate_teacher_path(id: 'fake')
     assert_redirected_to root_url
     # destroy
     delete teacher_path(id: 'fake')
     assert_redirected_to root_url
+  end
+
+  test 'allows admins to activate a teacher' do
+    sign_in users(:admin)
+    teacher = teachers(:deactivated)
+    put activate_teacher_path(teacher)
+    assert_redirected_to teachers_path
+    assert_match /Teacher was successfully activated/, flash[:notice]
   end
 
   test 'allows admins to deactivate a teacher' do
