@@ -1,7 +1,7 @@
 class TeachersController < ApplicationController
 
   before_action :restrict_unless_admin, except: [:index, :show]
-  before_action :set_teacher, only: [:show, :edit, :update, :deactivate, :destroy]
+  before_action :set_teacher, only: [:show, :edit, :update, :activate, :deactivate, :destroy]
   before_action :set_date, only: [:show]
 
   def index
@@ -34,6 +34,18 @@ class TeachersController < ApplicationController
         format.json { render :show, status: :ok, location: @teacher }
       else
         format.html { render :edit }
+        format.json { render json: @teacher.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def activate
+    respond_to do |format|
+      if @teacher.activate!
+        format.html { redirect_to teachers_path, notice: 'Teacher was successfully activated.' }
+        format.json { render :show, status: :ok, location: @teacher }
+      else
+        format.html { render :index, alert: 'This teacher could not be activated.' }
         format.json { render json: @teacher.errors, status: :unprocessable_entity }
       end
     end

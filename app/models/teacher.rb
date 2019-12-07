@@ -25,6 +25,10 @@ class Teacher < ApplicationRecord
     end
   end
 
+  def activate!
+    update(active: true)
+  end
+
   def to_s
     "#{title} #{name}"
   end

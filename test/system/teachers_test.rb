@@ -25,6 +25,10 @@ class TeachersTest < ApplicationSystemTestCase
     refute_link 'Delete'
     refute_link 'Deactivate', exact: true
     refute_link 'Reset student rosters'
+    click_link 'View Deactivated Teachers'
+    refute_link 'Reactivate'
+    refute_link 'Edit'
+    refute_link 'Delete'
   end
 
   test 'staff do not see creation form' do
@@ -127,6 +131,16 @@ class TeachersTest < ApplicationSystemTestCase
     visit teachers_url
     first('.list-group-item').click_link('Deactivate')
     assert_text 'Teacher was successfully deactivated'
+  end
+
+  # Reactivating
+
+  test 'admin reactivates a teacher' do
+    sign_in users(:admin)
+    visit teachers_url
+    click_link 'View Deactivated Teachers'
+    first('.list-group-item').click_link('Reactivate')
+    assert_text 'Teacher was successfully activated'
   end
 
   # Deleting
