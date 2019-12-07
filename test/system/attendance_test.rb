@@ -19,12 +19,10 @@ class AttendanceTest < ApplicationSystemTestCase
   end
 
   test 'attendance list does not show present students' do
-    first('.lnk-attendance').click do
-      assert_text 'Attendance'
-      assert_no_selector 'tr'
-      asert_no_text 'late'
-      asert_no_text 'absent'
-    end
+    first('.lnk-attendance').click
+    assert_text 'Attendance'
+    assert_no_text 'late'
+    assert_no_text 'absent'
   end
 
   # Marking Attendance
@@ -41,10 +39,9 @@ class AttendanceTest < ApplicationSystemTestCase
 
   test 'staff sees late students in attendance list' do
     registrations(:by_student).late!
-    first('.lnk-attendance').click do
-      assert_text 'Attendance'
-      asert_text 'late'
-    end
+    first('.lnk-attendance').click
+    assert_text 'Attendance'
+    assert_text 'late'
   end
 
   test 'staff marks student as absent' do
@@ -59,10 +56,9 @@ class AttendanceTest < ApplicationSystemTestCase
 
   test 'staff sees absent students in attendance list' do
     registrations(:by_student).absent!
-    first('.lnk-attendance').click do
-      assert_text 'Attendance'
-      asert_text 'absent'
-    end
+    first('.lnk-attendance').click
+    assert_text 'Attendance'
+    assert_text 'absent'
   end
 
 end
