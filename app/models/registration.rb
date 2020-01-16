@@ -9,7 +9,7 @@ class Registration < ApplicationRecord
   validate :student_must_be_student
   validate :student_not_registered_for_another_activity_on_same_date, unless: :updating_activity
   validates_presence_of :teacher
-  validate :teacher_must_be_student_teacher
+  validate :teacher_must_be_student_teacher, on: :create
   validate :activity_cannot_be_full, if: Proc.new { |r| r.activity_id_changed? }
   validate :activity_must_not_be_more_than_a_week_away, if: Proc.new { |r| r.creator.student? }
   validate :student_can_only_register_themselves, if: Proc.new { |r| r.creator.student? }

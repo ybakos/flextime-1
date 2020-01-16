@@ -42,11 +42,22 @@ class RegistrationTest < ActiveSupport::TestCase
     refute registration.valid?
   end
 
-  test 'is invalid if student teacher is not the same as the teacher' do
-    registration = registrations(:by_staff)
+  test 'is invalid if student teacher is not the same as the teacher during initial registration' do
+    student = users(:student)
+    registration = Registration.new(creator: student,
+      student: student,
+      teacher: student.teacher,
+      activity: activities(:friday_activity))
     assert registration.valid?
     registration.teacher = teachers(:mr_valid)
     refute registration.valid?
+  end
+
+  test 'is valid if student teacher is not the same as the teacher during update' do
+    registration = registrations(:by_staff)
+    assert registration.valid?
+    registration.teacher = teachers(:mr_valid)
+    assert registration.valid?
   end
 
   # students may only register themselves
