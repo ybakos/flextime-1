@@ -6,7 +6,7 @@ class TeachersController < ApplicationController
 
   def index
     @teacher = Teacher.new
-    @teachers = params[:status] == 'deactivated' ? Teacher.deactivated : Teacher.active
+    @teachers = params[:status] == 'deactivated' ? Teacher.deactivated.includes(:students).includes(:registrations) : Teacher.active.includes(:students).includes(:registrations)
   end
 
   def show; end
