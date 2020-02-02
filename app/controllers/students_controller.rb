@@ -7,10 +7,10 @@ class StudentsController < ApplicationController
   def index
     @filter_params = params.slice(:all, :last_name_starting_with).permit!
     if params[:all]
-      @students = User.student.active
+      @students = User.includes(:teacher).student.active
     else
       initial_letter_of_last_name = params[:last_name_starting_with] || 'A'
-      @students = User.student.active.starting_with(initial_letter_of_last_name).includes(:teacher)
+      @students = User.includes(:teacher).student.active.starting_with(initial_letter_of_last_name)
     end
   end
 
