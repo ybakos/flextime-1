@@ -2,7 +2,7 @@ language: ruby
 rvm:
  - 2.7.2
 
-script: bundle exec rails test
+script: bundle exec rails test:system test
 
 services:
   - postgresql
