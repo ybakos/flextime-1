@@ -6,10 +6,10 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 gem 'rails', '~> 5.2.3'
 gem 'pg', '~> 1.2.3'
-gem 'puma', '~> 3.12.2'
+gem 'puma', '~> 5.1.1'
 gem 'sass-rails', '~> 6.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'bootsnap', '>= 1.1.0', require: false
+gem 'uglifier', '>= 4.2.0'
+gem 'bootsnap', '>= 1.5.1', require: false
 gem 'coffee-rails', '~> 5'
 gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.10'
