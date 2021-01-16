@@ -1,4 +1,4 @@
-%li.list-group-item.mb-4[teacher]
+%li.list-group-item.mb-4.border-top[teacher]
   %h3.mb-0= link_to teacher.to_s, teacher
   %p.text-muted= pluralize(teacher.students.active.count, 'student')
   - if current_user.admin?
