@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_11_24_034102) do
+ActiveRecord::Schema.define(version: 2021_01_22_062414) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -40,6 +40,14 @@ ActiveRecord::Schema.define(version: 2019_11_24_034102) do
     t.index ["creator_id"], name: "index_registrations_on_creator_id"
     t.index ["student_id"], name: "index_registrations_on_student_id"
     t.index ["teacher_id"], name: "index_registrations_on_teacher_id"
+  end
+
+  create_table "schools", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "slug", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["slug"], name: "index_schools_on_slug", unique: true
   end
 
   create_table "teachers", force: :cascade do |t|
