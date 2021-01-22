@@ -10,6 +10,8 @@ class User < ApplicationRecord
   validates_presence_of :last_name
   validates :active, inclusion: { in: [true, false] }
 
+  belongs_to :school
+
   belongs_to :teacher, optional: true
   validates_presence_of :teacher_id, unless: Proc.new { |u| u.new_record? || !u.student? || !u.active || u.active_changed?(from: false) }
 

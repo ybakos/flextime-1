@@ -24,4 +24,9 @@ class SchoolTest < ActiveSupport::TestCase
     refute school.valid?
   end
 
+  test 'has many users' do
+    assert_respond_to schools(:first), :users
+    assert_kind_of User, schools(:first).users.first
+  end
+
 end

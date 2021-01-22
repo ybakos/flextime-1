@@ -1,4 +1,5 @@
 unknown:
+  school: first
   email: 'unknown@example.com'
   encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
   provider: 'FAKE'
@@ -10,6 +11,7 @@ unknown:
   # no explicit 'active' status
 
 deactivated:
+  school: first
   email: 'deactivated@example.com'
   encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
   provider: 'FAKE'
@@ -21,6 +23,7 @@ deactivated:
   # no explicit role
 
 student:
+  school: first
   email: 'student@example.com'
   encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
   provider: 'FAKE'
@@ -33,6 +36,7 @@ student:
   teacher: miss_valid
 
 second_student:
+  school: first
   email: 'student2@example.com'
   encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
   provider: 'FAKE'
@@ -45,6 +49,7 @@ second_student:
   teacher: miss_valid
 
 deactivated_student:
+  school: first
   email: 'deactivated_student@example.com'
   encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
   provider: 'FAKE'
@@ -57,6 +62,7 @@ deactivated_student:
   teacher: miss_valid
 
 new_student_without_teacher:
+  school: first
   email: 'new-student@example.com'
   encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
   provider: 'FAKE'
@@ -68,6 +74,7 @@ new_student_without_teacher:
   active: true
 
 staff:
+  school: first
   email: 'staff@example.com'
   encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
   provider: 'FAKE'
@@ -79,6 +86,7 @@ staff:
   active: true
 
 admin:
+  school: first
   email: 'admin@example.com'
   encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
   provider: 'FAKE'

@@ -4,7 +4,7 @@ require 'minitest/mock'
 class UserTest < ActiveSupport::TestCase
 
   def new_user
-    User.new(email: 'new_fake_user@example.com',
+    User.new(school: schools(:first), email: 'new_fake_user@example.com',
       password: 'password', password_confirmation: 'password',
       first_name: 'New Fake', last_name: 'User')
   end
@@ -69,6 +69,11 @@ class UserTest < ActiveSupport::TestCase
     u = new_user
     u.active = false
     refute u.active_for_authentication?
+  end
+
+  test 'belongs to a school' do
+    assert_respond_to users(:student), :school
+    assert_kind_of School, users(:student).school
   end
 
   test 'belongs to a teacher' do
