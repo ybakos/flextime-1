@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_22_072331) do
+ActiveRecord::Schema.define(version: 2021_01_23_001109) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,7 +24,9 @@ ActiveRecord::Schema.define(version: 2021_01_22_072331) do
     t.datetime "updated_at", null: false
     t.integer "registrations_count", default: 0
     t.boolean "restricted", default: false, null: false
+    t.bigint "school_id"
     t.index ["date", "name", "room"], name: "index_activities_on_date_and_name_and_room", unique: true
+    t.index ["school_id"], name: "index_activities_on_school_id"
   end
 
   create_table "registrations", force: :cascade do |t|
@@ -87,6 +89,7 @@ ActiveRecord::Schema.define(version: 2021_01_22_072331) do
     t.index ["teacher_id"], name: "index_users_on_teacher_id"
   end
 
+  add_foreign_key "activities", "schools"
   add_foreign_key "registrations", "activities"
   add_foreign_key "registrations", "teachers"
   add_foreign_key "registrations", "users", column: "creator_id"

@@ -17,7 +17,7 @@ class ActivitiesController < ApplicationController
   def show; end
 
   def new
-    @activity = Activity.new(date: @date)
+    @activity = Activity.new(school: current_user.school, date: @date)
     @dates_for_select = dates_for_select_for_week_of(@activity.date)
   end
 
@@ -27,6 +27,7 @@ class ActivitiesController < ApplicationController
 
   def create
     @activity = Activity.new(activity_params)
+    @activity.school = current_user.school
     respond_to do |format|
       if @activity.save
         format.html { redirect_to @activity, notice: 'Activity was successfully created.' }

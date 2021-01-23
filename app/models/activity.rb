@@ -7,6 +7,7 @@ class Activity < ApplicationRecord
   validate :date_must_be_valid_activity_day, unless: Proc.new { date.nil? }
   validates_uniqueness_of :room, scope: [:date, :name], case_sensitive: false
 
+  belongs_to :school
   has_many :registrations, dependent: :destroy
 
   def self.for_week(date)
@@ -22,7 +23,7 @@ class Activity < ApplicationRecord
 
   def self.copy!(from_date, to_date)
     Activity.where(date: from_date).each do |a|
-      Activity.create!(name: a.name, room: a.room, capacity: a.capacity, date: to_date)
+      Activity.create!(school: a.school, name: a.name, room: a.room, capacity: a.capacity, date: to_date)
     end
   end
 
