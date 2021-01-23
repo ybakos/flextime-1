@@ -40,6 +40,7 @@ env:
     - TEST_DATABASE="flex_time_test"
     - DEVISE_MAILER_SENDER=no-reply@example.com
     - ACTION_MAILER_URL_HOST=travis
+    - REGISTRATION_CUTOFF_TIME=10:00PM UTC  # 2pm PDT, 1pm PST
 
 # after_success:
 #   - bundle exec codeclimate-test-reporter
