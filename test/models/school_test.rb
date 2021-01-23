@@ -29,4 +29,9 @@ class SchoolTest < ActiveSupport::TestCase
     assert_kind_of User, schools(:first).users.first
   end
 
+  test 'has many activities' do
+    assert_respond_to schools(:first), :activities
+    assert_kind_of Activity, schools(:first).activities.first
+  end
+
 end

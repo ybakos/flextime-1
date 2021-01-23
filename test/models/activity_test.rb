@@ -55,6 +55,11 @@ class ActivityTest < ActiveSupport::TestCase
     assert_raises { activity.save! }
   end
 
+  test 'belongs to a school' do
+    assert_respond_to activities(:tuesday_activity), :school
+    assert_kind_of School, activities(:tuesday_activity).school
+  end
+
   test 'has registrations' do
     assert_respond_to activities(:tuesday_activity), :registrations
     assert_kind_of Registration, activities(:tuesday_activity).registrations.first
