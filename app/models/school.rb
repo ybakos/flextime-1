@@ -4,6 +4,7 @@ class School < ApplicationRecord
 
   has_many :activities
   has_many :registrations
+  has_many :teachers
   has_many :users
 
 end

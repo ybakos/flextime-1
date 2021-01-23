@@ -39,4 +39,9 @@ class SchoolTest < ActiveSupport::TestCase
     assert_kind_of Registration, schools(:first).registrations.first
   end
 
+  test 'has many teachers' do
+    assert_respond_to schools(:first), :teachers
+    assert_kind_of Teacher, schools(:first).teachers.first
+  end
+
 end

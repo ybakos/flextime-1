@@ -15,6 +15,7 @@ class TeachersController < ApplicationController
 
   def create
     @teacher = Teacher.new(teacher_params)
+    @teacher.school = current_user.school
     respond_to do |format|
       if @teacher.save
         format.html { redirect_to teachers_path, notice: "#{@teacher} was successfully created." }

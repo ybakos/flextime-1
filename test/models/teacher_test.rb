@@ -47,6 +47,11 @@ class TeacherTest < ActiveSupport::TestCase
     assert_raises { teacher.save! }
   end
 
+  test 'belongs to a school' do
+    assert_respond_to teachers(:miss_valid), :school
+    assert_kind_of School, teachers(:miss_valid).school
+  end
+
   test 'has many students' do
     assert_respond_to(teachers(:miss_valid), :students)
     assert_kind_of User, teachers(:miss_valid).students.first
