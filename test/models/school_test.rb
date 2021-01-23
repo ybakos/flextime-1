@@ -34,4 +34,9 @@ class SchoolTest < ActiveSupport::TestCase
     assert_kind_of Activity, schools(:first).activities.first
   end
 
+  test 'has many registrations' do
+    assert_respond_to schools(:first), :registrations
+    assert_kind_of Registration, schools(:first).registrations.first
+  end
+
 end

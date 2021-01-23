@@ -1,22 +1,26 @@
 by_student:
+  school: first
   creator: student
   student: student
   teacher: miss_valid
   activity: tuesday_activity
 
 by_staff:
+  school: first
   creator: staff
   student: student
   teacher: miss_valid
   activity: second_thursday_activity
 
 previous_week:
+  school: first
   creator: student
   student: student
   teacher: miss_valid
   activity: last_tuesday_activity
 
 next_week:
+  school: first
   creator: student
   student: student
   teacher: mr_valid

@@ -22,6 +22,11 @@ class RegistrationTest < ActiveSupport::TestCase
     assert_kind_of Activity, registrations(:by_student).activity
   end
 
+  test 'belongs to a school' do
+    assert_respond_to registrations(:by_student), :school
+    assert_kind_of School, registrations(:by_student).school
+  end
+
   test 'has a default attendance of present' do
     registration = Registration.new
     assert_equal registration.attendance, 'present'
@@ -44,7 +49,8 @@ class RegistrationTest < ActiveSupport::TestCase
 
   test 'is invalid if student teacher is not the same as the teacher during initial registration' do
     student = users(:student)
-    registration = Registration.new(creator: student,
+    registration = Registration.new(school: student.school,
+      creator: student,
       student: student,
       teacher: student.teacher,
       activity: activities(:friday_activity))
@@ -63,7 +69,8 @@ class RegistrationTest < ActiveSupport::TestCase
   # students may only register themselves
   test 'is invalid if student registrant (creator) is not the registration student' do
     student = users(:student)
-    new_registration = Registration.new(creator: student,
+    new_registration = Registration.new(school: student.school,
+      creator: student,
       student: users(:second_student),
       teacher: users(:second_student).teacher,
       activity: activities(:friday_activity))
@@ -84,7 +91,8 @@ class RegistrationTest < ActiveSupport::TestCase
   # Students may only register for an activity once
   test 'must be unique for the student and activity' do
     existing_registration = registrations(:by_student)
-    new_registration = Registration.new(creator: existing_registration.creator,
+    new_registration = Registration.new(school: existing_registration.school,
+      creator: existing_registration.creator,
       student: existing_registration.student,
       teacher: existing_registration.teacher,
       activity: activities(:friday_activity))
@@ -95,7 +103,8 @@ class RegistrationTest < ActiveSupport::TestCase
 
   test 'is invalid if the student has another registration for an activity on the same date' do
     existing_registration = registrations(:by_student)
-    new_registration = Registration.new(creator: existing_registration.creator,
+    new_registration = Registration.new(school: existing_registration.school,
+      creator: existing_registration.creator,
       student: existing_registration.student,
       teacher: existing_registration.teacher,
       activity: activities(:friday_activity))
@@ -106,7 +115,7 @@ class RegistrationTest < ActiveSupport::TestCase
 
   test 'is invalid if the activity is full' do
     full_activity = activities(:tuesday_activity)
-    new_registration = Registration.new(
+    new_registration = Registration.new(school: full_activity.school,
       creator: users(:second_student),
       student: users(:second_student),
       teacher: users(:second_student).teacher,
@@ -118,7 +127,7 @@ class RegistrationTest < ActiveSupport::TestCase
   test 'is invalid if the creator is a student and the activity is more than eight days away' do
     student = users(:student)
     activity = activities(:next_friday_activity)
-    registration = Registration.new(activity: activity, creator: student, student: student, teacher: student.teacher)
+    registration = Registration.new(school: student.school, activity: activity, creator: student, student: student, teacher: student.teacher)
     travel_to Date.today.thursday do
       refute registration.valid?
     end
