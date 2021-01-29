@@ -6,7 +6,7 @@ class AddSchoolToActivity < ActiveRecord::Migration[5.2]
       UPDATE activities
       SET school_id = #{initial_default_school.id};
     SQL
-    change_column_null :activities, :school_id, true
+    change_column_null :activities, :school_id, false
   end
 
   def down

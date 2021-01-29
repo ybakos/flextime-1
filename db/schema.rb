@@ -24,7 +24,7 @@ ActiveRecord::Schema.define(version: 2021_01_23_054311) do
     t.datetime "updated_at", null: false
     t.integer "registrations_count", default: 0
     t.boolean "restricted", default: false, null: false
-    t.bigint "school_id"
+    t.bigint "school_id", null: false
     t.index ["date", "name", "room"], name: "index_activities_on_date_and_name_and_room", unique: true
     t.index ["school_id"], name: "index_activities_on_school_id"
   end
@@ -37,7 +37,7 @@ ActiveRecord::Schema.define(version: 2021_01_23_054311) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "attendance", default: 0, null: false
-    t.bigint "school_id"
+    t.bigint "school_id", null: false
     t.index ["activity_id", "student_id"], name: "index_registrations_on_activity_id_and_student_id", unique: true
     t.index ["activity_id"], name: "index_registrations_on_activity_id"
     t.index ["creator_id"], name: "index_registrations_on_creator_id"
@@ -60,7 +60,7 @@ ActiveRecord::Schema.define(version: 2021_01_23_054311) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.boolean "active", default: true, null: false
-    t.bigint "school_id"
+    t.bigint "school_id", null: false
     t.index ["name", "title"], name: "index_teachers_on_name_and_title", unique: true
     t.index ["school_id"], name: "index_teachers_on_school_id"
   end
@@ -86,7 +86,7 @@ ActiveRecord::Schema.define(version: 2021_01_23_054311) do
     t.integer "role", default: 0, null: false
     t.bigint "teacher_id"
     t.boolean "active", default: true, null: false
-    t.bigint "school_id"
+    t.bigint "school_id", null: false
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
     t.index ["school_id"], name: "index_users_on_school_id"

@@ -6,7 +6,7 @@ class AddSchoolToUsers < ActiveRecord::Migration[5.2]
       UPDATE users
       SET school_id = #{initial_default_school.id};
     SQL
-    change_column_null :users, :school_id, true
+    change_column_null :users, :school_id, false
   end
 
   def down

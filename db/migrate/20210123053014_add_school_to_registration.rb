@@ -6,7 +6,7 @@ class AddSchoolToRegistration < ActiveRecord::Migration[5.2]
       UPDATE registrations
       SET school_id = #{initial_default_school.id};
     SQL
-    change_column_null :registrations, :school_id, true
+    change_column_null :registrations, :school_id, false
   end
 
   def down
