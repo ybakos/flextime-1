@@ -26,7 +26,11 @@
             %li.nav-item= link_to 'Teachers', teachers_path, class: 'nav-link'
           - if current_user&.admin?
             %li.nav-item= link_to 'Users', users_path(status: 'active', last_name_starting_with: 'A'), class: 'nav-link'
-          %li.nav-item= sign_in_or_out_link
+          - if signed_in?
+            %li.nav-item= link_to 'Sign Out', destroy_user_session_path, method: :delete, class: 'nav-link'
+          - else
+            %li.nav-item= link_to 'Sign Up', new_user_registration_path, class: 'nav-link'
+            %li.nav-item= link_to 'Sign In', user_google_oauth2_omniauth_authorize_path, method: :post, class: 'nav-link'
     %main.container{role: 'main'}
       - flash.each do |message_type, message|
         .alert.alert-dismissible.fade.show{class: "alert-#{message_type.to_s == 'notice' ? 'success' : 'warning'}"}
