@@ -78,10 +78,10 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to student_path(student)
   end
 
-  test 'redirects delete requests from staff users to root url' do
+  test 'redirects delete requests from staff users to activities url' do
     sign_in users(:staff)
     delete activity_path(activities(:tuesday_activity))
-    assert_redirected_to root_url
+    assert_redirected_to activities_url
   end
 
   test 'allows admins to delete an activity' do
@@ -92,10 +92,10 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     assert_match /Fake Tuesday Activity was successfully deleted/, flash[:notice]
   end
 
-  test 'redirects copy requests from staff users to root url' do
+  test 'redirects copy requests from staff users to activities url' do
     sign_in users(:staff)
     post copy_activities_path
-    assert_redirected_to root_url
+    assert_redirected_to activities_url
   end
 
   test 'redirects when the activity is not found' do

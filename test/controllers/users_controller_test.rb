@@ -40,16 +40,16 @@ class UsersControllerTest < ActionDispatch::IntegrationTest
     assert defines_before_filter?(UsersController, :restrict_unless_admin)
   end
 
-  test 'redirects requests from staff users to root url' do
+  test 'redirects requests from staff users to activities url' do
     sign_in users(:staff)
     # index
     get users_path
-    assert_redirected_to root_url
+    assert_redirected_to activities_url
     # update
     patch user_path(id: 'fake')
-    assert_redirected_to root_url
+    assert_redirected_to activities_url
     put user_path(id: 'fake')
-    assert_redirected_to root_url
+    assert_redirected_to activities_url
   end
 
   test 'allows requests from admin users' do

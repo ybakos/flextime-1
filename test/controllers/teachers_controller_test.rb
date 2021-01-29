@@ -76,28 +76,28 @@ class TeachersControllerTest < ActionDispatch::IntegrationTest
     assert defines_before_filter?(TeachersController, :restrict_unless_admin)
   end
 
-  test 'redirects requests from staff users to root url' do
+  test 'redirects requests from staff users to activities url' do
     sign_in users(:staff)
     # edit
     get edit_teacher_path(id: 'fake')
-    assert_redirected_to root_url
+    assert_redirected_to activities_url
     # create
     post teachers_path
-    assert_redirected_to root_url
+    assert_redirected_to activities_url
     # update
     patch teacher_path(id: 'fake')
-    assert_redirected_to root_url
+    assert_redirected_to activities_url
     put teacher_path(id: 'fake')
-    assert_redirected_to root_url
+    assert_redirected_to activities_url
     # activate
     put activate_teacher_path(id: 'fake')
-    assert_redirected_to root_url
+    assert_redirected_to activities_url
     # deactivate
     put deactivate_teacher_path(id: 'fake')
-    assert_redirected_to root_url
+    assert_redirected_to activities_url
     # destroy
     delete teacher_path(id: 'fake')
-    assert_redirected_to root_url
+    assert_redirected_to activities_url
   end
 
   test 'allows admins to activate a teacher' do
