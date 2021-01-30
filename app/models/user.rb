@@ -27,6 +27,8 @@ class User < ApplicationRecord
 
   before_save :remove_teacher, if: Proc.new { |u| u.role_changed?(from: 'student') }
 
+  accepts_nested_attributes_for :school
+
   # https://github.com/zquestz/omniauth-google-oauth2
   def self.from_omniauth(auth, allowed_domains)
     return unless allowed_domains.include? auth&.extra&.raw_info&.hd

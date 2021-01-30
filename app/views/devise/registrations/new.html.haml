@@ -5,7 +5,7 @@
     .form-row.mb-4
       .col
         = f.label :first_name, class: 'sr-only'
-        = f.text_field :first_name, autofocus: true, required: true,placeholder: 'First name', class: 'form-control'
+        = f.text_field :first_name, autofocus: true, required: true, placeholder: 'First name', class: 'form-control'
       .col
         = f.label :last_name, class: 'sr-only'
         = f.text_field :last_name, required: true, placeholder: 'Last name', class: 'form-control'
@@ -22,6 +22,15 @@
       .col
         = f.label :password_confirmation, class: 'sr-only'
         = f.password_field :password_confirmation, required: true, placeholder: 'Password confirmation', class: 'form-control'
+    .form-row.mb-4
+      = f.fields_for :school, School.new do |sf|
+        .col
+          = sf.label :name, class: 'sr-only'
+          = sf.text_field :name, required: true, placeholder: 'Name of your school', class: 'form-control'
+          %small{class: 'form-text text-muted'} (e.g. Cool Kids Middle School)
+        .col
+          = sf.label :slug, class: 'sr-only'
+          = sf.text_field :slug, required: true, placeholder: 'slug🐌', class: 'form-control'
     .mb-4.text-center= recaptcha_tags
     = f.submit 'Sign up', class: 'btn btn-lg btn-primary btn-block'
   .mt-4
