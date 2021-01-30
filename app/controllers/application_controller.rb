@@ -21,6 +21,14 @@ class ApplicationController < ActionController::Base
       redirect_to(activities_url, alert: 'Access denied.') unless current_user.admin?
     end
 
+    def after_sign_in_path_for(resource)
+      if resource.student?
+        student_path(resource)
+      else
+        activities_path
+      end
+    end
+
     def after_sign_out_path_for(resource)
       new_user_session_path
     end
