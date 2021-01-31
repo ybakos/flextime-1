@@ -1,6 +1,6 @@
 class AddSchoolToTeacher < ActiveRecord::Migration[5.2]
   def up
-    add_reference :teachers, :school, foreign_key: true
+    add_reference :teachers, :school, foreign_key: { on_delete: :cascade }
     initial_default_school = School.find_or_create_by(slug: 'defaultschool') { |s| s.name = 'Default School' }
     execute <<-SQL.squish
       UPDATE teachers

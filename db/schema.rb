@@ -93,13 +93,13 @@ ActiveRecord::Schema.define(version: 2021_01_23_054311) do
     t.index ["teacher_id"], name: "index_users_on_teacher_id"
   end
 
-  add_foreign_key "activities", "schools"
+  add_foreign_key "activities", "schools", on_delete: :cascade
   add_foreign_key "registrations", "activities"
-  add_foreign_key "registrations", "schools"
+  add_foreign_key "registrations", "schools", on_delete: :cascade
   add_foreign_key "registrations", "teachers"
   add_foreign_key "registrations", "users", column: "creator_id"
   add_foreign_key "registrations", "users", column: "student_id"
-  add_foreign_key "teachers", "schools"
-  add_foreign_key "users", "schools"
+  add_foreign_key "teachers", "schools", on_delete: :cascade
+  add_foreign_key "users", "schools", on_delete: :cascade
   add_foreign_key "users", "teachers"
 end

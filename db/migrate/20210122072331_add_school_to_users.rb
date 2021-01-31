@@ -1,6 +1,6 @@
 class AddSchoolToUsers < ActiveRecord::Migration[5.2]
   def up
-    add_reference :users, :school, foreign_key: true
+    add_reference :users, :school, foreign_key: { on_delete: :cascade }
     initial_default_school = School.create!(name: 'Default School', slug: 'defaultschool')
     execute <<-SQL.squish
       UPDATE users
