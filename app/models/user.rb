@@ -3,7 +3,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :trackable, :validatable, :registerable,
          :omniauthable, omniauth_providers: [:google_oauth2]
 
-  enum role: [:student, :staff, :admin]
+  enum role: [:student, :staff, :admin, :sys_admin]
   attribute :role, :integer, default: :student
 
   validates_presence_of :first_name

@@ -120,3 +120,15 @@ second_admin:
   image_url: 'http://fake.com/fake.jpg'
   role: 'admin'
   active: true
+
+sys_admin:
+  school: sys_admin
+  email: 'sys_admin@example.com'
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
+  provider: 'FAKE'
+  uid: 'FAKE'
+  first_name: 'Fake'
+  last_name: 'SysAdmin'
+  image_url: 'http://fake.com/fake.jpg'
+  role: 'staff'
+  active: true

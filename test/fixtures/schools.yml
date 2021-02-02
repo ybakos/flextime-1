@@ -5,3 +5,7 @@ first:
 second:
   name: Second Fake School
   slug: secondfakeschool
+
+sys_admin:
+  name: Fake SysAdmin School
+  slug: sysadminschool
