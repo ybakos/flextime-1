@@ -96,3 +96,27 @@ admin:
   image_url: 'http://fake.com/fake.jpg'
   role: 'admin'
   active: true
+
+second_staff:
+  school: second
+  email: 'staff2@example.com'
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
+  provider: 'FAKE'
+  uid: 'FAKE'
+  first_name: 'Second Fake'
+  last_name: 'Staff'
+  image_url: 'http://fake.com/fake.jpg'
+  role: 'staff'
+  active: true
+
+second_admin:
+  school: second
+  email: 'admin2@example.com'
+  encrypted_password: <%= Devise::Encryptor.digest(User, 'FAKE') %>
+  provider: 'FAKE'
+  uid: 'FAKE'
+  first_name: 'Second Fake'
+  last_name: 'Admin'
+  image_url: 'http://fake.com/fake.jpg'
+  role: 'admin'
+  active: true
