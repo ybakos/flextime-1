@@ -27,4 +27,8 @@ Rails.application.routes.draw do
     resources :users, only: [:index, :update]
   end
 
+  namespace :sys_admin do
+    resources :schools
+  end
+
 end
