@@ -130,5 +130,5 @@ sys_admin:
   first_name: 'Fake'
   last_name: 'SysAdmin'
   image_url: 'http://fake.com/fake.jpg'
-  role: 'staff'
+  role: 'sys_admin'
   active: true
