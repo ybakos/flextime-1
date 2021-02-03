@@ -34,4 +34,14 @@ class SysAdminViewsSchoolsTest < ApplicationSystemTestCase
     assert_text 'has been created'
   end
 
+  test 'sys_admin edits a school' do
+    sign_in(users(:sys_admin))
+    new_name = 'New Fake School Name'
+    visit edit_sys_admin_school_path(schools(:first))
+    fill_in 'Name', with: new_name
+    click_on 'Update School'
+    assert_text 'School updated'
+    assert_text new_name
+  end
+
 end

@@ -21,8 +21,19 @@ class SysAdmin::SchoolsController < SysAdmin::SysAdminController
     end
   end
 
-  def edit; end
-  def update; end
+  def edit
+    @school = School.find(params[:id])
+  end
+
+  def update
+    @school = School.find(params[:id])
+    if @school.update(school_params)
+      redirect_to sys_admin_school_url(@school), notice: "School updated."
+    else
+      render :edit
+    end
+  end
+
   def destroy; end
 
   private
