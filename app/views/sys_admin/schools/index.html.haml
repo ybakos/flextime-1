@@ -1,0 +1,17 @@
+%h1 Administration
+%h2 Schools
+
+%table.table.table-hover
+  %thead
+    %tr
+      %th{scope: 'col'} id
+      %th{scope: 'col'} Name
+      %th{scope: 'col'} Created
+      %th{scope: 'col'} Last Updated
+  %tbody
+    - @schools.each do |school|
+      %tr
+        %th{scope: 'row'}= school.id
+        %td= link_to school, sys_admin_school_path(school)
+        %td= school.created_at.to_s(:long)
+        %td= school.updated_at.to_s(:long)

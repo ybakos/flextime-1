@@ -1,6 +1,8 @@
 class SysAdmin::SchoolsController < SysAdmin::SysAdminController
 
-  def index; end
+  def index
+    @schools = School.all
+  end
 
   def show; end
   def new; end
