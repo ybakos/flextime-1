@@ -44,4 +44,8 @@ class SchoolTest < ActiveSupport::TestCase
     assert_kind_of Teacher, schools(:first).teachers.first
   end
 
+  test 'has a string representation of name' do
+    assert_equal schools(:first).to_s, schools(:first).name
+  end
+
 end

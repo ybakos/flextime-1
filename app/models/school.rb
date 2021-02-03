@@ -7,4 +7,8 @@ class School < ApplicationRecord
   has_many :teachers, dependent: :destroy
   has_many :users, dependent: :destroy
 
+  def to_s
+    name
+  end
+
 end
