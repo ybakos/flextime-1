@@ -4,7 +4,10 @@ class SysAdmin::SchoolsController < SysAdmin::SysAdminController
     @schools = School.all
   end
 
-  def show; end
+  def show
+    @school = School.find(params[:id])
+  end
+
   def new; end
   def create; end
   def edit; end
