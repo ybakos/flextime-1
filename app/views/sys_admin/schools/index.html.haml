@@ -1,5 +1,10 @@
 %h1 Administration
-%h2 Schools
+.row
+  .col
+    %h2 Schools
+  .col.text-right
+    = link_to 'Create new school', new_sys_admin_school_path, class: 'btn btn-outline-primary'
+
 
 %table.table.table-hover
   %thead
