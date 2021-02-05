@@ -44,4 +44,20 @@ class SysAdminViewsSchoolsTest < ApplicationSystemTestCase
     assert_text new_name
   end
 
+  test 'sys_admin tries to delete a school with delete-restricted associations' do
+    sign_in(users(:sys_admin))
+    visit sys_admin_school_path(schools(:first))
+    click_on 'Delete'
+    assert_text 'Cannot delete'
+    assert_text schools(:first).name
+  end
+
+  test 'sys_admin deletes a school without any delete-restricted associations' do
+    sign_in(users(:sys_admin))
+    visit sys_admin_school_path(schools(:standalone_school))
+    click_on 'Delete'
+    assert_text 'School deleted'
+    refute_text schools(:standalone_school).name
+  end
+
 end

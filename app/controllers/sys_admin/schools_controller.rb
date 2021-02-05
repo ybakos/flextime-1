@@ -34,7 +34,13 @@ class SysAdmin::SchoolsController < SysAdmin::SysAdminController
     end
   end
 
-  def destroy; end
+  def destroy
+    @school = School.find(params[:id])
+    @school.destroy!
+    redirect_to sys_admin_schools_path, notice: "School deleted."
+  rescue ActiveRecord::RecordNotDestroyed => error
+    redirect_to sys_admin_school_path(@school), alert: error.record.errors.full_messages
+  end
 
   private
 
