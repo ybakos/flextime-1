@@ -5,7 +5,7 @@ class ActivitiesController < ApplicationController
   before_action :restrict_unless_admin, only: [:destroy, :copy]
 
   def index
-    @week_of_activities = Activity.for_week(@date)
+    @week_of_activities = current_user.school.activities.for_week(@date)
   end
 
   def attendance

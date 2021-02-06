@@ -210,4 +210,12 @@ class ActivitiesTest < ApplicationSystemTestCase
     assert_text 'Fake Tuesday Activity was successfully deleted'
   end
 
+  # Multi-tenancy
+
+  test 'staff does not see activities from other schools' do
+    sign_in users(:second_staff)
+    visit activities_url
+    refute_text activities(:tuesday_activity).name
+  end
+
 end
