@@ -26,8 +26,7 @@ class ActivitiesController < ApplicationController
   end
 
   def create
-    @activity = Activity.new(activity_params)
-    @activity.school = current_user.school
+    @activity = current_user.school.activities.build(activity_params)
     respond_to do |format|
       if @activity.save
         format.html { redirect_to @activity, notice: 'Activity was successfully created.' }
