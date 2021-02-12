@@ -153,6 +153,13 @@ class ActivityTest < ActiveSupport::TestCase
     assert_equal Activity.where(date: from).count, Activity.where(date: to).count
   end
 
+  test 'copied activities have the same school' do
+    from = Date.today.tuesday
+    to = 2.weeks.from_now(from)
+    Activity.copy!(from, to)
+    assert_equal Activity.where(date: from).first.school, Activity.where(date: to).first.school
+  end
+
   # ::find_with_registration_student_and_teacher
 
   test "eager loads an activity's registration, student and teacher" do
