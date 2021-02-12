@@ -105,4 +105,25 @@ class ActivitiesControllerTest < ActionDispatch::IntegrationTest
     assert_match /activity seems to have just been removed/, flash[:alert]
   end
 
+  # Multi-tenancy
+
+  test 'redirects requests for another school\'s activity' do
+    sign_in users(:second_staff)
+    other_school_activity = activities(:tuesday_activity)
+    # show
+    get activity_path(other_school_activity)
+    assert_redirected_to activities_path
+    # edit
+    get edit_activity_path(other_school_activity)
+    assert_redirected_to activities_path
+    # update
+    patch activity_path(other_school_activity)
+    assert_redirected_to activities_path
+    put activity_path(other_school_activity)
+    assert_redirected_to activities_path
+    # destroy
+    delete activity_path(other_school_activity)
+    assert_redirected_to activities_path
+  end
+
 end
