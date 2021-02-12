@@ -61,4 +61,16 @@ class AttendanceTest < ApplicationSystemTestCase
     assert_text 'absent'
   end
 
+  # Multi-tenancy
+
+  test 'attendance records of one school are not visible by users of another school' do
+    # From test 'staff sees late students in attendance list'
+    registrations(:by_student).late!
+    sign_in users(:second_staff)
+    visit activities_url
+    first('.lnk-attendance').click
+    assert_text 'Attendance'
+    refute_text 'late'
+  end
+
 end

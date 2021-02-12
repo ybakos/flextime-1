@@ -11,7 +11,7 @@ class ActivitiesController < ApplicationController
   def attendance
     redirect_to(activities_path) and return unless params[:date]
     @date = params[:date].to_date
-    @registrations = Registration.joins(:activity).includes(:activity, :teacher, :student).where.not(attendance: :present).where('activities.date = ?', @date).order('last_name')
+    @registrations = current_user.school.registrations.joins(:activity).includes(:activity, :teacher, :student).where.not(attendance: :present).where('activities.date = ?', @date).order('last_name')
   end
 
   def show; end
