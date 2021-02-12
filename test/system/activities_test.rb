@@ -225,4 +225,35 @@ class ActivitiesTest < ApplicationSystemTestCase
     refute_text activities(:tuesday_activity).name
   end
 
+  test 'a created activity for one school is not visible by staff at another school' do
+    # From test 'staff creates a new activity'
+    date_text = I18n.l(Date.today.tuesday, format: :without_year)
+    activity_name = 'New Fake Tuesday Activity'
+    activity_room = 'New Fake Room'
+    first('a', text: 'Add New Activity').click
+    assert_selector 'h2', text: 'New Activity'
+    fill_in 'activity_name', with: activity_name
+    fill_in 'activity_room', with: 'New Fake Room'
+    fill_in 'activity_capacity', with: 10
+    select date_text, from: 'activity_date'
+    click_button 'Create Activity'
+    sign_in users(:second_staff)
+    visit activities_path
+    refute_text activity_name
+  end
+
+  test 'copy' do
+    # From test 'admins can copy all the activities from one day to the same day the following week' do
+    sign_in users(:admin)
+    visit activities_url
+    click_link 'Next week'
+    click_link 'Next week' # an empty week in the schedule
+    click_link 'copy last Thursday'
+    sign_in users(:second_staff)
+    visit activities_url
+    click_link 'Next week'
+    click_link 'Next week'
+    refute_text 'Fake Next Thursday Activity'
+  end
+
 end
