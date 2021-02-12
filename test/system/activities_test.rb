@@ -218,4 +218,11 @@ class ActivitiesTest < ApplicationSystemTestCase
     refute_text activities(:tuesday_activity).name
   end
 
+  test 'staff cannot view an activity from another school' do
+    sign_in users(:second_staff)
+    other_scool_activity = activities(:tuesday_activity)
+    visit activity_path(other_scool_activity)
+    refute_text activities(:tuesday_activity).name
+  end
+
 end

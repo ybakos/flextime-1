@@ -75,7 +75,7 @@ class ActivitiesController < ApplicationController
   private
 
     def set_activity
-      @activity = Activity.find_with_registration_student_and_teacher(params[:id])
+      @activity = current_user.school.activities.find_with_registration_student_and_teacher(params[:id])
       rescue ActiveRecord::RecordNotFound
         redirect_back(fallback_location: activities_path, alert: "The activity seems to have just been removed.")
     end
