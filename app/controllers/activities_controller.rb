@@ -17,7 +17,7 @@ class ActivitiesController < ApplicationController
   def show; end
 
   def new
-    @activity = Activity.new(school: current_user.school, date: @date)
+    @activity = current_user.school.activities.build(date: @date)
     @dates_for_select = dates_for_select_for_week_of(@activity.date)
   end
 
