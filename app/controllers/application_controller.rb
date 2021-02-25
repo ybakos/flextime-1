@@ -2,6 +2,9 @@ class ApplicationController < ActionController::Base
 
   before_action :authenticate_user!, unless: :devise_controller?
   before_action :restrict_from_students, unless: :devise_controller?
+  set_current_tenant_through_filter
+  before_action :set_tenant
+
 
   rescue_from ActionController::InvalidAuthenticityToken, with: :redirect_and_prompt_for_sign_in
 
@@ -31,6 +34,10 @@ class ApplicationController < ActionController::Base
 
     def after_sign_out_path_for(resource)
       new_user_session_path
+    end
+
+    def set_tenant
+      current_user&.school
     end
 
 end
