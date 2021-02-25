@@ -4,6 +4,7 @@ source 'https://rubygems.org'
 
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
+gem 'acts_as_tenant', '~> 0.5.0'
 gem 'coffee-rails', '~> 5'
 gem 'bootsnap', '>= 1.5.1', require: false
 gem 'bootstrap', '>= 4.5.3'
