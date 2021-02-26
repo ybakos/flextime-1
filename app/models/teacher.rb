@@ -7,7 +7,7 @@ class Teacher < ApplicationRecord
   validates :name, uniqueness: { scope: :title, case_sensitive: false }
   validates :active, inclusion: { in: [true, false] }
 
-  belongs_to :school
+  acts_as_tenant(:school)
   has_many :students, class_name: 'User', dependent: :restrict_with_error
   has_many :registrations, dependent: :restrict_with_error
 

@@ -2,7 +2,7 @@ class Registration < ApplicationRecord
 
   belongs_to :activity, counter_cache: true
   belongs_to :creator, class_name: 'User'
-  belongs_to :school
+  acts_as_tenant(:school)
   belongs_to :student, class_name: 'User'
   belongs_to :teacher
 
