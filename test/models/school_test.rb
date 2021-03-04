@@ -48,4 +48,36 @@ class SchoolTest < ActiveSupport::TestCase
     assert_equal schools(:first).to_s, schools(:first).name
   end
 
+  test 'cannot be destroyed when it has teachers that have students/registrations' do
+    school = schools(:first)
+    refute school.destroy
+    assert_raises(ActiveRecord::RecordNotDestroyed) { school.destroy! }
+  end
+
+  test 'destroys associated records when destroyed' do
+    school = schools(:second)
+    refute_empty school.users
+    assert school.destroy
+    assert_empty school.users
+  end
+
+  # See https://github.com/ErwinM/acts_as_tenant/issues/253
+  # You would think that this would fail. Since the tenant is `schools(:first)`,
+  # shouldn't school.users initially be empty? And shouldn't destroying the school
+  # not cause the associated users to be deleted because .users should be scoped
+  # to the tenant? Does this mean that, if you obtain the tenant, all bets are off?
+  test 'acts_as_tenant' do
+    ActsAsTenant.with_tenant(schools(:first)) do
+      school = schools(:second)
+      refute_empty school.users
+      assert school.destroy
+      assert_empty school.users
+    end
+    # Notice how this raises InvalidForeignKey and not RecordNotDestroyed.
+    ActsAsTenant.with_tenant(schools(:second)) do
+      school = schools(:first)
+      assert_raises(ActiveRecord::InvalidForeignKey) { school.destroy }
+    end
+  end
+
 end

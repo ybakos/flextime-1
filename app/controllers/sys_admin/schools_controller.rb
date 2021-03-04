@@ -34,9 +34,13 @@ class SysAdmin::SchoolsController < SysAdmin::SysAdminController
     end
   end
 
+  # This method is turning off the tenant. When we don't, there is something that
+  # acts_as_tenant does that causes the underlying ActiveRecord::InvalidForeignKey
+  # to be raised rather than an ActiveRecord::RecordNotDestroyed exception.
+  # See https://github.com/ErwinM/acts_as_tenant/issues/253
   def destroy
     @school = School.find(params[:id])
-    @school.destroy!
+    ActsAsTenant.without_tenant { @school.destroy! }
     redirect_to sys_admin_schools_path, notice: "School deleted."
   rescue ActiveRecord::RecordNotDestroyed => error
     redirect_to sys_admin_school_path(@school), alert: error.record.errors.full_messages
