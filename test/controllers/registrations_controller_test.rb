@@ -107,4 +107,18 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_match /registration seems to have been deleted/, flash[:alert]
   end
 
+  # Multi-tenancy
+
+  test 'redirects requests for marking attendance of another school' do
+    # From test 'allows staff to update attendance'
+    sign_in users(:second_staff)
+    other_school_registration = registrations(:by_student)
+    patch mark_attendance_student_registration_path(
+      other_school_registration.student, other_school_registration, params: {attendance: 'late'})
+    assert_redirected_to student_path(other_school_registration.student)
+    # Note: students_controller would then send another redirect, since the student
+    # is not of the same tenant as the current user. But, we're don't test that here.
+    # You can check it with follow_redirect here, if you wish.
+  end
+
 end
