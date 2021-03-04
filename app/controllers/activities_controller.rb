@@ -5,19 +5,19 @@ class ActivitiesController < AuthenticatedController
   before_action :restrict_unless_admin, only: [:destroy, :copy]
 
   def index
-    @week_of_activities = current_user.school.activities.for_week(@date)
+    @week_of_activities = Activity.for_week(@date)
   end
 
   def attendance
     redirect_to(activities_path) and return unless params[:date]
     @date = params[:date].to_date
-    @registrations = current_user.school.registrations.joins(:activity).includes(:activity, :teacher, :student).where.not(attendance: :present).where('activities.date = ?', @date).order('last_name')
+    @registrations = Registration.joins(:activity).includes(:activity, :teacher, :student).where.not(attendance: :present).where('activities.date = ?', @date).order('last_name')
   end
 
   def show; end
 
   def new
-    @activity = current_user.school.activities.build(date: @date)
+    @activity = Activity.new(date: @date)
     @dates_for_select = dates_for_select_for_week_of(@activity.date)
   end
 
@@ -26,7 +26,7 @@ class ActivitiesController < AuthenticatedController
   end
 
   def create
-    @activity = current_user.school.activities.build(activity_params)
+    @activity = Activity.new(activity_params)
     respond_to do |format|
       if @activity.save
         format.html { redirect_to @activity, notice: 'Activity was successfully created.' }
@@ -74,7 +74,7 @@ class ActivitiesController < AuthenticatedController
   private
 
     def set_activity
-      @activity = current_user.school.activities.find_with_registration_student_and_teacher(params[:id])
+      @activity = Activity.find_with_registration_student_and_teacher(params[:id])
       rescue ActiveRecord::RecordNotFound
         redirect_back(fallback_location: activities_path, alert: "The activity seems to have just been removed.")
     end
