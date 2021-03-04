@@ -1,4 +1,4 @@
-class StudentsController < ApplicationController
+class StudentsController < AuthenticatedController
 
   skip_before_action :restrict_from_students, only: [:show, :update]
   before_action :set_student, only: [:show, :edit, :update]

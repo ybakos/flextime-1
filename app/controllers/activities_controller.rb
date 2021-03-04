@@ -1,4 +1,4 @@
-class ActivitiesController < ApplicationController
+class ActivitiesController < AuthenticatedController
 
   before_action :set_activity, only: [:show, :edit, :update, :destroy]
   before_action :set_date, only: [:index, :new, :destroy]

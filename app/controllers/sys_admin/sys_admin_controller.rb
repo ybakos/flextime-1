@@ -1,4 +1,4 @@
-class SysAdmin::SysAdminController < ApplicationController
+class SysAdmin::SysAdminController < AuthenticatedController
   before_action :restrict_unless_sys_admin
 
   private

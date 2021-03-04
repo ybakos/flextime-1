@@ -1,4 +1,4 @@
-class TeachersController < ApplicationController
+class TeachersController < AuthenticatedController
 
   before_action :restrict_unless_admin, except: [:index, :show]
   before_action :set_teacher, only: [:show, :edit, :update, :activate, :deactivate, :destroy]

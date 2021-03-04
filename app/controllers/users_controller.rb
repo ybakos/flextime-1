@@ -1,4 +1,4 @@
-class UsersController < ApplicationController
+class UsersController < AuthenticatedController
 
   before_action :restrict_unless_admin
   before_action :ignore_password_and_password_confirmation, only: :update

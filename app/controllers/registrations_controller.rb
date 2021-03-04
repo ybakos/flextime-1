@@ -1,4 +1,4 @@
-class RegistrationsController < ApplicationController
+class RegistrationsController < AuthenticatedController
 
   skip_before_action :restrict_from_students, only: :create
   before_action :set_registration, only: [:edit, :update, :destroy, :mark_attendance]
