@@ -13,4 +13,21 @@ class UsersTest < ApplicationSystemTestCase
     skip
   end
 
+  test 'admins view a list of users' do
+    sign_in users(:admin)
+    visit users_url
+    click_on 'S'
+    assert_text users(:student).last_name_first_name
+  end
+
+  # Multi-tenancy
+
+  test 'admins of one school do not see users from another school' do
+    # From test 'admins view a list of users'
+    sign_in users(:second_admin)
+    visit users_url
+    click_on 'S'
+    refute_text users(:student).last_name_first_name
+  end
+
 end
