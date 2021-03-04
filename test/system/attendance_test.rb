@@ -70,6 +70,7 @@ class AttendanceTest < ApplicationSystemTestCase
     visit activities_url
     first('.lnk-attendance').click
     assert_text 'Attendance'
+    refute_text registrations(:by_student).student.last_name_first_name
     refute_text 'late'
   end
 
