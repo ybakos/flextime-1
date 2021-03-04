@@ -1,3 +1,7 @@
+# School
+
+school = School.create!(name: 'Example School', slug: 'exampleschool')
+
 # Teacher Seeds
 [
   'Adkins',
@@ -27,7 +31,7 @@
   'Wognild',
   'Young'
 ].each do |name|
-  Teacher.create(title: Random.new.rand(4), name: name)
+  school.teachers.create!(title: Random.new.rand(4), name: name)
 end
 
 # Activity Seeds
@@ -149,23 +153,23 @@ rooms = [
 capacity = (10..26).to_a
 
 10.times do |i|
-  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.tuesday)
-  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.thursday)
-  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.friday)
+  school.activities.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.tuesday)
+  school.activities.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.thursday)
+  school.activities.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.friday)
 
-  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.prev_week.tuesday)
-  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.prev_week.thursday)
-  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.prev_week.friday)
+  school.activities.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.prev_week.tuesday)
+  school.activities.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.prev_week.thursday)
+  school.activities.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.prev_week.friday)
 
-  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.next_week.tuesday)
-  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.next_week.thursday)
-  Activity.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.next_week.friday)
+  school.activities.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.next_week.tuesday)
+  school.activities.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.next_week.thursday)
+  school.activities.create(name: activity_names.sample, room: rooms.sample, capacity: capacity.sample, date: Date.today.next_week.friday)
 end
 
 all_teachers = Teacher.all
 
 100.times do |i|
-  User.create(email: "example#{i}@example.com", password: 'password', password_confirmation: 'password', provider: 'FAKE', uid: "FAKE#{i}", first_name: 'Example', last_name: "Student #{i}", teacher: all_teachers.sample)
+  school.users.create!(email: "example#{i}@example.com", password: 'password', password_confirmation: 'password', provider: 'FAKE', uid: "FAKE#{i}", first_name: 'Example', last_name: "Student #{i}", teacher: all_teachers.sample)
 end
 
 all_students = User.student
@@ -174,5 +178,13 @@ all_activities = Activity.all
 
 400.times do |i|
   student = all_students.sample
-  Registration.create(creator: student, student: student, teacher: student.teacher, activity: all_activities.sample)
+  school.registrations.create(creator: student, student: student, teacher: student.teacher, activity: all_activities.sample)
 end
+
+# sys_admin
+
+u = User.create!(
+  first_name: 'Sys', last_name: 'Admin', role: 'sys_admin',
+  email: 'sys_admin@flextime.net', password: 'password', password_confirmation: 'password',
+  school: School.create!(name: 'SysAdmin School', slug: 'sysadminschool')
+)
