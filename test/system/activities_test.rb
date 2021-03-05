@@ -256,4 +256,36 @@ class ActivitiesTest < ApplicationSystemTestCase
     refute_text 'Fake Next Thursday Activity'
   end
 
+  test 'copying activities in one school should not cause a copying of activities of another school' do
+    # From test 'admins can copy all the activities from one day to the same day the following week' do
+    # Scenario: School 1 copying activities should not result in copying for School 2
+    sign_in users(:admin)
+    visit activities_url
+    click_link 'Next week'
+    click_link 'Next week' # an empty week in the schedule
+    click_link 'copy last Thursday'
+    sign_in users(:second_staff)
+    visit activities_url
+    click_link 'Next week'
+    click_link 'Next week'
+    refute_text 'Fake Second School Next Thursday Activity'
+    # Scenario: School 2 copying activities should not result in copying for School 1
+    sign_in users(:second_admin)
+    visit activities_url
+    click_link 'Next week'
+    within '#thursday' do
+      assert_selector 'h5', text: 'Fake Second School Next Thursday Activity'
+    end
+    click_link 'Next week' # an empty week in the schedule
+    click_link 'copy last Thursday'
+    within '#thursday' do
+      assert_selector 'h5', text: 'Fake Second School Next Thursday Activity'
+    end
+    sign_in users(:admin)
+    visit activities_url
+    click_link 'Next week'
+    click_link 'Next week'
+    refute_text 'Second School'
+  end
+
 end

@@ -89,3 +89,11 @@ next_friday_activity:
   room: Fake Room
   capacity: 1
   date: <%= Date.today.next_week.friday %>
+
+# Second school
+second_school_next_thursday_activity:
+  school: second
+  name: Fake Second School Next Thursday Activity
+  room: Fake Room
+  capacity: 1
+  date: <%= Date.today.next_week.thursday %>
