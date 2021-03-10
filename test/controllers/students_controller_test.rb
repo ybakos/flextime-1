@@ -63,6 +63,9 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
     # show
     get student_path(other_school_student)
     assert_redirected_to students_path
+    # edit
+    get edit_student_path(other_school_student)
+    assert_redirected_to students_path
   end
 
 end
