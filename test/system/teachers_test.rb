@@ -173,4 +173,20 @@ class TeachersTest < ApplicationSystemTestCase
     end
   end
 
+  # Multi-tenancy
+
+  test 'clearing the student roster in one school does not affect the other schools' do
+    # From test 'admin clears all student rosters'
+    sign_in users(:third_admin)
+    visit teachers_url
+    assert_text '1 student'
+    click_link 'Reset student rosters'
+    assert_text 'All students have been removed from teacher rosters'
+    refute_text '1 student'
+    assert_text '0 students'
+    sign_in users(:admin)
+    visit teachers_url
+    assert_text '2 students'
+  end
+
 end
