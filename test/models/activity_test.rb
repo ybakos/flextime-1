@@ -107,8 +107,10 @@ class ActivityTest < ActiveSupport::TestCase
       date.thursday => [activities(:thursday_activity), activities(:second_thursday_activity)],
       date.friday => [activities(:friday_activity), activities(:restricted)]
     }
-    (0..6).each do |offset|
-      assert_equal expected, Activity.for_week(date + offset)
+    ActsAsTenant.with_tenant(schools(:first)) do
+      (0..6).each do |offset|
+        assert_equal expected, Activity.for_week(date + offset)
+      end
     end
   end
 
@@ -119,8 +121,10 @@ class ActivityTest < ActiveSupport::TestCase
       date.prev_week.thursday => [activities(:last_thursday_activity)],
       date.prev_week.friday => [activities(:last_friday_activity)]
     }
-    (-6..-1).each do |offset|
-      assert_equal expected, Activity.for_week(date + offset)
+    ActsAsTenant.with_tenant(schools(:first)) do
+      (-6..-1).each do |offset|
+        assert_equal expected, Activity.for_week(date + offset)
+      end
     end
   end
 
@@ -131,16 +135,20 @@ class ActivityTest < ActiveSupport::TestCase
       date.next_week.thursday => [activities(:next_thursday_activity)],
       date.next_week.friday => [activities(:next_friday_activity)]
     }
-    (7..13).each do |offset|
-      assert_equal expected, Activity.for_week(date + offset)
+    ActsAsTenant.with_tenant(schools(:first)) do
+      (7..13).each do |offset|
+        assert_equal expected, Activity.for_week(date + offset)
+      end
     end
   end
 
   # ::available_on_date
 
   test 'returns a list of activities that are not full on a date' do
-    available_activities = Activity.available_on_date(Date.today.tuesday)
-    refute_includes(available_activities, activities(:tuesday_activity))
+    ActsAsTenant.with_tenant(schools(:first)) do
+      available_activities = Activity.available_on_date(Date.today.tuesday)
+      refute_includes(available_activities, activities(:tuesday_activity))
+    end
   end
 
   # ::copy!
@@ -148,25 +156,31 @@ class ActivityTest < ActiveSupport::TestCase
   test 'creates new activities based on activities from another date' do
     from = Date.today.tuesday
     to = 2.weeks.from_now(from)
-    assert_empty Activity.where(date: to)
-    Activity.copy!(from, to)
-    assert_equal Activity.where(date: from).count, Activity.where(date: to).count
+    ActsAsTenant.with_tenant(schools(:first)) do
+      assert_empty Activity.where(date: to)
+      Activity.copy!(from, to)
+      assert_equal Activity.where(date: from).count, Activity.where(date: to).count
+    end
   end
 
   test 'copied activities have the same school' do
     from = Date.today.tuesday
     to = 2.weeks.from_now(from)
-    Activity.copy!(from, to)
-    assert_equal Activity.where(date: from).first.school, Activity.where(date: to).first.school
+    ActsAsTenant.with_tenant(schools(:first)) do
+      Activity.copy!(from, to)
+      assert_equal Activity.where(date: from).first.school, Activity.where(date: to).first.school
+    end
   end
 
   # ::find_with_registration_student_and_teacher
 
   test "eager loads an activity's registration, student and teacher" do
-    activity = Activity.find_with_registration_student_and_teacher(activities(:tuesday_activity).id)
-    assert activity.association(:registrations).loaded?
-    assert activity.registrations.first.association(:student).loaded?
-    assert activity.registrations.first.association(:teacher).loaded?
+    ActsAsTenant.with_tenant(schools(:first)) do
+      activity = Activity.find_with_registration_student_and_teacher(activities(:tuesday_activity).id)
+      assert activity.association(:registrations).loaded?
+      assert activity.registrations.first.association(:student).loaded?
+      assert activity.registrations.first.association(:teacher).loaded?
+    end
   end
 
 end
