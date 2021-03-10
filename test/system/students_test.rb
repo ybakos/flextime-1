@@ -109,4 +109,13 @@ class StudentsTest < ApplicationSystemTestCase
     assert_text 'error'
   end
 
+  # Multi-tenant
+
+  test 'staff in one school do not see students from another school' do
+    sign_in users(:staff)
+    visit students_path(all: true)
+    assert_text users(:student).last_name_first_name
+    refute_text users(:third_school_student).last_name_first_name
+  end
+
 end

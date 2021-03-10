@@ -39,3 +39,9 @@ deactivated:
   name: zInactive Teacher
   title: 3
   active: false
+
+third_school_teacher:
+  school: third
+  name: Second School Teacher
+  title: 0
+  active: true

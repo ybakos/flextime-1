@@ -6,9 +6,13 @@ second:
   name: Second Fake School
   slug: secondfakeschool
 
-standalone_school:
+third:
   name: Third Fake School
   slug: thirdfakeschool
+
+standalone_school:
+  name: Standalone Fake School
+  slug: standalonefakeschool
 
 sys_admin:
   name: Fake SysAdmin School
