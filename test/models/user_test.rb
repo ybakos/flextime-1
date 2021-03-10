@@ -158,4 +158,16 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
+  # Multi-tenancy
+
+  test 'with a tenant, disassociate_all_from_teachers only affects tenant users' do
+    # From test 'disassociate_all_from_teachers'
+    ActsAsTenant.with_tenant(schools(:third)) do
+      user_with_teacher_count = User.where('teacher_id IS NOT NULL').count
+      assert_difference -> { User.where('teacher_id IS NULL').count }, user_with_teacher_count do
+        User.disassociate_all_from_teachers
+      end
+    end
+  end
+
 end
