@@ -42,6 +42,8 @@ class StudentsController < AuthenticatedController
 
     def set_student
       @student = current_user&.student? ? current_user : User.student.find(params[:id])
+      rescue ActiveRecord::RecordNotFound
+        redirect_back(fallback_location: students_path, alert: 'The details of this student were not found.')
     end
 
     def set_date
