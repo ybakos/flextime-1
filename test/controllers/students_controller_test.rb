@@ -58,7 +58,7 @@ class StudentsControllerTest < ActionDispatch::IntegrationTest
   # Multi-tenancy
 
   test 'redirects requests for another school\'s students' do
-    sign_in users(:second_staff)
+    sign_in users(:third_staff)
     other_school_student = users(:student)
     # show
     get student_path(other_school_student)
