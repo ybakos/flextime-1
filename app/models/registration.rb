@@ -15,7 +15,7 @@ class Registration < ApplicationRecord
   validate :activity_must_not_be_more_than_a_week_away, if: Proc.new { |r| r.creator.student? }
   validate :student_can_only_register_themselves, if: Proc.new { |r| r.creator.student? }
   validate :student_cannot_register_for_restricted_activities, if: Proc.new { |r| r.creator.student? }
-
+  validate :schools_of_associations_match
 
   enum attendance: [:present, :late, :absent]
   attribute :attendance, :integer, default: :present
@@ -67,6 +67,12 @@ class Registration < ApplicationRecord
 
     def student_cannot_register_for_restricted_activities
       errors.add(:activity, 'cannot be a restricted activity') if activity.restricted?
+    end
+
+    def schools_of_associations_match
+      if [activity&.school, creator&.school, student&.school, teacher&.school].compact.any? { |school| school != self.school }
+        errors.add(:activity, 'has a mismatched school in one or more associations')
+      end
     end
 
 end

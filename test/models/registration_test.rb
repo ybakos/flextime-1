@@ -94,6 +94,13 @@ class RegistrationTest < ActiveSupport::TestCase
     end
   end
 
+  test 'is invalid if any associated objects schools do not match the registration school' do
+    registration = registrations(:by_staff)
+    assert registration.valid?
+    registration.student = users(:third_school_student)
+    refute registration.valid?
+  end
+
   # Students may only register for an activity once
   test 'must be unique for the student and activity' do
     existing_registration = registrations(:by_student)
