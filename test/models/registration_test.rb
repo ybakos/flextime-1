@@ -49,14 +49,16 @@ class RegistrationTest < ActiveSupport::TestCase
 
   test 'is invalid if student teacher is not the same as the teacher during initial registration' do
     student = users(:student)
-    registration = Registration.new(school: student.school,
-      creator: student,
-      student: student,
-      teacher: student.teacher,
-      activity: activities(:friday_activity))
-    assert registration.valid?
-    registration.teacher = teachers(:mr_valid)
-    refute registration.valid?
+    ActsAsTenant.with_tenant(student.school) do
+      registration = Registration.new(
+        creator: student,
+        student: student,
+        teacher: student.teacher,
+        activity: activities(:friday_activity))
+      assert registration.valid?
+      registration.teacher = teachers(:mr_valid)
+      refute registration.valid?
+    end
   end
 
   test 'is valid if student teacher is not the same as the teacher during update' do
@@ -69,84 +71,98 @@ class RegistrationTest < ActiveSupport::TestCase
   # students may only register themselves
   test 'is invalid if student registrant (creator) is not the registration student' do
     student = users(:student)
-    new_registration = Registration.new(school: student.school,
-      creator: student,
-      student: users(:second_student),
-      teacher: users(:second_student).teacher,
-      activity: activities(:friday_activity))
-    refute new_registration.valid?
+    ActsAsTenant.with_tenant(student.school) do
+      new_registration = Registration.new(
+        creator: student,
+        student: users(:second_student),
+        teacher: users(:second_student).teacher,
+        activity: activities(:friday_activity))
+      refute new_registration.valid?
+    end
   end
 
   # students may not register themselves for restricted activities
   # https://github.com/osu-cascades/flex-time/issues/117
   test 'is invalid if the student is the registrant and the activity is restricted' do
     student = users(:student)
-    new_registration = Registration.new(creator: student,
-      student: student,
-      teacher: student.teacher,
-      activity: activities(:restricted))
-    refute new_registration.valid?
+    ActsAsTenant.with_tenant(student.school) do
+      new_registration = Registration.new(creator: student,
+        student: student,
+        teacher: student.teacher,
+        activity: activities(:restricted))
+      refute new_registration.valid?
+    end
   end
 
   # Students may only register for an activity once
   test 'must be unique for the student and activity' do
     existing_registration = registrations(:by_student)
-    new_registration = Registration.new(school: existing_registration.school,
-      creator: existing_registration.creator,
-      student: existing_registration.student,
-      teacher: existing_registration.teacher,
-      activity: activities(:friday_activity))
-    assert new_registration.valid?
-    new_registration.activity = existing_registration.activity
-    refute new_registration.valid?
+    ActsAsTenant.with_tenant(existing_registration.school) do
+      new_registration = Registration.new(
+        creator: existing_registration.creator,
+        student: existing_registration.student,
+        teacher: existing_registration.teacher,
+        activity: activities(:friday_activity))
+      assert new_registration.valid?
+      new_registration.activity = existing_registration.activity
+      refute new_registration.valid?
+    end
   end
 
   test 'is invalid if the student has another registration for an activity on the same date' do
     existing_registration = registrations(:by_student)
-    new_registration = Registration.new(school: existing_registration.school,
-      creator: existing_registration.creator,
-      student: existing_registration.student,
-      teacher: existing_registration.teacher,
-      activity: activities(:friday_activity))
-    assert new_registration.valid?
-    new_registration.activity = activities(:second_tuesday_activity)
-    refute new_registration.valid?
+    ActsAsTenant.with_tenant(existing_registration.school) do
+      new_registration = Registration.new(
+        creator: existing_registration.creator,
+        student: existing_registration.student,
+        teacher: existing_registration.teacher,
+        activity: activities(:friday_activity))
+      assert new_registration.valid?
+      new_registration.activity = activities(:second_tuesday_activity)
+      refute new_registration.valid?
+    end
   end
 
   test 'is invalid if the activity is full' do
     full_activity = activities(:tuesday_activity)
-    new_registration = Registration.new(school: full_activity.school,
-      creator: users(:second_student),
-      student: users(:second_student),
-      teacher: users(:second_student).teacher,
-      activity: full_activity
-    )
-    refute new_registration.valid?
+    ActsAsTenant.with_tenant(full_activity.school) do
+      new_registration = Registration.new(
+        creator: users(:second_student),
+        student: users(:second_student),
+        teacher: users(:second_student).teacher,
+        activity: full_activity
+      )
+      refute new_registration.valid?
+    end
   end
 
   test 'is invalid if the creator is a student and the activity is more than eight days away' do
     student = users(:student)
     activity = activities(:next_friday_activity)
-    registration = Registration.new(school: student.school, activity: activity, creator: student, student: student, teacher: student.teacher)
-    travel_to Date.today.thursday do
-      refute registration.valid?
-    end
-    travel_to Date.today.friday do
-      assert registration.valid?
+    ActsAsTenant.with_tenant(student.school) do
+      registration = Registration.new(activity: activity, creator: student, student: student, teacher: student.teacher)
+      travel_to Date.today.thursday do
+        refute registration.valid?
+      end
+      travel_to Date.today.friday do
+        assert registration.valid?
+      end
     end
   end
 
   # ::for_week
 
   test 'returns a hash of tuesday, thursday and friday registrations for the current week given any date this week' do
-    date = Date.today.beginning_of_week
-    expected = {
-      date.tuesday => registrations(:by_student),
-      date.thursday => registrations(:by_staff),
-      date.friday => nil
-    }
-    (0..6).each do |offset|
-      assert_equal expected, Registration.for_week(date + offset)
+    ActsAsTenant.with_tenant(schools(:first)) do
+      date = Date.today.beginning_of_week
+      expected = {
+        date.tuesday => registrations(:by_student),
+        date.thursday => registrations(:by_staff),
+        date.friday => nil
+      }
+      (0..6).each do |offset|
+        assert_equal expected, Registration.for_week(date + offset)
+      end
     end
   end
 
