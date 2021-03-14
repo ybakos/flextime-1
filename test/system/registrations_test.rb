@@ -10,6 +10,8 @@
 # a  b  c    d  f  h    i  j  k
 #            e  g  R
 #
+#                          l3
+#
 # Registrations
 # -------------
 # T  R  F    T  R  F    T  R  F
@@ -402,6 +404,27 @@ class RegistrationsTest < ApplicationSystemTestCase
 
   test 'no one can edit or update past student registrations' do
     skip
+  end
+
+  # Multi-tenancy
+
+  test 'registerable activities does not include activities from another school' do
+    travel_to Date.today.monday do
+      sign_in users(:third_staff)
+      visit student_path(users(:third_school_student))
+      click_link('Next week')
+      within '#thursday' do
+        assert_select('registration_activity_id', with_options: [activities(:third_school_next_thursday_activity).name])
+        refute_select('registration_activity_id', with_options: [activities(:next_thursday_activity).name])
+      end
+      sign_in users(:staff)
+      visit student_path(users(:student))
+      click_link('Next week')
+      within('#thursday') do
+        assert_select('registration_activity_id', with_options: [activities(:next_thursday_activity).name])
+        refute_select('registration_activity_id', with_options: [activities(:third_school_next_thursday_activity).name])
+      end
+    end
   end
 
 end
