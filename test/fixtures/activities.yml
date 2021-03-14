@@ -80,7 +80,7 @@ next_thursday_activity:
   school: first
   name: Fake Next Thursday Activity
   room: Fake Room
-  capacity: 1
+  capacity: 10
   date: <%= Date.today.next_week.thursday %>
 
 next_friday_activity:
@@ -95,5 +95,5 @@ third_school_next_thursday_activity:
   school: third
   name: Fake Third School Next Thursday Activity
   room: Fake Room
-  capacity: 1
+  capacity: 10
   date: <%= Date.today.next_week.thursday %>
