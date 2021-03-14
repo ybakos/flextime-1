@@ -25,3 +25,10 @@ next_week:
   student: student
   teacher: mr_valid
   activity: next_tuesday_activity
+
+third_school:
+  school: third
+  creator: third_staff
+  student: third_school_student
+  teacher: third_school_teacher
+  activity: third_school_next_tuesday_activity

@@ -10,12 +10,13 @@
 # a  b  c    d  f  h    i  j  k
 #            e  g  R
 #
-#                          l3
+#                       l3 m3
 #
 # Registrations
 # -------------
 # T  R  F    T  R  F    T  R  F
 # a          d  g       i
+#                       l3
 #
 require 'application_system_test_case'
 

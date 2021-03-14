@@ -173,4 +173,32 @@ class RegistrationTest < ActiveSupport::TestCase
     end
   end
 
+  # Multi-tenancy
+
+  test '::for_week does not include registrations for a different school' do
+    ActsAsTenant.with_tenant(schools(:first)) do
+      date = Date.today.beginning_of_week + 7
+      expected = {
+        date.tuesday => registrations(:next_week),
+        date.thursday => nil,
+        date.friday => nil
+      }
+      (0..6).each do |offset|
+        assert_equal expected, Registration.for_week(date + offset)
+      end
+    end
+    ActsAsTenant.with_tenant(schools(:third)) do
+      date = Date.today.beginning_of_week + 7
+      expected = {
+        date.tuesday => registrations(:third_school),
+        date.thursday => nil,
+        date.friday => nil
+      }
+      (0..6).each do |offset|
+        assert_equal expected, Registration.for_week(date + offset)
+      end
+    end
+  end
+
+
 end
