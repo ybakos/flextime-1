@@ -264,28 +264,28 @@ class ActivitiesTest < ApplicationSystemTestCase
     click_link 'Next week'
     click_link 'Next week' # an empty week in the schedule
     click_link 'copy last Thursday'
-    sign_in users(:second_staff)
+    sign_in users(:third_staff)
     visit activities_url
     click_link 'Next week'
     click_link 'Next week'
-    refute_text 'Fake Second School Next Thursday Activity'
+    refute_text 'Fake Third School Next Thursday Activity'
     # Scenario: School 2 copying activities should not result in copying for School 1
-    sign_in users(:second_admin)
+    sign_in users(:third_admin)
     visit activities_url
     click_link 'Next week'
     within '#thursday' do
-      assert_selector 'h5', text: 'Fake Second School Next Thursday Activity'
+      assert_selector 'h5', text: 'Fake Third School Next Thursday Activity'
     end
     click_link 'Next week' # an empty week in the schedule
     click_link 'copy last Thursday'
     within '#thursday' do
-      assert_selector 'h5', text: 'Fake Second School Next Thursday Activity'
+      assert_selector 'h5', text: 'Fake Third School Next Thursday Activity'
     end
     sign_in users(:admin)
     visit activities_url
     click_link 'Next week'
     click_link 'Next week'
-    refute_text 'Second School'
+    refute_text 'Third School'
   end
 
 end
