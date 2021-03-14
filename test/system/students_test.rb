@@ -125,4 +125,12 @@ class StudentsTest < ApplicationSystemTestCase
     assert_selector 'h2', text: 'Students'
   end
 
+  test 'students do not see teachers from other schools in their list of choices' do
+    # From test 'student specifies a teacher'
+    sign_in users(:new_student_without_teacher)
+    visit student_path(users(:new_student_without_teacher))
+    assert_select 'student_teacher_id', with_options: ['Mr. Valid']
+    refute_select 'student_teacher_id', with_options: [teachers(:third_school_teacher).to_s]
+  end
+
 end
