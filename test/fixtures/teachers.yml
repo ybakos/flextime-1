@@ -42,6 +42,6 @@ deactivated:
 
 third_school_teacher:
   school: third
-  name: Second School Teacher
+  name: Third School Teacher
   title: 0
   active: true
