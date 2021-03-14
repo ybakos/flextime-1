@@ -30,4 +30,11 @@ class UsersTest < ApplicationSystemTestCase
     refute_text users(:student).last_name_first_name
   end
 
+  test 'is invalid if the teacher does not belong to the same school' do
+    first_school_student = users(:student)
+    assert first_school_student.valid?
+    first_school_student.teacher = teachers(:third_school_teacher)
+    refute first_school_student.valid?
+  end
+
 end
