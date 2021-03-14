@@ -118,7 +118,26 @@ class RegistrationsControllerTest < ActionDispatch::IntegrationTest
     assert_redirected_to student_path(other_school_registration.student)
     # Note: students_controller would then send another redirect, since the student
     # is not of the same tenant as the current user. But, we're don't test that here.
-    # You can check it with follow_redirect here, if you wish.
+    # You can check it with follow_redirect! here, if you wish.
+  end
+
+  test 'redirects requests for another school\'s registration' do
+    # Note: students_controller would then send another redirect, since the student
+    # is not of the same tenant as the current user. But, we're don't test that here.
+    # You can check it with follow_redirect! if you wish.
+    sign_in users(:second_staff)
+    other_school_registration = registrations(:by_student)
+    # edit
+    get edit_student_registration_path(other_school_registration.student, other_school_registration)
+    assert_redirected_to student_path(other_school_registration.student)
+    # update
+    patch student_registration_path(other_school_registration.student, other_school_registration)
+    assert_redirected_to student_path(other_school_registration.student)
+    put student_registration_path(other_school_registration.student, other_school_registration)
+    assert_redirected_to student_path(other_school_registration.student)
+    # destroy
+    delete student_registration_path(other_school_registration.student, other_school_registration)
+    assert_redirected_to student_path(other_school_registration.student)
   end
 
 end
