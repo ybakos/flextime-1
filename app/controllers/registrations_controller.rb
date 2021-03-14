@@ -16,7 +16,7 @@ class RegistrationsController < AuthenticatedController
       redirect_to student_path(student), alert: "The activity has been removed. Please choose a different activity."
       return
     end
-    @registration = Registration.new(school: current_user.school, creator: current_user, student: student, teacher: student.teacher, activity: activity)
+    @registration = Registration.new(creator: current_user, student: student, teacher: student.teacher, activity: activity)
     respond_to do |format|
       if @registration.save
         format.html { redirect_back(fallback_location: student_path(@registration.student), notice: "Successfully registered for #{activity.name}.") }
