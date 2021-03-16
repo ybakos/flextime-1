@@ -10,7 +10,6 @@ class User < ApplicationRecord
   validates_presence_of :last_name
   validates :active, inclusion: { in: [true, false] }
 
-  acts_as_tenant(:school)
   belongs_to :teacher, optional: true
   validates_presence_of :teacher_id, unless: Proc.new { |u| u.new_record? || !u.student? || !u.active || u.active_changed?(from: false) }
   validate :school_of_teacher_matches, if: -> { teacher.present? }
@@ -19,6 +18,8 @@ class User < ApplicationRecord
   has_many :created_registrations, foreign_key: :creator_id
 
   has_many :activities, through: :registrations
+
+  acts_as_tenant :school
 
   default_scope { order(:last_name) }
   scope :active, -> { where(active: true) }

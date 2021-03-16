@@ -2,9 +2,10 @@ class Registration < ApplicationRecord
 
   belongs_to :activity, counter_cache: true
   belongs_to :creator, class_name: 'User'
-  acts_as_tenant(:school)
   belongs_to :student, class_name: 'User'
   belongs_to :teacher
+
+  acts_as_tenant :school
 
   validates :activity, uniqueness: {scope: :student}
   validate :student_must_be_student
