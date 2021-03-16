@@ -12,7 +12,6 @@ class User < ApplicationRecord
 
   belongs_to :teacher, optional: true
   validates_presence_of :teacher_id, unless: Proc.new { |u| u.new_record? || !u.student? || !u.active || u.active_changed?(from: false) }
-  validate :school_of_teacher_matches, if: -> { teacher.present? }
 
   has_many :registrations, foreign_key: :student_id
   has_many :created_registrations, foreign_key: :creator_id
@@ -67,11 +66,5 @@ class User < ApplicationRecord
   def remove_teacher
     self.teacher = nil
   end
-
-  private
-
-    def school_of_teacher_matches
-      errors.add(:student, 'does not have the same school as the teacher') if school != teacher.school
-    end
 
 end

@@ -170,4 +170,13 @@ class UserTest < ActiveSupport::TestCase
     end
   end
 
+  test 'is invalid if the teacher does not belong to the same school' do
+    first_school_student = users(:student)
+    ActsAsTenant.with_tenant(first_school_student.school) do
+      assert first_school_student.valid?
+      first_school_student.teacher = teachers(:third_school_teacher)
+      refute first_school_student.valid?
+    end
+  end
+
 end
