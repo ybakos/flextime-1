@@ -45,3 +45,9 @@ third_school_teacher:
   name: Third School Teacher
   title: 0
   active: true
+
+third_school_deactivated:
+  school: third
+  name: zInactive Third School Teacher
+  title: 0
+  active: false

@@ -189,4 +189,58 @@ class TeachersTest < ApplicationSystemTestCase
     assert_text '2 students'
   end
 
+  test 'viewing the teachers list does not include teacher from other schools' do
+    # From test 'staff views a list of teachers'
+    sign_in users(:staff)
+    visit teachers_url
+    assert_selector 'h2', text: 'Teachers'
+    assert_text 'Miss Valid'
+    refute_text 'Third School Teacher'
+    sign_in users(:third_staff)
+    visit teachers_url
+    assert_selector 'h2', text: 'Teachers'
+    refute_text 'Miss Valid'
+    assert_text 'Third School Teacher'
+  end
+
+  test 'viewing deactivated teachers does not include deactivated teachers from other schools' do
+    # From test 'admin reactivates a teacher'
+    sign_in users(:admin)
+    visit teachers_url
+    click_link 'View Deactivated Teachers'
+    assert_text 'zInactive Teacher'
+    refute_text 'zInactive Third School Teacher'
+    sign_in users(:third_admin)
+    visit teachers_url
+    click_link 'View Deactivated Teachers'
+    refute_text 'zInactive Teacher'
+    assert_text 'zInactive Third School Teacher'
+  end
+
+  test 'created teachers do not appear on the teacher lists of other schools' do
+    # From test 'admin creates a teacher'
+    sign_in users(:admin)
+    visit teachers_url
+    select 'Miss', from: 'teacher_title'
+    fill_in 'teacher_name', with: 'FAKE'
+    click_button 'Create Teacher'
+    assert_link 'Miss FAKE'
+    sign_in users(:third_admin)
+    visit teachers_url
+    assert_text 'Third School Teacher'
+    refute_text 'Miss FAKE'
+  end
+
+  test 'after a create validation failure the teachers list does not contain teachers from other schools' do
+    # From test 'admin sees an error when creating a teacher and neither a title nor name are specified'
+    sign_in users(:admin)
+    visit teachers_url
+    click_button 'Create Teacher'
+    assert_text '2 errors prohibited this teacher from being saved'
+    assert_text "Title can't be blank"
+    assert_text "Name can't be blank"
+    assert_text 'Miss Valid'
+    refute_text 'Third School Teacher'
+  end
+
 end
