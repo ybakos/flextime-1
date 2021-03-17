@@ -1,13 +1,13 @@
 class Activity < ApplicationRecord
 
+  has_many :registrations, dependent: :destroy
+
   validates_presence_of :name
-  validates_presence_of :room
   validates :capacity, numericality: { only_integer: true, greater_than_or_equal_to: 0 }
   validates_presence_of :date
   validate :date_must_be_valid_activity_day, unless: Proc.new { date.nil? }
+  validates_presence_of :room
   validates_uniqueness_of :room, scope: [:date, :name], case_sensitive: false
-
-  has_many :registrations, dependent: :destroy
 
   acts_as_tenant :school
 

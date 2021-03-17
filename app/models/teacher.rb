@@ -1,20 +1,20 @@
 class Teacher < ApplicationRecord
 
-  enum title: ['Miss', 'Mr.', 'Mrs.', 'Ms.']
-
-  validates_presence_of :name
-  validates_presence_of :title
-  validates :name, uniqueness: { scope: :title, case_sensitive: false }
-  validates :active, inclusion: { in: [true, false] }
-
-  has_many :students, class_name: 'User', dependent: :restrict_with_error
-  has_many :registrations, dependent: :restrict_with_error
-
-  acts_as_tenant :school
-
   default_scope { order(:name) }
   scope :active, -> { where(active: true) }
   scope :deactivated, -> { where(active: false) }
+
+  enum title: ['Miss', 'Mr.', 'Mrs.', 'Ms.']
+
+  has_many :registrations, dependent: :restrict_with_error
+  has_many :students, class_name: 'User', dependent: :restrict_with_error
+
+  validates :active, inclusion: { in: [true, false] }
+  validates_presence_of :name
+  validates :name, uniqueness: { scope: :title, case_sensitive: false }
+  validates_presence_of :title
+
+  acts_as_tenant :school
 
   def deactivate!
     transaction do

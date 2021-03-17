@@ -1,33 +1,29 @@
 class User < ApplicationRecord
 
-  devise :database_authenticatable, :trackable, :validatable, :registerable,
-         :omniauthable, omniauth_providers: [:google_oauth2]
-
-  enum role: [:student, :staff, :admin, :sys_admin]
-  attribute :role, :integer, default: :student
-
-  validates_presence_of :first_name
-  validates_presence_of :last_name
-  validates :active, inclusion: { in: [true, false] }
-
-  belongs_to :teacher, optional: true
-  validates_presence_of :teacher_id, unless: Proc.new { |u| u.new_record? || !u.student? || !u.active || u.active_changed?(from: false) }
-
-  has_many :registrations, foreign_key: :student_id
-  has_many :created_registrations, foreign_key: :creator_id
-
-  has_many :activities, through: :registrations
-
-  acts_as_tenant :school
-
   default_scope { order(:last_name) }
   scope :active, -> { where(active: true) }
   scope :deactivated, -> { where(active: false) }
   scope :starting_with, ->(letter) { where('upper(last_name) LIKE ?', "#{letter}%") }
 
+  enum role: [:student, :staff, :admin, :sys_admin]
+  attribute :role, :integer, default: :student
+
+  belongs_to :teacher, optional: true
+  has_many :registrations, foreign_key: :student_id
+  has_many :created_registrations, foreign_key: :creator_id
+  has_many :activities, through: :registrations
+
+  validates :active, inclusion: { in: [true, false] }
+  validates_presence_of :first_name
+  validates_presence_of :last_name
+  validates_presence_of :teacher_id, unless: Proc.new { |u| u.new_record? || !u.student? || !u.active || u.active_changed?(from: false) }
+
   before_save :remove_teacher, if: Proc.new { |u| u.role_changed?(from: 'student') }
 
+  acts_as_tenant :school
   accepts_nested_attributes_for :school
+  devise :database_authenticatable, :trackable, :validatable, :registerable,
+         :omniauthable, omniauth_providers: [:google_oauth2]
 
   # https://github.com/zquestz/omniauth-google-oauth2
   def self.from_omniauth(auth, allowed_domains)
