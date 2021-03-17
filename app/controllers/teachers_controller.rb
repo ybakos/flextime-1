@@ -80,6 +80,8 @@ class TeachersController < AuthenticatedController
 
     def set_teacher
       @teacher = Teacher.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to teachers_path, alert: 'This teacher could not be found, because the teacher has been removed or you do not have access.'
     end
 
     def set_date

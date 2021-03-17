@@ -124,4 +124,34 @@ class TeachersControllerTest < ActionDispatch::IntegrationTest
     assert_match /#{teacher.name} was successfully deleted/, flash[:notice]
   end
 
+
+  # Multi-tenancy
+
+  test 'redirects requests for another school\'s teacher' do
+    sign_in users(:second_admin)
+    other_school_teacher = teachers(:third_school_teacher)
+    # show
+    get teacher_path(other_school_teacher)
+    assert_redirected_to teachers_path
+    # edit
+    get edit_teacher_path(other_school_teacher)
+    assert_redirected_to teachers_path
+    # update
+    patch teacher_path(other_school_teacher)
+    assert_redirected_to teachers_path
+    put teacher_path(other_school_teacher)
+    assert_redirected_to teachers_path
+    # Note: These three are bad tests because a successful action will redirect
+    # to teachers_path too. (!)
+    # activate
+    put activate_teacher_path(other_school_teacher)
+    assert_redirected_to teachers_path
+    # deactivate
+    put deactivate_teacher_path(other_school_teacher)
+    assert_redirected_to teachers_path
+    # destroy
+    delete teacher_path(other_school_teacher)
+    assert_redirected_to teachers_path
+  end
+
 end
