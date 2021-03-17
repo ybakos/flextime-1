@@ -131,4 +131,28 @@ class TeacherTest < ActiveSupport::TestCase
     assert_raises(ActiveRecord::RecordNotFound) { teacher.reload }
   end
 
+  # Multi-tenant
+
+  test 'can not be associated with students of another school' do
+    teacher = teachers(:miss_valid)
+    other_school_student = users(:third_school_student)
+    ActsAsTenant.with_tenant(schools(:first)) do
+      assert_no_difference 'teacher.students.count' do
+        teacher.students << other_school_student
+      end
+    end
+  end
+
+  # Let's let this blow up. There are custom validators in Registration that
+  # will crash when the associations have mismatched tenants.
+  test 'can not be associated with registrations of another school' do
+    teacher = teachers(:miss_valid)
+    other_school_registration = registrations(:third_school)
+    ActsAsTenant.with_tenant(schools(:first)) do
+      assert_raises do
+        teacher.registrations << other_school_registration
+      end
+    end
+  end
+
 end
