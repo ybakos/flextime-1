@@ -168,8 +168,22 @@ class ActivityTest < ActiveSupport::TestCase
     to = 2.weeks.from_now(from)
     ActsAsTenant.with_tenant(schools(:first)) do
       Activity.copy!(from, to)
-      assert_equal Activity.where(date: from).first.school, Activity.where(date: to).first.school
+      original_and_copied_activities = Activity.where(date: from) + Activity.where(date: to)
+      assert_equal original_and_copied_activities.map(&:school).uniq.length, 1
+      refute original_and_copied_activities.any? { |a| a.school != schools(:first) }
     end
+  end
+
+  test 'copying activities does not copy activities for other schools' do
+    from = Date.today.tuesday
+    to = 2.weeks.from_now(from)
+    ActsAsTenant.with_tenant(schools(:third)) { assert_empty Activity.where(date: to) }
+    ActsAsTenant.with_tenant(schools(:first)) do
+      assert_empty Activity.where(date: to)
+      Activity.copy!(from, to)
+      refute_empty Activity.where(date: to)
+    end
+    ActsAsTenant.with_tenant(schools(:third)) { assert_empty Activity.where(date: to) }
   end
 
   # ::find_with_registration_student_and_teacher

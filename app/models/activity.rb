@@ -24,7 +24,7 @@ class Activity < ApplicationRecord
 
   def self.copy!(from_date, to_date)
     Activity.where(date: from_date).each do |a|
-      Activity.create!(school: a.school, name: a.name, room: a.room, capacity: a.capacity, date: to_date)
+      Activity.create!(name: a.name, room: a.room, capacity: a.capacity, date: to_date)
     end
   end
 
