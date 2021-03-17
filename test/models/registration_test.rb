@@ -94,11 +94,40 @@ class RegistrationTest < ActiveSupport::TestCase
     end
   end
 
-  test 'is invalid if any associated objects schools do not match the registration school' do
+  test 'is invalid if activity school does not match the registration school' do
     registration = registrations(:by_staff)
-    assert registration.valid?
-    registration.student = users(:third_school_student)
-    refute registration.valid?
+    ActsAsTenant.with_tenant(registration.school) do
+      assert registration.valid?
+      registration.activity = activities(:third_school_next_tuesday_activity)
+      refute registration.valid?
+    end
+  end
+
+  test 'is invalid if creator school does not match the registration school' do
+    registration = registrations(:by_staff)
+    ActsAsTenant.with_tenant(registration.school) do
+      assert registration.valid?
+      registration.creator = users(:third_staff)
+      refute registration.valid?
+    end
+  end
+
+  test 'is invalid if student school does not match the registration school' do
+    registration = registrations(:by_staff)
+    ActsAsTenant.with_tenant(registration.school) do
+      assert registration.valid?
+      registration.student = users(:third_school_student)
+      refute registration.valid?
+    end
+  end
+
+  test 'is invalid if teacher school does not match the registration school' do
+    registration = registrations(:by_staff)
+    ActsAsTenant.with_tenant(registration.school) do
+      assert registration.valid?
+      registration.teacher = teachers(:third_school_teacher)
+      refute registration.valid?
+    end
   end
 
   # Students may only register for an activity once
