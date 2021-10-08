@@ -61,14 +61,23 @@ class UserTest < ActiveSupport::TestCase
 
   test 'active user is active_for_authentication' do
     u = new_user
+    u.role = 'staff'
     u.active = true
     assert u.active_for_authentication?
   end
 
   test 'inactive user is not active_for_authentication' do
     u = new_user
+    u.role = 'staff'
     u.active = false
     refute u.active_for_authentication?
+  end
+
+  test 'inactive student is active_for_authentication' do
+    u = new_user
+    u.role = 'student'
+    u.active = false
+    assert u.active_for_authentication?
   end
 
   test 'belongs to a teacher' do

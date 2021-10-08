@@ -56,7 +56,7 @@ class User < ApplicationRecord
   end
 
   def active_for_authentication?
-    super && active?
+    super && (student? || active?)
   end
 
   def remove_teacher

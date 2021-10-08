@@ -15,10 +15,10 @@ deactivated:
   provider: 'FAKE'
   uid: 'FAKE'
   first_name: 'Fake'
-  last_name: 'Deactivated'
+  last_name: 'Deactivated Staff'
   image_url: 'http://fake.com/fake.jpg'
   active: false
-  # no explicit role
+  role: 'staff'
 
 student:
   email: 'student@example.com'
