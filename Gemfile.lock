@@ -168,7 +168,6 @@ GEM
     marcel (1.0.1)
     method_source (1.0.0)
     mini_mime (1.1.1)
-    mini_portile2 (2.6.1)
     minitest (5.14.4)
     msgpack (1.4.2)
     multi_json (1.15.0)
@@ -176,9 +175,6 @@ GEM
     multipart-post (2.1.1)
     nenv (0.3.0)
     nio4r (2.5.8)
-    nokogiri (1.12.4)
-      mini_portile2 (~> 2.6.1)
-      racc (~> 1.4)
     nokogiri (1.12.4-x86_64-darwin)
       racc (~> 1.4)
     nokogiri (1.12.4-x86_64-linux)
@@ -363,4 +359,4 @@ RUBY VERSION
    ruby 2.7.4p191
 
 BUNDLED WITH
-   2.2.27
+   2.2.29
