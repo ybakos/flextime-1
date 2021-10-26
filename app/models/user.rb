@@ -34,7 +34,7 @@ class User < ApplicationRecord
       user.password = Devise.friendly_token[0,20]
       user.email = auth.info.email
       user.first_name = auth.info.first_name.capitalize
-      user.last_name = auth.info.last_name.capitalize
+      user.last_name = auth.info.last_name&.capitalize || ''
       user.image_url = auth.info.image
     end
   end
