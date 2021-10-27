@@ -42,6 +42,8 @@ class StudentsController < ApplicationController
 
     def set_student
       @student = current_user&.student? ? current_user : User.student.find(params[:id])
+    rescue
+      redirect_to root_url, notice: "Student not found, or your role is no longer a 'student'."
     end
 
     def set_date
