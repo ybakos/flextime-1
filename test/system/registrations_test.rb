@@ -400,8 +400,19 @@ class RegistrationsTest < ApplicationSystemTestCase
     end
   end
 
-  test 'no one can edit or update past student registrations' do
-    skip
+  # https://github.com/osu-cascades/flex-time/issues/181
+  test 'staff can change past student registrations' do
+    travel_to Date.today.thursday do
+      sign_in users(:staff)
+      visit student_path(users(:student))
+      within('#tuesday') { click_link('change') }
+      select 'Second Fake Tuesday Activity', from: 'registration_activity_id'
+      click_button 'Save'
+      assert_text 'Registration was successfully updated'
+      within '#tuesday' do
+        assert_selector 'h5', text: 'Second Fake Tuesday Activity'
+      end
+    end
   end
 
 end
