@@ -39,7 +39,7 @@ class ActivitiesTest < ApplicationSystemTestCase
     end
   end
 
-  # https://github.com/osu-cascades/falcon-time/issues/30
+  # https://github.com/osu-cascades/flex-time/issues/30
   test 'staff views a week with no activities' do
     2.times { click_link 'Previous week' }
     d = Date.today.prev_week.prev_week
