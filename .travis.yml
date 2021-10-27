@@ -36,9 +36,10 @@ env:
     - SCHOOL_NAME="Travis School"
     - SCHOOL_URL="https://example.com"
     - SCHOOL_APP_NAME="Travis Time"
-    - TEST_DATABASE="flex_time_test"
     - DEVISE_MAILER_SENDER=no-reply@example.com
     - ACTION_MAILER_URL_HOST=travis
+    - REGISTRATION_CUTOFF_TIME=9:00PM UTC
+    - TEST_DATABASE_URL=postgresql://postgres@localhost/flextime_test
 
 # after_success:
 #   - bundle exec codeclimate-test-reporter
