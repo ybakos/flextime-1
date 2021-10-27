@@ -22,6 +22,8 @@ before_script:
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build
+  - echo 'America/Los_Angeles' | sudo tee /etc/timezone
+  - sudo dpkg-reconfigure --frontend noninteractive tzdata
 
 after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
@@ -39,7 +41,7 @@ env:
     - SCHOOL_APP_NAME="Travis Time"
     - DEVISE_MAILER_SENDER=no-reply@example.com
     - ACTION_MAILER_URL_HOST=travis
-    - REGISTRATION_CUTOFF_TIME="9:00PM UTC"
+    - REGISTRATION_CUTOFF_TIME="1:00PM"
     - TEST_DATABASE_URL=postgresql://postgres@localhost/flextime_test
 
 # after_success:
