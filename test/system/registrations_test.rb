@@ -112,10 +112,10 @@ class RegistrationsTest < ApplicationSystemTestCase
     end
   end
 
-  # See Date#registration_cutoff_datetime. Could be '2pm' when PDT.
+  # See Date#registration_cutoff_datetime.
   # Yes, need to normalize all the datetime calculations in the system.
   test 'student can register for activities up to 1pm the day of' do
-    travel_to DateTime.now.friday.change({hour:13, min:59, sec: 0}) do
+    travel_to DateTime.now.friday.change({hour:12, min:59, sec: 0}) do
       sign_in_as_student_and_visit_profile
       within '#friday' do
         assert_select 'Activity'
@@ -123,10 +123,10 @@ class RegistrationsTest < ApplicationSystemTestCase
     end
   end
 
-  # See Date#registration_cutoff_datetime. Could be '2pm' when PDT.
+  # See Date#registration_cutoff_datetime.
   # Yes, need to normalize all the datetime calculations in the system.
   test 'student cannot register for activities after 1pm the day of' do
-    travel_to DateTime.now.friday.change({hour:14, min:0, sec: 0}) do
+    travel_to DateTime.now.friday.change({hour:13, min:0, sec: 0}) do
       sign_in_as_student_and_visit_profile
       within '#friday' do
         assert_no_select 'Activity'
