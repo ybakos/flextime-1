@@ -98,7 +98,7 @@ class ActivityTest < ActiveSupport::TestCase
   test 'returns a hash of tuesday, thursday and friday activities for the current week given any date this week' do
     date = Date.today.beginning_of_week
     expected = {
-      date.tuesday => [activities(:tuesday_activity), activities(:second_tuesday_activity)],
+      date.tuesday => [activities(:restricted_tuesday_activity), activities(:tuesday_activity), activities(:second_tuesday_activity)],
       date.thursday => [activities(:thursday_activity), activities(:second_thursday_activity)],
       date.friday => [activities(:friday_activity), activities(:restricted)]
     }

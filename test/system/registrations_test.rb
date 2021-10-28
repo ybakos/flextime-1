@@ -415,4 +415,19 @@ class RegistrationsTest < ApplicationSystemTestCase
     end
   end
 
+  # https://github.com/osu-cascades/flex-time/issues/183
+  test 'staff can re-assign a student to a restricted activity' do
+    travel_to Date.today.monday do
+      sign_in users(:staff)
+      visit student_path(users(:student))
+      within('#tuesday') { click_link('change') }
+      select 'Fake Restricted Tuesday Activity', from: 'registration_activity_id'
+      click_button 'Save'
+      assert_text 'Registration was successfully updated'
+      within '#tuesday' do
+        assert_selector 'h5', text: 'Fake Restricted Tuesday Activity'
+      end
+    end
+  end
+
 end

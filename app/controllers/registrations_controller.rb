@@ -37,11 +37,11 @@ class RegistrationsController < ApplicationController
 
   def update
     respond_to do |format|
-      if @registration.update(registration_params)
+      if @registration.update(registration_params.merge(creator: current_user))
         format.html { redirect_to student_path(@registration.student, date: @registration.activity.week_date), notice: 'Registration was successfully updated.' }
         format.json { render :show, status: :ok, location: @registration }
       else
-        format.html { redirect_back(fallback_location: student_path(@registration.student)) }
+        format.html { redirect_back(fallback_location: student_path(@registration.student), alert: 'Could not change this registration.') }
         format.json { render json: @registration.errors, status: :unprocessable_entity }
       end
     end

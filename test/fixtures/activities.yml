@@ -12,6 +12,13 @@ second_tuesday_activity:
   capacity: 1
   date: <%= Date.today.tuesday %>
 
+restricted_tuesday_activity:
+  name: Fake Restricted Tuesday Activity
+  room: Fake Room
+  capacity: 10
+  date: <%= Date.today.tuesday %>
+  restricted: true
+
 thursday_activity:
   name: Fake Thursday Activity
   room: Fake Room
