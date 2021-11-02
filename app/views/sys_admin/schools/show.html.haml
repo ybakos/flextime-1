@@ -1,8 +1,0 @@
-%h1 Administration
-.row
-  .col
-    %h2= @school
-    %h3 Slug: #{@school.slug}
-  .col.text-right
-    = link_to 'Edit', edit_sys_admin_school_path(@school), class: 'btn btn-outline-primary'
-    = link_to 'Delete', sys_admin_school_path(@school), class: 'btn btn-outline-danger', method: :delete, data: {confirm: 'Are you sure you want to delete this school?' }

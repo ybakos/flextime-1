@@ -1,16 +1,33 @@
 class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  include Jumpstart::Omniauth::Callbacks
 
-  # https://github.com/zquestz/omniauth-google-oauth2
-  def google_oauth2
-    @user = User.from_omniauth(request.env['omniauth.auth'],
-      Rails.application.secrets.authenticatable_hosted_domains.split)
-    if @user&.persisted?
-      flash[:notice] = I18n.t 'devise.omniauth_callbacks.success', kind: 'Google'
-      sign_in_and_redirect @user, event: :authentication
-    else
-      session['devise.google_data'] = request.env['omniauth.auth'].except(:extra) # Removing extra as it can overflow some session stores
-      redirect_to new_user_session_url, alert: 'Authentication failed. Are you using your school account?'
-    end
-  end
+  # Jumpstart Pro's Callbacks module handles:
+  #
+  #   1. Registering with OAuth
+  #   2. Connecting OAuth when logged in
+  #   3. Logging in with OAuth
+  #   4. Rejecting OAuth if user already has account, but hasn't connected this OAuth account yet
 
+  # For extra processing on the account that was just connected,
+  # simply define a method like the following examples:
+  #
+  # def github_connected(connected_account)
+  # end
+  #
+  # def twitter_connected(connected_account)
+  # end
+  #
+  # etc...
+
+  # To change the redirect URL after an account is connected, you can override the following methods:
+  #
+  # After sign up and sign in with OAuth
+  # def after_sign_in_path_for(resource)
+  #   root_path
+  # end
+  #
+  # After connecting an OAuth account while logged in
+  # def after_connect_redirect_path
+  #   user_connected_accounts_path
+  # end
 end

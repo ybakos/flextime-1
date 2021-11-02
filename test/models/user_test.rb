@@ -1,182 +1,67 @@
-require 'test_helper'
-require 'minitest/mock'
+# == Schema Information
+#
+# Table name: users
+#
+#  id                     :bigint           not null, primary key
+#  accepted_privacy_at    :datetime
+#  accepted_terms_at      :datetime
+#  admin                  :boolean
+#  announcements_read_at  :datetime
+#  confirmation_sent_at   :datetime
+#  confirmation_token     :string
+#  confirmed_at           :datetime
+#  email                  :string           default(""), not null
+#  encrypted_password     :string           default(""), not null
+#  first_name             :string
+#  invitation_accepted_at :datetime
+#  invitation_created_at  :datetime
+#  invitation_limit       :integer
+#  invitation_sent_at     :datetime
+#  invitation_token       :string
+#  invitations_count      :integer          default(0)
+#  invited_by_type        :string
+#  last_name              :string
+#  last_otp_timestep      :integer
+#  otp_backup_codes       :text
+#  otp_required_for_login :boolean
+#  otp_secret             :string
+#  preferred_language     :string
+#  remember_created_at    :datetime
+#  reset_password_sent_at :datetime
+#  reset_password_token   :string
+#  time_zone              :string
+#  unconfirmed_email      :string
+#  created_at             :datetime         not null
+#  updated_at             :datetime         not null
+#  invited_by_id          :bigint
+#
+# Indexes
+#
+#  index_users_on_email                 (email) UNIQUE
+#  index_users_on_invitation_token      (invitation_token) UNIQUE
+#  index_users_on_invitations_count     (invitations_count)
+#  index_users_on_invited_by            (invited_by_type,invited_by_id)
+#  index_users_on_invited_by_id         (invited_by_id)
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#
+
+require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
-
-  def new_user
-    User.new(school: schools(:first), email: 'new_fake_user@example.com',
-      password: 'password', password_confirmation: 'password',
-      first_name: 'New Fake', last_name: 'User')
+  test "user has many accounts" do
+    user = users(:one)
+    assert_includes user.accounts, accounts(:one)
+    assert_includes user.accounts, accounts(:company)
   end
 
-  def fake_allowable_domains
-    ['fake.com']
+  test "user has a personal account" do
+    user = users(:one)
+    assert_equal accounts(:one), user.personal_account
   end
 
-  # OMG!
-  def mock_auth(domain)
-    mock = MiniTest::Mock.new
-    mock.expect(:extra, MiniTest::Mock.new.expect(:raw_info, MiniTest::Mock.new.expect(:hd, domain)))
-    mock.expect(:provider, 'fake provider')
-    mock.expect(:uid, 'fake uid')
-    mock_info = MiniTest::Mock.new
-    mock_info.expect(:email, 'fake@fake.com')
-    mock_info.expect(:email, 'fake@fake.com')
-    mock_info.expect(:first_name, 'Fake')
-    mock_info.expect(:last_name, 'Fake')
-    mock_info.expect(:image, 'Fake')
-    mock.expect(:info, mock_info)
-    mock.expect(:info, mock_info)
-    mock.expect(:info, mock_info)
-    mock.expect(:info, mock_info)
-    mock.expect(:info, mock_info)
-  end
-
-  test 'has a required first name' do
-    u = new_user
-    assert u.valid?
-    u.first_name = ''
-    refute u.valid?
-  end
-
-  test 'has a required last name' do
-    u = new_user
-    assert u.valid?
-    u.last_name = ''
-    refute u.valid?
-  end
-
-  test 'has a default role of student' do
-    new_user = User.new
-    assert_equal new_user.role, 'student'
-  end
-
-  test 'pre-existing User without defined role has a default role of student' do
-    assert_equal users(:unknown).role, 'student'
-  end
-
-  test 'is active by default' do
-    assert new_user.active?
-  end
-
-  test 'active user is active_for_authentication' do
-    u = new_user
-    u.active = true
-    assert u.active_for_authentication?
-  end
-
-  test 'inactive user is not active_for_authentication' do
-    u = new_user
-    u.active = false
-    refute u.active_for_authentication?
-  end
-
-  test 'belongs to a school' do
-    assert_respond_to users(:student), :school
-    assert_kind_of School, users(:student).school
-  end
-
-  test 'belongs to a teacher' do
-    assert_respond_to users(:student), :teacher
-    assert_kind_of Teacher, users(:student).teacher
-  end
-
-  test 'non-student does not have to have a teacher' do
-    [users(:staff), users(:admin)].each { |u| u.teacher = nil; assert u.valid? }
-  end
-
-  test 'new student does not have to have a teacher' do
-    new_student = new_user
-    assert new_student.student?
-    assert new_student.new_record?
-    new_student.teacher = nil
-    assert new_student.valid?
-    assert_nothing_raised { new_student.save! }
-  end
-
-  test 'non-new student must have a teacher' do
-    student = users(:student)
-    assert student.valid?
-    student.teacher = nil
-    assert student.invalid?
-  end
-
-  test 'can be deactivated without a teacher' do
-    student = users(:student)
-    assert student.active?
-    student.teacher = nil
-    student.active = false
-    assert student.valid?
-  end
-
-  test 'can be activated without a teacher' do
-    student = users(:deactivated)
-    assert_nil student.teacher
-    student.active = true
-    assert student.valid?
-  end
-
-  test 'has many registrations' do
-    assert_respond_to users(:student), :registrations
-    assert_kind_of Registration, users(:student).registrations.first
-  end
-
-  test 'has a string representation of first_name last_name' do
-    assert_equal users(:student).to_s, 'Fake Student'
-  end
-
-  test 'has a string representation of last_name, first_name' do
-    assert_equal users(:student).last_name_first_name, 'Student, Fake'
-  end
-
-  test '#activity_for_day_of_week' do
-    assert_equal users(:student).activity_for_day_of_week(:tuesday, Date.today.monday),
-      registrations(:by_student).activity
-  end
-
-  test '::from_omniauth returns nil when auth object does not provide allowable hosted domain' do
-    assert_nil User.from_omniauth(nil, fake_allowable_domains)
-    assert_nil User.from_omniauth(mock_auth(''), fake_allowable_domains)
-  end
-
-  test '::from_omniauth returns User when auth object provides allowable hosted domain' do
-    assert_instance_of User, User.from_omniauth(mock_auth(fake_allowable_domains.first), fake_allowable_domains)
-  end
-
-  test 'removes teacher when role changes from student to something else' do
-    student = users(:student)
-    assert_not_nil(student.teacher)
-    student.role = 'staff'
-    student.save
-    assert_nil student.teacher
-  end
-
-  test 'disassociate_all_from_teachers' do
-    user_with_teacher_count = User.where('teacher_id IS NOT NULL').count
-    assert_difference -> { User.where('teacher_id IS NULL').count }, user_with_teacher_count do
-      User.disassociate_all_from_teachers
+  test "can delete user with accounts" do
+    assert_difference "User.count", -1 do
+      users(:one).destroy
     end
   end
-
-  # Multi-tenancy
-
-  test 'with a tenant, disassociate_all_from_teachers only affects tenant users' do
-    # From test 'disassociate_all_from_teachers'
-    ActsAsTenant.with_tenant(schools(:third)) do
-      user_with_teacher_count = User.where('teacher_id IS NOT NULL').count
-      assert_difference -> { User.where('teacher_id IS NULL').count }, user_with_teacher_count do
-        User.disassociate_all_from_teachers
-      end
-    end
-  end
-
-  test 'is invalid if the teacher does not belong to the same school' do
-    first_school_student = users(:student)
-    ActsAsTenant.with_tenant(first_school_student.school) do
-      assert first_school_student.valid?
-      first_school_student.teacher = teachers(:third_school_teacher)
-      refute first_school_student.valid?
-    end
-  end
-
 end

@@ -1,9 +1,0 @@
-= render 'form_errors', model: @teacher
-
-= form_for @teacher, html: {class: 'form-inline justify-content-center'} do |f|
-  .form-group
-    = f.label :title, class: 'sr-only'
-    = f.select :title, Teacher.titles.keys, {include_blank: 'Choose...'}, {class: 'form-control mr-1', required: true}
-    = f.label :name, class: 'sr-only'
-    = f.text_field :name, placeholder: 'Name', class: 'form-control mr-3', required: true
-    = f.submit class: 'btn btn-success'

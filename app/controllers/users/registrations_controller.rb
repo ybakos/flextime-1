@@ -1,36 +1,42 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-
-  prepend_before_action :check_captcha, only: [:create]
-  before_action :configure_sign_up_params, only: [:create]
-  # before_action :configure_account_update_params, only: [:update]
+  invisible_captcha only: :create
 
   protected
 
-  def check_captcha
-    unless verify_recaptcha
-      self.resource = User.new sign_up_params
-      resource.validate
-      respond_with_navigational(resource) { render :new }
+  def build_resource(hash = {})
+    self.resource = resource_class.new_with_session(hash, session)
+
+    # Jumpstart: Skip email confirmation on registration.
+    #   Require confirmation when user changes their email only
+    resource.skip_confirmation!
+
+    # Registering to accept an invitation should display the invitation on sign up
+    if params[:invite] && (invite = AccountInvitation.find_by(token: params[:invite]))
+      @account_invitation = invite
+      resource.skip_default_account = true
+
+    # Build and display account fields in registration form if enabled
+    elsif Jumpstart.config.register_with_account?
+      account = resource.owned_accounts.first
+      account ||= resource.owned_accounts.new
+      account.account_users.new(user: resource, admin: true)
     end
   end
 
-  def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, school_attributes: [:name, :slug]])
+  def update_resource(resource, params)
+    # Jumpstart: Allow user to edit their profile without password
+    resource.update_without_password(params)
   end
 
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_account_update_params
-  #   devise_parameter_sanitizer.permit(:account_update, keys: [:attribute])
-  # end
+  def sign_up(resource_name, resource)
+    sign_in(resource_name, resource)
 
-  # The path used after sign up.
-  # def after_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+    # If user registered through an invitation, automatically accept it after signing in
+    if @account_invitation
+      @account_invitation.accept!(current_user)
 
-  # The path used after sign up for inactive accounts.
-  # def after_inactive_sign_up_path_for(resource)
-  #   super(resource)
-  # end
-
+      # Clear redirect to account invitation since it's already been accepted
+      stored_location_for(:user)
+    end
+  end
 end

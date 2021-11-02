@@ -1,90 +1,100 @@
-# Flex Time
+# Jumpstart Pro Rails Template
 
-A scheduling application for flex time periods in K-12 schools.
+All your Rails apps should start off with a bunch of great defaults.
 
-[![Build Status](https://travis-ci.com/osu-cascades/flex-time.svg?token=UcyKnDFJfk4eb8TzWbtd&branch=master)](https://travis-ci.com/osu-cascades/flex-time) [![Test Coverage](https://api.codeclimate.com/v1/badges/158ce0907b3c88aa9baa/test_coverage)](https://codeclimate.com/github/osu-cascades/flex-time/test_coverage)
+## Getting Started
 
-## Prerequisites
+Jumpstart Pro is a preconfigured Rails application, so you can either
+download the code or clone this repository and add your own repo as a
+remote to merge in updates.
 
-Please use Ruby 2.6.5 and Rails 5.2.3+. You'll need a PostgreSQL server running.
+#### Requirements
 
-## Development
+You'll need the following installed to run the template successfully:
 
-Clone the repository, `bundle install`, create a _.env_ based on _.env.example_, create the database, and run the server.
+* Ruby 3.0 or higher
+* bundler - `gem install bundler`
+* Redis - For ActionCable support (and Sidekiq, caching, etc)
+* PostgreSQL - `brew install postgresql`
+* Imagemagick - `brew install imagemagick`
+* Yarn - `brew install yarn` or [Install Yarn](https://yarnpkg.com/en/docs/install)
+* Foreman (optional) - `gem install foreman` - helps run all your
+  processes in development
+* If you install [Overmind](https://github.com/DarthSim/overmind) (optional), it will be used in place of Foreman - `brew install tmux overmind`
+* [Stripe CLI](https://stripe.com/docs/stripe-cli) for Stripe webhooks in development - `brew install stripe/stripe-cli/stripe`
 
-```
-bundle install
-rails db:create
-rails server
-```
+All Homebrew dependencies are listed in `Brewfile`, so you can install them all at once like this:
 
-## Test
-
-Test with the Rails built-in test harness.
-
-```
-rails test
-```
-
-Or
-
-```
-guard
+```bash
+brew bundle install --no-upgrade
 ```
 
-The test suite exercises model, helper, controllers and system tests.
-It currently uses the built-in fixtures mechanism.
+#### Initial Setup
 
-At the time of this writing, the tests are specific to Tuesday, Thursday, Friday days.
-This is a smell.
+First, edit `config/database.yml` and change the database name.
 
-## Domain / Work System Notes
+Next, run `bin/setup` to install Rubygem and Javascript dependencies. This will also install foreman system wide for you and setup your database.
 
-A User is anyone who may sign in to the system. There are three roles: admin,
-staff, and student (the default). Admins have full control. Staff can modify everything
-except for users. Students can choose their activities and see their own weekly
-schedules.
+```bash
+bin/setup
+```
 
-A Teacher is a concept separate from a User who is a teacher (staff role). A Teacher
-represents the main flextime period teacher. For flex time periods, students usually
-have a period teacher or home room teacher. They then go to particular activities
-held by specific people in the school.
+Optionally, you can rename the application name in `config/application.rb`. This won't affect anything, so it's not too important.
 
-Activities are specific activities that students may participate in.
+You can also rename the app in the Jumpstart config UI which updates the app name in the navbar, footer, etc.
 
-A Registration represents a student's "signup" for a particular Activity.
+#### Running Jumpstart Pro
 
-### The way it all works
+To run your application, you'll use the `bin/dev` command:
 
-After a new deployment, we invite the principal to sign in to the system, and we
-then elevate their role to _admin_. The principal can then create Teacher records
-in the system.
+```bash
+bin/dev
+```
 
-Next, the principal invites staff to sign up. Right now, anyone can sign up in the
-system as long as their email domain is allowed. **[smell: security]** The principal
-then elevates these staff User roles to _staff_.
+This starts up Overmind (or fallback to Foreman) running the Procfile.dev config.
 
-Staff and admins then create lists of activities for particular days of the week.
-The days of the week are driven by configuration (env vars) as different schools
-hold their flex time periods on different days of the week.
+We've configured this to run the Rails server, CSS bundling, and JS bundling out of the box. You can add background workers like Sidekiq, the Stripe CLI, etc to have them run at the same time.
 
-For a new school year, staff then invite students to sign in for the first time.
-This authenticates the students via Google, and creates a new User record with
-the _student_ role in our system. Students are then prompted to select their
-flex time teacher prior to being able to register for an activity. They may then
-select an activity for each flex time period up to one week in advance. They have
-until a 'cutoff' time to sign up for a particular day. The cutoff time is driven
-by configuration (env vars) as different schools hold their flex time period at
-different times of the day. We also assume that the time is the same for each day
-of the week.
+Here's a couple of useful Overmind commands:
 
-Between school years, some students graduate and leave the school. To prepare
-for a new school year, the admin resets all student rosters, which disassociates
-students from teachers. Next, the admin uses the Users interface to manually
-deactivate the students who have left the school. In addition, when staff Users leave the school, the admin sets their User record as inactive. Deactivated users may not sign in to the system.
+```sh
+# Debugging with byebug: connect to the `web` process to be able to input commands:
+overmind connect web
+# Then disconnect by hitting [Ctrl+B] (or your tmux prefix) and then [D].
 
-Sometimes, to speed up user deactivation, we obtan a list of email addresses, and
-run a script on the server to deactivate all the users with those email addresses.
+# Restart a process without restarting all the other ones:
+overmind restart web
 
+# If something goes wrong, you can kill all running processes:
+overmind kill
+```
 
-&copy; 2017 Yong Bakos. All rights reserved.
+#### Windows Support
+
+If you'd like to run Jumpstart Pro on Windows, we recommend using WSL2. You can find instructions here: https://gorails.com/setup/windows
+
+Alternatively, if you'd like to use Docker on Windows, you'll need to make sure you clone the repository and preserve the Linux line endings.
+
+```bash
+git clone git@github.com:username/myrepo.git --config core.autocrlf=input
+```
+
+#### Running with Docker Compose
+
+We include a sample Docker Compose configuration that runs Rails, Postgresql, and Redis for you.
+
+Simply run:
+```
+docker-compose up
+```
+
+Then open http://localhost:3000
+
+#### Running with Docker
+
+If you'd like to run Jumpstart Pro with Docker directly, you can run:
+
+```bash
+docker build --tag myapp .
+docker run myapp
+```
