@@ -1,0 +1,13 @@
+--- !ruby/object:Jumpstart::Configuration
+application_name: FlexTime
+business_name: FlexTime LLC
+domain: example.com
+support_email: flextimedev@gmail.com
+default_from_email: Jumpstart <support@example.com>
+business_address: "650 SW Columbia St.\r\nBend, OR 97702"
+background_job_processor: async
+email_provider: ''
+personal_accounts: true
+livereload: false
+solargraph: false
+register_with_account: false
